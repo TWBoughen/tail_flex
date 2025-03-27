@@ -235,17 +235,21 @@ distribution (GPD) usually dubbed the Integer GPD (GPD) where
 \Pr(X> x|X> v) = \left(\frac{\xi(x-v)}{\sigma} + 1\right)^{-1/\xi},\qquad x=v+1,v+2,\ldots
 \] for \(v\in\mathbb Z^+, \sigma>0,\xi\in \mathbb R\).
 
-The IGPD has been shown to be in the same domain of attraction and has
-the same tail-index \(\xi\) as the regular GPD with the same parameters
-by using the following quantity introduced by \citep{shimura12}:
+\citet{shimura12} introduces a quantity that will help in determining
+what domain of attraction a discrete distribution belongs to, that is:
+
+For a distribution \(F\) with survival function \(\bar F\) and some
+\(n\in\mathbb Z^+\) let:
 
 \[
-\Omega(F,n) = \left(\log\displaystyle\frac{\bar F (n+1)}{\bar F (n+2)}\right)^{-1} - \left(\log\displaystyle\frac{\bar F (n)}{\bar F (n+1)}\right)^{-1},
-\] the limit of this quantity if it exists and is non-zero is exactly
-the tail-index of the distribution \(F\), and if the limit is zero then
-the distribution is in the Gumbel maximum domain of attraction. These
-results will be useful later on when trying to establish the tail
-behaviour of a network's limiting degree distribution.
+\Omega(F,n) = \left(\log\displaystyle\frac{\bar F (n+1)}{\bar F (n+2)}\right)^{-1} - \left(\log\displaystyle\frac{\bar F (n)}{\bar F (n+1)}\right)^{-1}
+\]
+
+\citep{shimura12} then states that if
+\(\lim_{n\rightarrow\infty} \Omega(F,n) = 1/\alpha\) (\(\alpha>0\)),
+then \(F\) is heavy tailed with \(\bar F(n) \sim n^{-\alpha}\).
+Additionally, if \(\lim_{n\rightarrow\infty} \Omega(F,n) = 0\) then the
+distribution is light tailed.
 
 These models that seem to outperform the power law do not however come
 with the added benefit of suggesting a generating mechanism for the
@@ -540,13 +544,23 @@ data simulated from the proposed model with various combinations of
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{paper_files/figure-pdf/fig-rec2-1.pdf}
+\captionsetup{labelsep=none}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{mcmc_plot.jpg}
 
 }
 
-\caption{\label{fig-rec2}Posterior estimates of paramters for data
-simulated from the proposed model with various combinations of
+\caption{: Posterior estimates of paramters for data simulated from the
+proposed model with various combinations of
 (\(\alpha\),\(\beta\),\(\varepsilon\)) and \(k_0=20\).}
+
+\end{figure}%
+
+}
+
+\caption{\label{fig-rec2}}
 
 \end{figure}%
 
@@ -578,6 +592,25 @@ unlikely to have come from a preferential attachment model. However for
 those with a good fit, it is possible to obtain information about the
 underlying PA mechanism assuming that the corresponding networks did
 indeed grow in that fashion.
+
+To demonstrate that the model is capturing the tail behaviour of the
+degree distributions Figure~\ref{fig-gp_comp} shows the tail heaviness
+based on samples from the MCMC for each network as well as the tail
+heaviness as estimated by fitting the GPD to the degrees for various
+thresholds.
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.8\textwidth,height=\textheight]{paper_files/figure-pdf/fig-gp_comp-1.pdf}
+
+}
+
+\caption{\label{fig-gp_comp}Posterior samples of shape parameter from
+model (blue) and GPD shape parameter (red) at various thresholds}
+
+\end{figure}%
 
 \section{Conclusion and Discussion}\label{conclusion-and-discussion}
 

@@ -407,17 +407,11 @@ ggpubr::annotate_figure(fig, bottom='Degree', left='Survival')
 ```
 
 
-```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="80%"}
-#| fig-width: 8
-#| fig-height: 8
-#| fig-cap: Posterior estimates of paramters for data simulated from the proposed model with various combinations of ($\alpha$,$\beta$,$\varepsilon$) and $k_0=20$.
-#| label: fig-rec2
 
-library(gridExtra)
-plt = readRDS('mcmc_plot.rds')
-plot(plt)
+:::{#fig-rec2 out.width="80%"}
+![: Posterior estimates of paramters for data simulated from the proposed model with various combinations of ($\alpha$,$\beta$,$\varepsilon$) and $k_0=20$.](mcmc_plot.jpg)
+:::
 
-```
 
 
 # Application to Real Data 
@@ -443,7 +437,7 @@ plot(plt1)
 
 To demonstrate that the model is capturing the tail behaviour of the degree distributions @fig-gp_comp shows the tail heaviness based on samples from the MCMC for each network as well as the tail heaviness as estimated by fitting the GPD to the degrees for various thresholds.
 
-```{r, echo=FALSE, warning=FALSE, cache=FALSE, out.width="80%"}
+```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="80%"}
 #| fig-width: 9
 #| fig-height: 6
 #| fig-cap: Posterior samples of shape parameter from model (blue) and GPD shape parameter (red) at various thresholds
