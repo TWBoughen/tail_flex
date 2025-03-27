@@ -30,6 +30,7 @@ abstract: |
 keywords: [networks, extremes]
 bibliography: refs.bib  
 ---
+
 ```{r,echo=FALSE, warning=FALSE, message=FALSE}
 library(ggplot2)
 library(paletteer)
@@ -37,6 +38,7 @@ library(gridExtra)
 library(latex2exp)
 library(ggpubr)
 ```
+
 
 
 
@@ -153,6 +155,7 @@ which must be solved numerically for most parameter choices. Also, note that $\l
 
 Some examples of what the degree distribution looks like are shown below in @fig-polylinsurv:
 
+
 ```{r, echo=FALSE}
 source('funcs.R')
 ```
@@ -191,6 +194,7 @@ ggplot(data = pars) + geom_line(aes(x=(x+1),y=surv, linetype=as.character(b),col
   facet_grid(eps~a,labeller = labeller, scales='free')
 ```
 
+
 The survival (@eq-polysurv) can be connected to the IGPD mentioned in [@sec-intro] by using Sterling's approximation of the gamma function to obtain:
 
 <!-- $$ -->
@@ -215,6 +219,7 @@ $$
 $$ meaning that for $k\ge k_0$ the limiting degree distribution is similar to $\text{IGPD}\left(\frac{\beta}{\lambda^*}, \frac{k_0^\alpha + \varepsilon}{\lambda^*},k_0-1\right)$.
 
 To assess how close of an approximation this is the theoretical conditional survivals are shown in @fig-approx_surv in colour and their IGPD approximations are shown in grey. The approximation seems to hold up fairly well even for large degrees.
+
 
 
 ```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="80%"}
@@ -268,7 +273,9 @@ ggplot(data = pars) + geom_line(aes(x=(x),y=surv, linetype=as.character(b),colou
 
 
 
+
 Since $\beta>0$, the shape parameter of the IGPD is positive and thus the distribution is heavy tailed. Additionally the value of the shape parameter $\xi$ is shown in @fig-polyheat for various parameter choices:
+
 
 
 ```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="80%"}
@@ -308,6 +315,7 @@ ggplot(pars) + geom_raster(aes(x=a,y=b,fill=b/lambda)) +
 
 
 ```
+
 
 The darker regions on the heat maps correspond to a heavier tail and the lighter to a lighter tail, the red dashed line shows combinations of $\alpha$ and $\beta$ that produce a limiting degree distribution with the same tail heaviness as the Barabási-Albert model, $\xi=0.5$.
 
@@ -368,6 +376,7 @@ k_0 &\sim \text{U}(1,10,000),\\
 to obtain a posterior distribution that can then be used in an adaptive Metropolis-Hastings Markov chain Monte Carlo (MCMC) algorithm  to obtain posterior samples. The results of this inference are shown in @fig-rec1 and @fig-rec2. For these simulated networks $l=2$.
 
 
+
 ```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="80%"}
 #| fig-width: 8
 #| fig-height: 8
@@ -406,7 +415,6 @@ ggpubr::annotate_figure(fig, bottom='Degree', left='Survival')
 
 ```
 
-
 ```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="80%"}
 #| fig-width: 8
 #| fig-height: 8
@@ -420,9 +428,11 @@ plot(plt)
 ```
 
 
+
 # Application to Real Data 
 
 Turning now to real data, the goal is to fit the model to the degree distributions of real networks from various sources. [describe networks being used].
+
 
 
 
@@ -439,9 +449,11 @@ plot(plt1)
 ```
 
 
+
 @fig-real1 displays the posterior estimates of the conditional survival $F(k|k\ge2)$ for several data sets, for many of the data sets the fit is quite good  whilst for other the fit is very bad. This may indicate that the data sets without a good fit are unlikely to have come from a preferential attachment model. However for those with a good fit, it is possible to obtain information about the underlying PA mechanism assuming that the corresponding networks did indeed grow in that fashion.
 
 To demonstrate that the model is capturing the tail behaviour of the degree distributions @fig-gp_comp shows the tail heaviness based on samples from the MCMC for each network as well as the tail heaviness as estimated by fitting the GPD to the degrees for various thresholds.
+
 
 ```{r, echo=FALSE, warning=FALSE, cache=FALSE, out.width="80%"}
 #| fig-width: 9
@@ -454,6 +466,7 @@ plt2 = readRDS('gp_plt.rds')
 plot(plt2)
 
 ```
+
 
 
 
@@ -509,6 +522,7 @@ Taking the form of the GPA degree survival: $$
 \bar F(n) = \prod_{i=0}^n\frac{b(i)}{\lambda+b(i)}
 $$ and substituting into the formula for $\Omega(F,n)$:
 
+
 ```{=tex}
 \begin{align*}
 \Omega(F,n)&=\left(\log\frac{\prod_{i=0}^{n+1}\frac{b(i)}{\lambda+b(i)}}{\prod_{i=0}^{n+2}\frac{b(i)}{\lambda+b(i)}}\right)^{-1}-\left(\log\frac{\prod_{i=0}^{n}\frac{b(i)}{\lambda+b(i)}}{\prod_{i=0}^{n+1}\frac{b(i)}{\lambda+b(i)}}\right)^{-1}\\
@@ -516,7 +530,9 @@ $$ and substituting into the formula for $\Omega(F,n)$:
 &=\left(\log\left[1+\frac{\lambda}{b(n+2)}\right]\right)^{-1}-\left(\log\left[1+\frac{\lambda}{b(n+1)}\right]\right)^{-1}
 \end{align*}
 ```
+
 Clearly if $b(n)=c$ or $\lim_{n\rightarrow\infty}b(n)=c$ for some $c>0$ then $\Omega(F,n)=0$. Now consider a non-constant $b(n)$ and re-write $\Omega(F,n)$ as:
+
 
 ```{=tex}
 \begin{align*}
@@ -524,7 +540,9 @@ Clearly if $b(n)=c$ or $\lim_{n\rightarrow\infty}b(n)=c$ for some $c>0$ then $\O
 &=\left\{ \left(\log\left[1+\frac{\lambda}{b(n+2)}\right]\right)^{-1}-\frac{b(n+2)}{\lambda}\right\} - \left\{ \left(\log\left[1+\frac{\lambda}{b(n+1)}\right]\right)^{-1}-\frac{b(n+1)}{\lambda}\right\}+\frac{b(n+2)}{\lambda}-\frac{b(n+1)}{\lambda}
 \end{align*}
 ```
+
 Then if $\lim_{n\rightarrow\infty}b(n)=\infty$ it follows that:
+
 
 ```{=tex}
 \begin{align*}
@@ -534,6 +552,7 @@ Then if $\lim_{n\rightarrow\infty}b(n)=\infty$ it follows that:
 &=\frac{1}{\lambda}\lim_{n\rightarrow\infty}\left[b(n+2)-b(n+1)\right]\qquad \square
 \end{align*}
 ```
+
 \newpage
 
 ## Removing the infinite sum
@@ -547,17 +566,20 @@ g(k_0) + \beta(k-k_0), &k\ge k_0
 \end{cases}
 $$ for $\beta>0, k_0\in\mathbb N$ we have that
 
+
 ```{=tex}
 \begin{align*}
 \hat\rho(\lambda) = \sum_{n=0}^\infty\prod_{i=0}^{n-1}\frac{b(i)}{\lambda+b(i)} &= \sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{g(i)}{\lambda+g(i)} + \sum_{n=k_0+1}^\infty\left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\prod_{i=k_0}^{n-1}\frac{g(k_0) + \beta(i-k_0)}{\lambda +g(k_0) + \beta(i-k_0)}\right)\\
 &=\sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{g(i)}{\lambda+g(i)} + \left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\right)\sum_{n=k_0+1}^\infty\prod_{i=k_0}^{n-1}\frac{g(k_0) + \beta(i-k_0)}{\lambda +g(k_0) + \beta(i-k_0)}
 \end{align*}
 ```
+
 Now using the fact that:
 
 $$
 \prod_{i=0}^n(x+yi) = x^{n+1}\frac{\Gamma(\frac{x}{y}+n+1)}{\Gamma(\frac{x}{y})}
 $$ and reindexing the product in the second sum
+
 
 ```{=tex}
 \begin{align*}
@@ -566,7 +588,9 @@ $$ and reindexing the product in the second sum
 &=\sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{g(i)}{\lambda+g(i)} + \frac{\Gamma\left(\frac{\lambda+g(k_0)}{\beta}\right)}{\Gamma\left(\frac{g(k_0)}{\beta}\right)}\left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\right)\sum_{n=1}^\infty\frac{\Gamma\left(\frac{g(k_0)}{\beta}+n\right)}{\Gamma\left(\frac{\lambda+g(k_0)}{\beta}+n\right)}
 \end{align*}
 ```
+
 In order to simplify the infinite sum, consider:
+
 
 ```{=tex}
 \begin{align*}
@@ -579,7 +603,9 @@ In order to simplify the infinite sum, consider:
 &= \frac{\Gamma(x)}{(y-1)\Gamma(x+y-1)}
 \end{align*}
 ```
+
 this infinite sum does not converge when $x\le1$ as each term is $O(n^{-x})$. We can now use this in $\hat\rho(\lambda)$:
+
 
 ```{=tex}
 \begin{align*}
@@ -592,7 +618,9 @@ this infinite sum does not converge when $x\le1$ as each term is $O(n^{-x})$. We
 
 
 
+
 # References
 <!-- the pattern below controls the placement of the references -->
 :::{#refs}
 :::
+

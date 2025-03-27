@@ -3,7 +3,6 @@ library(ggplot2)
 data_raw = read.csv('degs.csv')
 nms = unique(data_raw$name)
 selected = c(2,3,5,6,7,8,9,11,12,13,17,22)
-selected=11
 fits = list()
 plots = list()
 for(i in 1:length(selected)){
@@ -77,7 +76,6 @@ fit = fit.gpd(degs, threshold=15)
 fits = readRDS('real_mcmc.rds')
 
 
-plot(coda::as.mcmc(fits[[7]]$smps))
 
 
 
@@ -95,53 +93,34 @@ for(j in 1:length(fits)){
   shapes<- numeric()
   xs <- numeric()
   for(i in 1:(nrow(fit$dat)-3)){
-    if(fit$dat[i,1]>max(fit$mcmc$pars$k0[-(1:2e4)])){
+    if(fit$dat[i,1]>max(fit$mcmc$pars$k0[seq(2e4, 5e4,by=10)])){
       break;
     }
-    igp = fit.igp(fit$dat,threshold=fit$dat[i,1])
-    shapes = c(shapes,igp$par[1])
+    igp = mev::fit.gpd(counts_to_degs(fit$dat),threshold=fit$dat[i,1])
+    shapes = c(shapes,igp$estimate[2])
     xs = c(xs,fit$dat[i,1])
   }
   plts[[j]] = ggplot() +
-    geom_point(aes(x=!!fit$mcmc$pars$k0[-(1:2e4)],y=!!(fit$mcmc$pars$b[-(1:2e4)]/fit$mcmc$lambdas[-(1:2e4)])),colour='blue', alpha=0.0025) + 
-    geom_point(aes(x=!!xs[xs<=max(fit$mcmc$pars$k0[-(1:2e4)])],y=!!shapes[xs<=max(fit$mcmc$pars$k0[-(1:2e4)])]), colour='red') +
+    geom_point(aes(x=!!fit$mcmc$pars$k0[seq(2e4, 5e4,by=10)],y=!!(fit$mcmc$pars$b[seq(2e4, 5e4,by=10)]/fit$mcmc$lambdas[seq(2e4, 5e4,by=10)])),colour='blue', alpha=0.0025) + 
+    geom_point(aes(x=!!xs[xs<=max(fit$mcmc$pars$k0[seq(2e4, 5e4,by=10)])],y=!!shapes[xs<=max(fit$mcmc$pars$k0[seq(2e4, 5e4,by=10)])]), colour='red') +
     ylab('Shape') + xlab('k0') + ggtitle(ggtitle(nms[selected[j]]))
 }
 
 
-plts[[2]]
-
-
 igp_plt = ggpubr::ggarrange(plotlist = plts,nrow=3,ncol=4)
 
+
+saveRDS(igp_plt, 'gp_plt.rds')
+
+
 plot(igp_plt)
-
-
-
-
-
-
-
 
 df = data.frame(k0 = fit$mcmc$pars$k0,shape = fit$mcmc$pars$b/fit$mcmc$lambdas)
 
 df$real = shapes[match(df$k0,xs)]
 
 
-
-
-
 plt = readRDS('real_survs.rds')
-
-
-
-
-
-
-plt
-
-
-
 
 
 
