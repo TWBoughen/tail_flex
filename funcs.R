@@ -1,3 +1,8 @@
+require(Rcpp)
+require(RcppArmadillo)
+
+sourceCpp('cpp_funcs.cpp')
+
 f = Vectorize(function(x, g, lambda, k0, b){
   if(x>=k0){
     k0s = 0:(k0-1)
@@ -23,7 +28,7 @@ S = Vectorize(function(x, g, lambda, k0, b){
     phi_g = lgamma((lambda+g(k0))/b)  + sum(log(g(k0s)/(lambda+g(k0s))))-
       (lgamma(lambda/b)+lgamma(g(k0)/b))
     
-    return(exp(phi_g)*beta(g(k0)/b + x-k0+1, lambda/b))
+    return(exp(phi_g+lbeta(g(k0)/b + x-k0+1, lambda/b)))
   }
   if(x>0){
     ks = 0:(x)
@@ -34,19 +39,47 @@ S = Vectorize(function(x, g, lambda, k0, b){
   }
   
 },vectorize.args = 'x')
-sample_gpa_tree = function(n, g,b,k0,m=1){
-  degs = c(0)
-  prefs = c(g(0))
+# sample_gpa_tree = function(n, g,b,k0,m=1){
+#   degs = c(0)
+#   prefs = c(g(0))
+#   for(i in 1:n){
+#     # message(i)
+#     selected = sample(1:length(degs), min(m, length(degs)), prob=prefs)
+#     degs = c(degs, 0)
+#     prefs = c(prefs, g(0))
+#     degs[selected] = degs[selected]+1
+#     prefs[selected] = ifelse(degs[selected]<k0, g(degs[selected]), g(k0) + b*(degs[selected]-k0))
+#   }
+#   return(degs)
+# }
+sample_gpa_tree = function(n, g, b, k0, m=1,quiet=T){
+  df = data.frame(deg = c(0),
+                  count = c(1),
+                  pref = c(g(0)))
   for(i in 1:n){
-    # message(i)
-    selected = sample(1:length(degs), min(m, length(degs)), prob=prefs)
-    degs = c(degs, 0)
-    prefs = c(prefs, g(0))
-    degs[selected] = degs[selected]+1
-    prefs[selected] = ifelse(degs[selected]<k0, g(degs[selected]), g(k0) + b*(degs[selected]-k0))
+    if(!quiet){
+      message(i)
+    }
+    selected = sample(1:nrow(df), min(m, sum(df$count)),prob = df$pref*df$count,replace=T)
+    for(j in 1:length(selected)){
+      df$count[selected] = df$count[selected]-1
+      if((df$deg[selected]+1) %in% df$deg){
+        df$count[df$deg==df$deg[selected]+1] = df$count[df$deg==df$deg[selected]+1]+1
+      }else{
+        df = rbind(df, c(df$deg[selected]+1, 1,
+                         ifelse((df$deg[selected]+1)<k0,
+                                g(df$deg[selected]+1),
+                                g(k0) + b*(df$deg[selected]+1-k0))))
+      }
+      df$count[1] = df$count[1] + 1
+      df = df[df$count!=0,]
+    }
   }
-  return(degs)
+  return(df)
 }
+
+
+
 rho = Vectorize(function(lambda, g, b, k0){
   n1 = 1:k0
   n2 = 0:(k0-1)
@@ -64,11 +97,11 @@ find_lambda2 = function(g, b, k0){
   }
   return(out)
 }
-samplepolylin = function(n,a,eps,b,k0,m=1){
+samplepolylin = function(n,a,eps,b,k0,m=1,quiet=T){
   g01 = function(x){
     return((x)^a+eps)
   }
-  degs = sample_gpa_tree(n,g01,b,k0,m)
+  degs = sample_gpa_tree(n,g01,b,k0,m,quiet=quiet)
   return(degs)
 }
 polylin = function(a,eps){
@@ -117,98 +150,23 @@ posterior_k0 = Vectorize(function(dat, k0, pars, lambda,minx=min(dat[,1])){
   }
   return(posterior(dat, c(pars[1],pars[2],k0,pars[4]), lambda,minx))
 },vectorize.args = 'k0')
-polylin_mcmc = function(N, dat,init =c(a = 1,eps=1,k0=dat[min(10,nrow(dat)-2),1],b=1),sig = matrix(c(5e-4, 5e-5, 3e-5, 5e-5, 2.5e-5, 4e-5, 3e-5, 4e-5, 1.5e-3),ncol=3,nrow=3),k0_jump = 2,stop_at = 1e4,  update_period = 2e2,quiet=T,burn.in=5e3,cov_scale = 0.1){
-  par_mat = matrix(as.matrix(init),nrow=1)
-  lambda_vec = c(2)
-  post_vec = c(posterior(dat, par_mat[1,],lambda_vec[1]))
-  lock = FALSE
-  old_pars = par_mat[1,]
-  accepted=numeric(N)
-  st = 1
-  for(i in 1:N){
-    if(length(post_vec)%%update_period == 0 & !quiet){
-      message(i,': ',sum(accepted[1:update_period + (i - update_period)])/update_period,'A ',' | ', paste0(signif(old_pars,2),sep='||'))
-      lock=TRUE
-    }
-    #update covariance matrix
-    if(length(post_vec)>update_period  & length(post_vec)>=burn.in){
-      acc_rate  = sum(accepted[1:update_period + (i - update_period)])/update_period
-      st = st*exp(cov_scale*(acc_rate-0.234))
-      sig = st*(cov(par_mat[,c(1,2,4)]))
-      # sig = (cov(par_mat[,c(1,2,4)]))*(2.38^2)/4
-    }
-    #propose new values
-    cur_k0 = tail(par_mat[,3],1)
-    # possk0  = max((cur_k0-k0_jump),2):(cur_k0+k0_jump)
-    possk0 = dat[,1][max(1,(which(dat[,1]==cur_k0) - k0_jump)):min(nrow(dat),(which(dat[,1]==cur_k0) + k0_jump))]
-    y = posterior_k0(dat, possk0, old_pars,tail(lambda_vec,1))
-    # print(exp(y - max(y)))
-    
-    
-    possk0_probs = exp(y - max(y))
-    if(any(is.na(possk0_probs))){
-      new_k0 = -1
-    }else{
-      new_k0 = sample(possk0,1,prob = possk0_probs)
-    }
-    new_pars0 = mvtnorm::rmvnorm(1, c(old_pars[-3]), sig)
-    new_pars = c(new_pars0[1],new_pars0[2],new_k0,new_pars0[3])
-    if(!any(new_pars<0)){
-      #obtain lambda
-      new_lambda = find_lambda2(polylin(new_pars[1], new_pars[2]), new_pars[4], new_pars[3])
-      if(is.null(new_lambda)){
-        par_mat = rbind(par_mat, old_pars)
-        lambda_vec = c(lambda_vec, tail(lambda_vec,1))
-        post_vec = c(post_vec, tail(post_vec, 1))
-      }else{
-        #obtain new_posterior
-        new_post = posterior(dat,new_pars,new_lambda)
-        logA = min(0,new_post - tail(post_vec,1))
-        #accept/reject
-        if(log(runif(1))<logA | runif(1)<0.05){
-          old_pars=new_pars
-          par_mat = rbind(par_mat, new_pars)
-          lambda_vec = c(lambda_vec, new_lambda)
-          post_vec = c(post_vec, new_post)
-          accepted[i] = 1
-          lock=FALSE
-        }
-        else{
-          par_mat = rbind(par_mat, old_pars)
-          lambda_vec = c(lambda_vec, tail(lambda_vec,1))
-          post_vec = c(post_vec, tail(post_vec, 1))
-        }
-      }
-      
-    }
-    else{
-      par_mat = rbind(par_mat, old_pars)
-      lambda_vec = c(lambda_vec, tail(lambda_vec,1))
-      post_vec = c(post_vec, tail(post_vec, 1))
-    }
-  }
-  par_mat = as.data.frame(par_mat)
-  names(par_mat) = c('a','eps','k0','b')
-  return(list(pars = par_mat, lambdas = lambda_vec, post = post_vec, sig=sig))
-}
-recover_params = function(a,eps,k0,b,stop_at=1e4,quiet=T,network.size=1e4,N=1e5,m=1){
-  message('Simulating ... ')
-  degs = samplepolylin(network.size, a, eps, b, k0,m=m)
-  dat = twbfn::deg_count(degs)
-  message('Fitting ...')
-  out = polylin_mcmc(N, dat,init = c(a=1, eps=1,k0=10,b=1),
-                     stop_at = stop_at,sig = diag(c(0.0001,0.0001,0.0001)),k0_jump = 1,
-                     update_period = 1e2,quiet=quiet)
-  return(list(output = out,degs  = degs))
-}
+
+
+
 
 counts_to_degs = function(dat){
   return(rep(dat[,1],dat[,2]))
 }
-fit_model = function(dat,N,burn.in=5e3,thin.by=5,trunc.at = min(dat[,1]),interval.size = 0.95,k0_jump=2,quiet=T){
-  dat = dat[dat[,1]>=trunc.at,]
-  out = polylin_mcmc(N, dat,quiet=quiet,burn.in = burn.in,k0_jump = k0_jump)
-  smps = out$pars[seq(burn.in*1.2, nrow(out$pars),by=thin.by),]
+fit_model = function(dat,N,burn_in=5e3L,thin.by=5,trunc.at = min(dat[,1]),interval.size = 0.95,k0_jump=3.0,cov_scale=0.25,
+                     lookback=200L,quiet=T,init =c(1,0.1,trunc.at+3,0.5) ){
+  dat = as.matrix(dat[dat[,1]>trunc.at,])
+  init_k0 = dat[which(dat[,1]>=20)[1],1]
+  out = polylin_mcmc(N,dat,init,burn_in = burn_in,k0_jump = k0_jump,sig=diag(c(1e-4,1e-4,0.1,1e-4)),
+                     minx = trunc.at,cov_scale=cov_scale,lookback = lookback)
+  
+  smps = as.data.frame(out$pars[seq(burn_in*1.2, nrow(out$pars),by=thin.by),])
+  names(smps) = c('a', 'eps','k0','b')
+  dat = as.data.frame(dat)
   names(dat) = c('x','count')
   x = dat$x
   y_mat = numeric(length(x))
@@ -240,15 +198,14 @@ fit_model = function(dat,N,burn.in=5e3,thin.by=5,trunc.at = min(dat[,1]),interva
 }
 
 
-recover_params = function(a, eps, b, k0,network.size=1e4,n.iter=3e4,quiet=T){
-  degs = samplepolylin(network.size, a, eps, b, k0)
-  dat = twbfn::deg_count(degs)
-  out = fit_model(dat, n.iter, burn.in=n.iter/4, thin.by=5,quiet=quiet)
+recover_params = function(a, eps, b, k0,network.size=1e4L,n.iter=3e4L,quiet=T){
+  dat = as.matrix(samplepolylin(network.size, a, eps, b, k0,quiet=T)[,1:2])
+  out = fit_model(dat, n.iter, burn_in=n.iter/4, thin.by=5,quiet=quiet)
   out$smps$true_a = a
   out$smps$true_eps = eps
   out$smps$true_b = b
   out$smps$true_k0 = k0
-  return(list(mcmc = out, degs = degs))
+  return(list(mcmc = out, degs = counts_to_degs(dat)))
 }
 
 

@@ -3,6 +3,7 @@ title: Tail Flexibility in the Degrees of Preferential
  Attachment Networks
 format:
   nature-pdf:
+    fig-pos: 'H'
     # journal.cite-style is included in the tex file but ignored by pandoc if 
     # cite-method is not `natbib`.
     journal:
@@ -36,6 +37,8 @@ library(paletteer)
 library(gridExtra)
 library(latex2exp)
 library(ggpubr)
+library(Rcpp)
+library(RcppArmadillo)
 ```
 
 
@@ -344,9 +347,7 @@ Some examples of the possible degree distributions are shown in the central row 
 
 The goal of was to provide a possible preference function that is able to explain the growth of real networks with varied tail behaviour in their degree distributions. This section aims to show that the parameters of the model in @sec-model can be recovered from the degree distribution of a network simulated from it.
 
-The procedure for recovering the parameters begins with simulating a network from the model with $N=100,000$ vertices and $m=1$ given some set of parameters $\pmb\theta = (\alpha, \beta, \varepsilon, k_0)$, obtaining the degree counts in the form of a vector of degrees $\pmb x = (1,2,\ldots,M)$ and the number of vertices with those degrees $\pmb n$ where $M$ is the maximum degree.
-
-Using these and the p.m.f derived in [@rudas07], the likelihood given that $x_i \ge l$ for all $i =1,2,\ldots,M$ is:
+The procedure for recovering the parameters begins with simulating a network from the model with $N=100,000$ vertices and $m=1$ given some set of parameters $\pmb\theta = (\alpha, \beta, \varepsilon, k_0)$, obtaining the degree counts in the form of a vector of degrees $\pmb x = (1,2,\ldots,M)$ and the number of vertices with those degrees $\pmb n$ where $M$ is the maximum degree. However, when it comes to fitting this model to real data in the next section, small degrees are extremely influential and will often cause the model to have a bad fit even though the rest of the data looks similar to that of the simulations; truncating the data above some value, say $l<k_0$, should allow the model to be more effectively fitted. This accounts in some way for the fact that this model only applies to trees, and could not possibly capture the behaviour for nodes with small degrees. Using the p.m.f derived in [@rudas07], the likelihood given that $x_i \ge l$ for all $i =1,2,\ldots,M$ is:
 
 
 \begin{align*}
@@ -365,44 +366,43 @@ k_0 &\sim \text{U}(1,10,000),\\
 \varepsilon &\sim \text{Ga(1,0.01)},
 \end{align*}
 
-to obtain a posterior distribution that can then be used in an adaptive Metropolis-Hastings Markov chain Monte Carlo (MCMC) algorithm  to obtain posterior samples. The results of this inference are shown in @fig-rec1 and @fig-rec2. For these simulated networks $l=2$.
+to obtain a posterior distribution that can then be used in an adaptive Metropolis-Hastings Markov chain Monte Carlo (MCMC) algorithm  to obtain posterior samples. The results of this inference are shown in @fig-rec1 and @fig-rec2. For these simulated networks $l=0$.
 
-
-```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="80%"}
+```{r, echo=FALSE, warning=FALSE, cache=FALSE, out.width="80%"}
 #| fig-width: 8
 #| fig-height: 8
 #| fig-cap: Posterior estimates of survival function for data simulated from the proposed model with various combinations of ($\alpha$,$\beta$,$\varepsilon$) and $k_0=20$.
 #| label: fig-rec1
-surfit_list = list()
-pars = readRDS('recovery_pars.rds')
-recovery_list = readRDS('recovery_dat.rds')
-selected = c(1,27,14,35)
-# selected = 1:36
-for(k in 1:length(selected)){
-  j=selected[k]
-  x = sort(unique(recovery_list[[j]]$degs))
-  ls = c()
-  
-  y_975 = recovery_list[[j]]$mcmc$surv$CI[2,]
-  y_025 = recovery_list[[j]]$mcmc$surv$CI[1,]
-  y_50 = recovery_list[[j]]$mcmc$surv$est
-  
-  surfit_list[[k]] = ggplot() + geom_point(data=twbfn::deg_surv(recovery_list[[j]]$degs), aes(x=degree, y=surv)) +
-    geom_line(data=NULL, aes(x=!!x, y=!!y_975), colour = 'red', linetype='dashed')+
-    geom_line(data=NULL, aes(x=!!x, y=!!y_50),colour='red')+
-    geom_line(data=NULL, aes(x=!!x, y=!!y_025), colour = 'red', linetype='dashed')+
-    scale_x_log10(limits=c(1,1e5))  +scale_y_log10(limits = c(1/length(recovery_list[[j]]$degs),1))+theme_bw() + theme(aspect.ratio = 0.66,axis.title.y=element_blank(),                                                                   axis.text.y=element_blank(),                                                                     axis.ticks.y=element_blank()) + xlab('')+ylab('') +
-    ggtitle(TeX(paste0('$\\alpha = $',pars$a[j],
-                       ', $\\epsilon = $',pars$eps[j],
-                       ', $\\beta = $',pars$b[j])))
-}
-
-fig = ggpubr::ggarrange(plotlist = surfit_list,
-          nrow=round(sqrt(length(surfit_list)),0),ncol=round(sqrt(length(surfit_list)),0),
-          label.x='Degree', label.y = 'Survival')
-
-
-ggpubr::annotate_figure(fig, bottom='Degree', left='Survival')
+# surfit_list = list()
+# pars = readRDS('recovery_pars.rds')
+# recovery_list = readRDS('recovery_dat.rds')
+# selected = c(1,27,14,35)
+# # selected = 1:36
+# for(k in 1:length(selected)){
+#   j=selected[k]
+#   x = sort(unique(recovery_list[[j]]$degs))
+#   ls = c()
+#   
+#   y_975 = recovery_list[[j]]$mcmc$surv$CI[2,]
+#   y_025 = recovery_list[[j]]$mcmc$surv$CI[1,]
+#   y_50 = recovery_list[[j]]$mcmc$surv$est
+#   
+#   surfit_list[[k]] = ggplot() + geom_point(data=twbfn::deg_surv(recovery_list[[j]]$degs), aes(x=degree, y=surv)) +
+#     geom_line(data=NULL, aes(x=!!x, y=!!y_975), colour = 'red', linetype='dashed')+
+#     geom_line(data=NULL, aes(x=!!x, y=!!y_50),colour='red')+
+#     geom_line(data=NULL, aes(x=!!x, y=!!y_025), colour = 'red', linetype='dashed')+
+#     scale_x_log10(limits=c(1,1e5))  +scale_y_log10(limits = c(1/length(recovery_list[[j]]$degs),1))+theme_bw() + theme(aspect.ratio = 0.66,axis.title.y=element_blank(),                                                                   axis.text.y=element_blank(),                                                                     axis.ticks.y=element_blank()) + xlab('')+ylab('') +
+#     ggtitle(TeX(paste0('$\\alpha = $',pars$a[j],
+#                        ', $\\epsilon = $',pars$eps[j],
+#                        ', $\\beta = $',pars$b[j])))
+# }
+# 
+# fig = ggpubr::ggarrange(plotlist = surfit_list,
+#           nrow=round(sqrt(length(surfit_list)),0),ncol=round(sqrt(length(surfit_list)),0),
+#           label.x='Degree', label.y = 'Survival')
+# 
+# 
+# ggpubr::annotate_figure(fig, bottom='Degree', left='Survival')
 
 ```
 
@@ -413,42 +413,37 @@ ggpubr::annotate_figure(fig, bottom='Degree', left='Survival')
 :::
 
 
-
 # Application to Real Data 
 
-Turning now to real data, the goal is to fit the model to the degree distributions of real networks from various sources. [describe networks being used].
+Turning now to real data, the goal is to fit the model to the degree distributions of real networks from various sources. [describe networks being used]. Alongside fitting this model to the degree distributions, we then compare the fit to that of an mixture distribution that was used in [clement] and is similar to others that have been used to model degree distributions [others]. 
 
 
 
-```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="80%"}
+```{r, echo=FALSE, warning=FALSE, cache=FALSE, out.width="80%"}
 #| fig-width: 9
-#| fig-height: 6
+#| fig-height: 9
 #| fig-cap: Posterior estimates (solid red) of survival for several real data sets and their 95% credible intervals (dotted red)
 #| label: fig-real1
 
-plt1 = readRDS('real_survs.rds')
+plt1 = readRDS('comp_plot.rds')
 
 plot(plt1)
 
 ```
 
+@fig-real1 displays the posterior estimates of the survival function for various data sets, obtained from fitting the GPA model and the Zipf-IGP mixture model. In most cases, the GPA model does not necessarily provide an improvement in fit when compared to the Zipf-IGP model but where the GPA model fits well we gain additional information about the preference function assuming that the network evolved according the the GPA scheme. @fig-shapes shows the posterior of the shape parameter $\xi$ obtained from the Zipf-IGP model alongside the posterior of the equivalent shape parameter $\beta/\lambda^*$ obtained from fitting the GPA model. 
 
-@fig-real1 displays the posterior estimates of the conditional survival $F(k|k\ge2)$ for several data sets, for many of the data sets the fit is quite good  whilst for other the fit is very bad. This may indicate that the data sets without a good fit are unlikely to have come from a preferential attachment model. However for those with a good fit, it is possible to obtain information about the underlying PA mechanism assuming that the corresponding networks did indeed grow in that fashion.
-
-To demonstrate that the model is capturing the tail behaviour of the degree distributions @fig-gp_comp shows the tail heaviness based on samples from the MCMC for each network as well as the tail heaviness as estimated by fitting the GPD to the degrees for various thresholds.
-
-```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="80%"}
+```{r, echo=FALSE, warning=FALSE, cache=FALSE, out.width="80%"}
 #| fig-width: 9
-#| fig-height: 6
-#| fig-cap: Posterior samples of shape parameter from model (blue) and GPD shape parameter (red) at various thresholds
-#| label: fig-gp_comp
+#| fig-height: 9
+#| fig-cap: Posterior estimates (solid red) of survival for several real data sets and their 95% credible intervals (dotted red)
+#| label: fig-shapes
 
-plt2 = readRDS('gp_plt.rds')
+plt2 = readRDS('shape_plt.rds')
 
 plot(plt2)
 
 ```
-
 
 
 

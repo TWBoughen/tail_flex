@@ -383,7 +383,7 @@ no longer converges and instead goes to infinity.
 Some examples of what the degree distribution looks like are shown below
 in Figure~\ref{fig-polylinsurv}:
 
-\begin{figure}
+\begin{figure}[H]
 
 \centering{
 
@@ -417,7 +417,7 @@ conditional survivals are shown in Figure~\ref{fig-approx_surv} in
 colour and their IGPD approximations are shown in grey. The
 approximation seems to hold up fairly well even for large degrees.
 
-\begin{figure}
+\begin{figure}[H]
 
 \centering{
 
@@ -435,7 +435,7 @@ the distribution is heavy tailed. Additionally the value of the shape
 parameter \(\xi\) is shown in Figure~\ref{fig-polyheat} for various
 parameter choices:
 
-\begin{figure}
+\begin{figure}[H]
 
 \centering{
 
@@ -499,10 +499,15 @@ some set of parameters
 \(\pmb\theta = (\alpha, \beta, \varepsilon, k_0)\), obtaining the degree
 counts in the form of a vector of degrees \(\pmb x = (1,2,\ldots,M)\)
 and the number of vertices with those degrees \(\pmb n\) where \(M\) is
-the maximum degree.
-
-Using these and the p.m.f derived in \citep{rudas07}, the likelihood
-given that \(x_i \ge l\) for all \(i =1,2,\ldots,M\) is:
+the maximum degree. However, when it comes to fitting this model to real
+data in the next section, small degrees are extremely influential and
+will often cause the model to have a bad fit even though the rest of the
+data looks similar to that of the simulations; truncating the data above
+some value, say \(l<k_0\), should allow the model to be more effectively
+fitted. This accounts in some way for the fact that this model only
+applies to trees, and could not possibly capture the behaviour for nodes
+with small degrees. Using the p.m.f derived in \citep{rudas07}, the
+likelihood given that \(x_i \ge l\) for all \(i =1,2,\ldots,M\) is:
 
 \begin{align*}
 L(\pmb x,\pmb n | \pmb \theta) = \left(\frac{\lambda^*}{\lambda^*+\varepsilon}\right)^{n_0}\left(\prod_{j=l}^{k_0-1}\frac{j^\alpha +\varepsilon}{\lambda^* + j^\alpha +\varepsilon}\right)^{\left(\sum_{x_i\ge k_0}n_{x_i}\right)} \prod_{l \le x_i<k_0}\left(\frac{\lambda^*}{\lambda^* +x_i^\alpha + \varepsilon } \prod_{j=l}^{k_0-1}\frac{j^\alpha + \varepsilon}{\lambda^* + j^\alpha + \varepsilon}\right)^{n_i}\\ \times \prod_{x_i\ge k_0}\left(\frac{\text{B}(x_i-k_0 + (k_0^\alpha + \varepsilon)/\beta,1+\lambda^*/\beta)}{\text{B}((k_0^\alpha + \varepsilon)/\beta,\lambda^*/\beta)}\right)^{n_i}
@@ -523,24 +528,10 @@ k_0 &\sim \text{U}(1,10,000),\\
 to obtain a posterior distribution that can then be used in an adaptive
 Metropolis-Hastings Markov chain Monte Carlo (MCMC) algorithm to obtain
 posterior samples. The results of this inference are shown in
-Figure~\ref{fig-rec1} and Figure~\ref{fig-rec2}. For these simulated
-networks \(l=2\).
+\textbf{?@fig-rec1} and Figure~\ref{fig-rec2}. For these simulated
+networks \(l=0\).
 
-\begin{figure}
-
-\centering{
-
-\includegraphics[width=0.8\textwidth,height=\textheight]{paper_files/figure-pdf/fig-rec1-1.pdf}
-
-}
-
-\caption{\label{fig-rec1}Posterior estimates of survival function for
-data simulated from the proposed model with various combinations of
-(\(\alpha\),\(\beta\),\(\varepsilon\)) and \(k_0=20\).}
-
-\end{figure}%
-
-\begin{figure}
+\begin{figure}[H]
 
 \centering{
 
@@ -568,9 +559,12 @@ proposed model with various combinations of
 
 Turning now to real data, the goal is to fit the model to the degree
 distributions of real networks from various sources. {[}describe
-networks being used{]}.
+networks being used{]}. Alongside fitting this model to the degree
+distributions, we then compare the fit to that of an mixture
+distribution that was used in {[}clement{]} and is similar to others
+that have been used to model degree distributions {[}others{]}.
 
-\begin{figure}
+\begin{figure}[H]
 
 \centering{
 
@@ -584,31 +578,28 @@ red)}
 
 \end{figure}%
 
-Figure~\ref{fig-real1} displays the posterior estimates of the
-conditional survival \(F(k|k\ge2)\) for several data sets, for many of
-the data sets the fit is quite good whilst for other the fit is very
-bad. This may indicate that the data sets without a good fit are
-unlikely to have come from a preferential attachment model. However for
-those with a good fit, it is possible to obtain information about the
-underlying PA mechanism assuming that the corresponding networks did
-indeed grow in that fashion.
+Figure~\ref{fig-real1} displays the posterior estimates of the survival
+function for various data sets, obtained from fitting the GPA model and
+the Zipf-IGP mixture model. In most cases, the GPA model does not
+necessarily provide an improvement in fit when compared to the Zipf-IGP
+model but where the GPA model fits well we gain additional information
+about the preference function assuming that the network evolved
+according the the GPA scheme. Figure~\ref{fig-shapes} shows the
+posterior of the shape parameter \(\xi\) obtained from the Zipf-IGP
+model alongside the posterior of the equivalent shape parameter
+\(\beta/\lambda^*\) obtained from fitting the GPA model.
 
-To demonstrate that the model is capturing the tail behaviour of the
-degree distributions Figure~\ref{fig-gp_comp} shows the tail heaviness
-based on samples from the MCMC for each network as well as the tail
-heaviness as estimated by fitting the GPD to the degrees for various
-thresholds.
-
-\begin{figure}
+\begin{figure}[H]
 
 \centering{
 
-\includegraphics[width=0.8\textwidth,height=\textheight]{paper_files/figure-pdf/fig-gp_comp-1.pdf}
+\includegraphics[width=0.8\textwidth,height=\textheight]{paper_files/figure-pdf/fig-shapes-1.pdf}
 
 }
 
-\caption{\label{fig-gp_comp}Posterior samples of shape parameter from
-model (blue) and GPD shape parameter (red) at various thresholds}
+\caption{\label{fig-shapes}Posterior estimates (solid red) of survival
+for several real data sets and their 95\% credible intervals (dotted
+red)}
 
 \end{figure}%
 

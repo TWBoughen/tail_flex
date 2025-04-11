@@ -73,16 +73,20 @@ fit = fit.gpd(degs, threshold=15)
 # -------------------------------------------------------------------------
 
 
-fits = readRDS('real_mcmc.rds')
+fits = readRDS('modelfits.rds')
+
+
+
+plt = readRDS('real_survs.rds')
 
 
 
 
+library(coda)
+plot(as.mcmc(fits[[10]]$smps), type='l')
 
 
-
-# -------------------------------------------------------------------------
-
+# gpd  vs model -----------------------------------------------------------
 
 
 plts = list()
@@ -90,10 +94,17 @@ plts = list()
 for(j in 1:length(fits)){
   print(j)
   fit = fits[[j]]
+  fit$mcmc$pars  = as.data.frame(fit$mcmc$pars)
+  names(fit$mcmc$pars) = c('a','eps','k0','b')
+  N = nrow(fit$mcmc$pars)
   shapes<- numeric()
   xs <- numeric()
+  
   for(i in 1:(nrow(fit$dat)-3)){
-    if(fit$dat[i,1]>max(fit$mcmc$pars$k0[seq(2e4, 5e4,by=10)])){
+    if(fit$dat[i,1]< min(fit$mcmc$pars$k0[seq(5e3, N, by=10)])){
+      next;
+    }
+    if(fit$dat[i,1]>max(fit$mcmc$pars$k0[seq(5e3, N, by=10)] )){
       break;
     }
     igp = mev::fit.gpd(counts_to_degs(fit$dat),threshold=fit$dat[i,1])
@@ -101,19 +112,23 @@ for(j in 1:length(fits)){
     xs = c(xs,fit$dat[i,1])
   }
   plts[[j]] = ggplot() +
-    geom_point(aes(x=!!fit$mcmc$pars$k0[seq(2e4, 5e4,by=10)],y=!!(fit$mcmc$pars$b[seq(2e4, 5e4,by=10)]/fit$mcmc$lambdas[seq(2e4, 5e4,by=10)])),colour='blue', alpha=0.0025) + 
-    geom_point(aes(x=!!xs[xs<=max(fit$mcmc$pars$k0[seq(2e4, 5e4,by=10)])],y=!!shapes[xs<=max(fit$mcmc$pars$k0[seq(2e4, 5e4,by=10)])]), colour='red') +
-    ylab('Shape') + xlab('k0') + ggtitle(ggtitle(nms[selected[j]]))
+    geom_jitter(aes(x=!!fit$mcmc$pars$k0[seq(5e3, N, by=10)] ,y=!!(fit$mcmc$pars$b[seq(5e3, N, by=10)] /fit$mcmc$lambdas[seq(5e3, N, by=10)] )),
+                colour='blue', alpha=0.025) + 
+    geom_point(aes(x=!!xs[xs<=max(fit$mcmc$pars$k0[seq(5e3, N, by=10)] )],y=!!shapes[xs<=max(fit$mcmc$pars$k0[seq(5e3, N, by=10)] )]), colour='red') +
+    ylab('Shape') + xlab('k0') + ggtitle(ggtitle(nms[selected[j]])) + ylim(-0.5,1) + xlim(min(fit$dat$x), max(xs))
 }
 
 
+
+
 igp_plt = ggpubr::ggarrange(plotlist = plts,nrow=3,ncol=4)
+plot(igp_plt)
 
 
 saveRDS(igp_plt, 'gp_plt.rds')
 
 
-plot(igp_plt)
+
 
 df = data.frame(k0 = fit$mcmc$pars$k0,shape = fit$mcmc$pars$b/fit$mcmc$lambdas)
 
@@ -122,24 +137,33 @@ df$real = shapes[match(df$k0,xs)]
 
 plt = readRDS('real_survs.rds')
 
+# -------------------------------------------------------------------------
+
+mixfits = readRDS('mixfits.rds')
+fits = readRDS('fits.rds')
+nms = readRDS('nms.rds')
+plts = list()
+for(j in 1:length(fits)){
+  fit = fits[[j]]
+  fit$mcmc$pars  = as.data.frame(fit$mcmc$pars)
+  names(fit$mcmc$pars) = c('a','eps','k0','b')
+  N = nrow(fit$mcmc$pars)
+  plts[[j]] = ggplot() +
+    geom_boxplot(aes(y=!!mixfits[[j]]$pars$shape,x='Zipf-IGP', fill='Zipf-IGP'))+
+    geom_boxplot(aes(x='GPA',y=!!(fit$mcmc$pars$b[seq(1e4, N, by=10)] /fit$mcmc$lambdas[seq(1e4, N, by=10)]),fill='GPA')) +
+    labs(fill='Model', x='',y='Shape')+ylim(0,1) +ggtitle(nms[j])
+}
 
 
 
 
 
+  
+shape_plt = ggpubr::ggarrange(plotlist = plts, common.legend = T, legend = 'right')
+saveRDS(shape_plt, 'shape_plt.rds')
 
 
-
-
-
-
-
-
-
-
-
-
-
+comp_plot
 
 
 
