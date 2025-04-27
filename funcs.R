@@ -62,14 +62,14 @@ sample_gpa_tree = function(n, g, b, k0, m=1,quiet=T){
     }
     selected = sample(1:nrow(df), min(m, sum(df$count)),prob = df$pref*df$count,replace=T)
     for(j in 1:length(selected)){
-      df$count[selected] = df$count[selected]-1
-      if((df$deg[selected]+1) %in% df$deg){
-        df$count[df$deg==df$deg[selected]+1] = df$count[df$deg==df$deg[selected]+1]+1
+      df$count[selected[j]] = df$count[selected[j]]-1
+      if((df$deg[selected[j]]+1) %in% df$deg){
+        df$count[df$deg==df$deg[selected[j]]+1] = df$count[df$deg==df$deg[selected[j]]+1]+1
       }else{
-        df = rbind(df, c(df$deg[selected]+1, 1,
-                         ifelse((df$deg[selected]+1)<k0,
-                                g(df$deg[selected]+1),
-                                g(k0) + b*(df$deg[selected]+1-k0))))
+        df = rbind(df, c(df$deg[selected[j]]+1, 1,
+                         ifelse((df$deg[selected[j]]+1)<k0,
+                                g(df$deg[selected[j]]+1),
+                                g(k0) + b*(df$deg[selected[j]]+1-k0))))
       }
       df$count[1] = df$count[1] + 1
       df = df[df$count!=0,]

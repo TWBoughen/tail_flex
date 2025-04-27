@@ -419,7 +419,7 @@ Turning now to real data, the goal is to fit the model to the degree distributio
 
 
 
-```{r, echo=FALSE, warning=FALSE, cache=FALSE, out.width="80%"}
+```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="80%"}
 #| fig-width: 9
 #| fig-height: 9
 #| fig-cap: Posterior estimates (solid red) of survival for several real data sets and their 95% credible intervals (dotted red)
@@ -444,6 +444,33 @@ plt2 = readRDS('shape_plt.rds')
 plot(plt2)
 
 ```
+
+
+```{r, echo=FALSE, warning=FALSE, cache=FALSE, out.width="80%"}
+#| fig-width: 9
+#| fig-height: 9
+#| fig-cap: df
+#| label: fig-pa
+
+plt3 = readRDS('PA_plot.rds')
+plot(plt3)
+
+```
+
+
+
+```{r, echo=FALSE, warning=FALSE, cache=FALSE, out.width="80%"}
+#| fig-width: 9
+#| fig-height: 9
+#| fig-cap: df
+#| label: fig-pars
+
+plt5 = readRDS('pars_plot.rds')
+plot(plt5)
+
+```
+
+
 
 
 

@@ -4,3 +4,5 @@ gridExtra
 latex2exp
 ggpubr
 ggh4x
+Rcpp
+RcppArmadillo
