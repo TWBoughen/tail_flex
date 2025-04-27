@@ -459,16 +459,9 @@ plot(plt3)
 
 
 
-```{r, echo=FALSE, warning=FALSE, cache=FALSE, out.width="80%"}
-#| fig-width: 9
-#| fig-height: 9
-#| fig-cap: df
-#| label: fig-pars
-
-plt5 = readRDS('pars_plot.rds')
-plot(plt5)
-
-```
+:::{#fig-rec2 out.width="80%"}
+![: Posterior estimates of paramters for real data.](pars_plot.png)
+:::
 
 
 

@@ -2,4 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
-mcmc_plot.jpg
+mcmc_plot.rds
+pars_plot.rds

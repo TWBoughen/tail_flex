@@ -169,6 +169,7 @@ for(i in 1:length(fits)){
 
 shape_plot = ggpubr::ggarrange(plotlist = plots, common.legend = T,label.x='', label.y='\\xi', legend='right')
 shape_plot
+saveRDS(shape_plot, 'shape_plot.rds')
 
 # PA plot -----------------------------------------------------------------
 
@@ -189,8 +190,8 @@ for(i in 1:length(fits)){
   plots[[i]] = ggplot() + geom_line(aes(x=!!x, y = !!pref_CI[1,]), lty=2)+
     geom_line(aes(x=!!x, y = !!pref_CI[2,]), lty=1)+
     geom_line(aes(x=!!x, y = !!pref_CI[3,]), lty=2) + xlab('Degree') + ylab('Preference')+
-    theme(aspect.ratio = 1, axis.title.x = element_blank(), axis.title.y =element_blank()) + ggtitle(nms[i])
-  PA_overlay = PA_overlay + geom_line(aes(!!x, y =!! pref_CI[2,]/sum(pref_CI[2,]), colour=!!as.character(nms[i])))
+    theme(aspect.ratio = 1, axis.title.x = element_blank(), axis.title.y =element_blank()) + ggtitle(nms[i]) + scale_x_log10() + scale_y_log10()
+  PA_overlay = PA_overlay + geom_line(aes(!!x, y =!! pref_CI[2,]/sum(!!pref_CI[2,]), colour=!!as.character(nms[i])))
 }
 
 PA_plot = ggpubr::ggarrange(plotlist = plots,common.legend = T,label.x = 'Degree', label.y='Preference')
@@ -232,7 +233,7 @@ saveRDS(parsplot, 'pars_plot.rds')
 
 
 
-
+ggsave('pars_plot.png', parsplot)
 
 
 
