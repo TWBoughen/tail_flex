@@ -30,6 +30,7 @@ abstract: |
   Devising the underlying generating mechanism of a real-life network is difficult as, more often than not, only its snapshots are available, but not its full evolution. One candidate for the generating mechanism is preferential attachment which, in its simplest form, results in a degree distribution that follows the power law. Consequently, the growth of real-life networks that roughly display such power-law behaviour is commonly modelled by preferential attachment. However, the validity of the power law has been challenged by the presence of alternatives with comparable performance, as well as the recent findings that the right tail of the degree distribution is often lighter than implied by the body, whilst still being heavy. In this paper, we study a modified version of the model with a flexible preference function that allows super/sub-linear behaviour whilst also guaranteeing that the limiting degree distribution has a heavy tail. We relate the distributions tail heaviness directly to the model parameters, allowing direct inference of the parameters from the degree distribution alone.
 keywords: [networks, extremes]
 bibliography: refs.bib  
+
 ---
 ```{r,echo=FALSE, warning=FALSE, message=FALSE}
 library(ggplot2)
@@ -69,7 +70,22 @@ $$
 
 These models that seem to outperform the power law do not however come with the added benefit of suggesting a generating mechanism for the networks in the same way the power law does. Efforts to make the preferential attachment model more flexible have not yet remedied this issue with [@krapivsky01] finding that using a sub/super-linear preference function yields a Weibull tail and a degenerate network, where one vertex eventually gains all new edges, respectively.
 
-[@rudas07] introduces theoretical results for a PA model with a general preference function in the cases that the network being generated is a tree; presenting an opportunity to design a preference function that will capture the behaviours observed in the degree distributions of real networks. This paper studies a flexible class of preference functions that allow for a power law body and a tail that is heavy and flexible, and proposes a strategy for fitting this model to real data. With good fits, this method does not only allow the tail heaviness to be quantified, but it also allows for some inference on the preference function assuming a general preferential attachment model is the underlying generating mechanism.
+The network generative model that we will be focussing on in this paper is dubbed General Preferential Attachment in [@rudas07] and is defined as follows:
+
+Starting at time $t=0$ with an initial network of $m$ vertices that each have no edges, at times $t=1,2,\ldots$ a new vertex is added to the network bringing with it $m$ directed edges (with the new vertex as the source); the target for each of these edges are selected from the vertices already in the network with weights proportional to some function $b$ of their degree.
+
+Special cases of this model include the Barabási-Albert (BA) model when $b(k) = k+\varepsilon$, which leads to a power-law degree distribution with index 2 and the Uniform Attachment (UA) model where $b(k)=c$ leading to a degree distribution in the Gumbel maximum domain of attraction.
+
+
+Estimating the preference function used by network generative models like this is of great interest, with the potential to provide a deeper understanding of the relationships between the vertices in the network. Several papers and at least one R package (`PAfit`) have been dedicated to estimating the preference function that may have been used when a network was growing; one thing all these have in common is requiring access to a networks evolution data, something that is not always readily available or feasible to access. A method for estimating a preference function without this data available would be extremely useful.
+
+[@rudas07] introduces theoretical results for this model with a general preference function in the cases that the network being generated is a tree ($m=1$); presenting an opportunity to design a preference function that will capture the behaviours observed in the degree distributions of real networks. Since they provide theoretical results for the limiting degree distribution, a model of this form would be able to be fitted to the degree distributions of real networks where the full evolution is not available, only a snapshot.
+
+
+## Structure of this paper
+
+@sec-gpa looks at the theoretical limiting behaviour of a GPA model when $m=1$ according to the results from [@rudas07], going on to introduce a flexible class of preference functions that can guarantee a heavy tailed degree distribution while still being flexible in the body. @sec-rec shows that the preference function parameters can be fairly well recovered from the degree distributions of networks simulated from the GPA model using various functions of the class introduced in @sec-gpa. Having shown that for simulated data the model parameters are recoverable from the degree distribution alone, @sec-real builds upon this and attempts to fit the model to degree distributions of real networks; modelling not only the degree distribution itself but also the estimates for the parameters of the preference function assuming the networks evolved according to the GPA scheme. Ultimately, @sec-conc discusses the main results of the paper, pitfalls of this method and future work.
+
 
 # General Preferential Attachment {#sec-gpa}
 
@@ -343,7 +359,7 @@ $$
 Some examples of the possible degree distributions are shown in the central row of @fig-polylinsurv.
 
 
-# Recovery
+# Recovery {#sec-rec}
 
 The goal of was to provide a possible preference function that is able to explain the growth of real networks with varied tail behaviour in their degree distributions. This section aims to show that the parameters of the model in @sec-model can be recovered from the degree distribution of a network simulated from it.
 
@@ -373,36 +389,38 @@ to obtain a posterior distribution that can then be used in an adaptive Metropol
 #| fig-height: 8
 #| fig-cap: Posterior estimates of survival function for data simulated from the proposed model with various combinations of ($\alpha$,$\beta$,$\varepsilon$) and $k_0=20$.
 #| label: fig-rec1
-# surfit_list = list()
-# pars = readRDS('recovery_pars.rds')
-# recovery_list = readRDS('recovery_dat.rds')
-# selected = c(1,27,14,35)
-# # selected = 1:36
-# for(k in 1:length(selected)){
-#   j=selected[k]
-#   x = sort(unique(recovery_list[[j]]$degs))
-#   ls = c()
-#   
-#   y_975 = recovery_list[[j]]$mcmc$surv$CI[2,]
-#   y_025 = recovery_list[[j]]$mcmc$surv$CI[1,]
-#   y_50 = recovery_list[[j]]$mcmc$surv$est
-#   
-#   surfit_list[[k]] = ggplot() + geom_point(data=twbfn::deg_surv(recovery_list[[j]]$degs), aes(x=degree, y=surv)) +
-#     geom_line(data=NULL, aes(x=!!x, y=!!y_975), colour = 'red', linetype='dashed')+
-#     geom_line(data=NULL, aes(x=!!x, y=!!y_50),colour='red')+
-#     geom_line(data=NULL, aes(x=!!x, y=!!y_025), colour = 'red', linetype='dashed')+
-#     scale_x_log10(limits=c(1,1e5))  +scale_y_log10(limits = c(1/length(recovery_list[[j]]$degs),1))+theme_bw() + theme(aspect.ratio = 0.66,axis.title.y=element_blank(),                                                                   axis.text.y=element_blank(),                                                                     axis.ticks.y=element_blank()) + xlab('')+ylab('') +
-#     ggtitle(TeX(paste0('$\\alpha = $',pars$a[j],
-#                        ', $\\epsilon = $',pars$eps[j],
-#                        ', $\\beta = $',pars$b[j])))
-# }
-# 
-# fig = ggpubr::ggarrange(plotlist = surfit_list,
-#           nrow=round(sqrt(length(surfit_list)),0),ncol=round(sqrt(length(surfit_list)),0),
-#           label.x='Degree', label.y = 'Survival')
-# 
-# 
-# ggpubr::annotate_figure(fig, bottom='Degree', left='Survival')
+
+surfit_list = list()
+pars = readRDS('recovery_pars.rds')
+recovery_list = readRDS('recovery_dat.rds')
+selected = c(1,27,14,35)
+# selected = 1:36
+for(k in 1:length(selected)){
+  j=selected[k]
+  x = recovery_list[[j]]$mcmc$dat[,1]
+  ls = c()
+
+  y_975 = recovery_list[[j]]$mcmc$surv$CI[2,][order(x)]
+  y_025 = recovery_list[[j]]$mcmc$surv$CI[1,][order(x)]
+  y_50 = recovery_list[[j]]$mcmc$surv$est[order(x)]
+  x = sort(x)
+  surfit_list[[k]] = ggplot() + geom_point(data=twbfn::deg_surv(recovery_list[[j]]$degs), aes(x=degree, y=surv)) +
+    geom_line(data=NULL, aes(x=!!x, y=!!y_975), colour = 'red', linetype='dashed')+
+    geom_line(data=NULL, aes(x=!!x, y=!!y_50),colour='red')+
+    geom_line(data=NULL, aes(x=!!x, y=!!y_025), colour = 'red', linetype='dashed')+
+    scale_x_log10(limits=c(1,1e5))  +scale_y_log10(limits = c(1/length(recovery_list[[j]]$degs),1))+theme_bw() + theme(aspect.ratio = 0.66,axis.title.y=element_blank(),                                                                   axis.text.y=element_blank(),                                                                     axis.ticks.y=element_blank()) + xlab('')+ylab('') +
+    ggtitle(TeX(paste0('$\\alpha = $',pars$a[j],
+                       ', $\\epsilon = $',pars$eps[j],
+                       ', $\\beta = $',pars$b[j])))
+}
+
+fig = ggpubr::ggarrange(plotlist = surfit_list,
+          nrow=round(sqrt(length(surfit_list)),0),ncol=round(sqrt(length(surfit_list)),0),
+          label.x='Degree', label.y = 'Survival')
+
+
+ggpubr::annotate_figure(fig, bottom='Degree', left='Survival')
+
 
 ```
 
@@ -413,7 +431,10 @@ to obtain a posterior distribution that can then be used in an adaptive Metropol
 :::
 
 
-# Application to Real Data 
+@fig-rec1 and @fig-rec2 demonstrate that using this methodology it is possible to recover the model parameters fairly well from only the final degree distribution of a simulated network. This indicates that the method may also be able to be applied to the degree distributions of real networks, estimating the model parameters assuming they evolved according to the GPA scheme.
+
+
+# Application to Real Data {#sec-real}
 
 Turning now to real data, the goal is to fit the model to the degree distributions of real networks from various sources. [describe networks being used]. Alongside fitting this model to the degree distributions, we then compare the fit to that of an mixture distribution that was used in [clement] and is similar to others that have been used to model degree distributions [others]. 
 
@@ -431,7 +452,7 @@ plot(plt1)
 
 ```
 
-@fig-real1 displays the posterior estimates of the survival function for various data sets, obtained from fitting the GPA model and the Zipf-IGP mixture model. In most cases, the GPA model does not necessarily provide an improvement in fit when compared to the Zipf-IGP model but where the GPA model fits well we gain additional information about the preference function assuming that the network evolved according the the GPA scheme. @fig-shapes shows the posterior of the shape parameter $\xi$ obtained from the Zipf-IGP model alongside the posterior of the equivalent shape parameter $\beta/\lambda^*$ obtained from fitting the GPA model. 
+@fig-real1 displays the posterior estimates of the survival function for various data sets, obtained from fitting the GPA model and the Zipf-IGP mixture model. In most cases, the GPA model does not necessarily provide an improvement in fit when compared to the Zipf-IGP model but where the GPA model fits well we gain additional information about the preference function assuming that the network evolved according the the GPA scheme. @fig-shapes shows the posterior of the shape parameter $\xi$ obtained from the Zipf-IGP model alongside the posterior of the equivalent shape parameter $\beta/\lambda^*$ obtained from fitting the GPA model. Generally, the GPA model performs similarly to the Zipf-IGP when estimating the tail behaviour of the degree distribution and where it doesn't it appears to either be because it is fitting better at the tail than the Zipf-IGP model or because of the threshold being estimated as too low forcing almost all of the data to be modelled by the linear part of the GPA. This again shows the effects that small degrees have on this model, which is somewhat expected as the theory used for this model is for trees and none of these real networks (nor many real networks) are.  
 
 ```{r, echo=FALSE, warning=FALSE, cache=FALSE, out.width="80%"}
 #| fig-width: 9
@@ -439,17 +460,20 @@ plot(plt1)
 #| fig-cap: Posterior estimates (solid red) of survival for several real data sets and their 95% credible intervals (dotted red)
 #| label: fig-shapes
 
-plt2 = readRDS('shape_plt.rds')
+plt2 = readRDS('shape_plot.rds')
 
 plot(plt2)
 
 ```
 
 
+@fig-pa shows the estimated preference function $b$ alongside the 95% credible interval  on a log-log plot. Although the credible interval becomes very large for the largest degrees, this is expected as not all of these networks had data in that region, for those that do the credible interval is much narrower as is the case for `sx-mathoverflow`. The most insightful conclusion we can draw from these plots come from the shape of the preference function. There appears to be two distinct shapes of preference function. The first appears mostly flat (similar to UA) for the smallest degrees and then after a threshold PA kicks in, some with this shape are `pajek-erdos` and `sx-mathoverflow`. The second distinct shape appears provide some clear PA behaviour that then slows down after a certain point, examples of this are seen in the two infrastructure networks `opsahl-openflights` and `topology`. 
+
+
 ```{r, echo=FALSE, warning=FALSE, cache=FALSE, out.width="80%"}
 #| fig-width: 9
 #| fig-height: 9
-#| fig-cap: df
+#| fig-cap: Posterior estimate for preference function (solid) with 95% credible interval (dashed) on log-log scale.
 #| label: fig-pa
 
 plt3 = readRDS('PA_plot.rds')
@@ -458,21 +482,26 @@ plot(plt3)
 ```
 
 
-
 :::{#fig-rec2 out.width="80%"}
 ![: Posterior estimates of paramters for real data.](pars_plot.png)
 :::
 
+# Conclusion and Discussion {#sec-conc}
 
+In this paper we introduced a flexible class of preference function that when used under the GPA scheme (in the tree setting) is guaranteed to generate a network with a heavy tailed degree distribution whilst remaining flexible in the body. Using simulations from networks using this class of preference function we showed that the model parameters are quite easily estimated from the degrees alone at a snapshot in time. Seeing this we applied this method to the degree distributions of real networks, estimating their model parameters assuming they evolved in the same way. Not only did this yield fairly good fits for the degree distribution, similar to that of the Zipf-IGP, it came with the added benefit of giving a posterior estimate for a preference function. 
 
+Obviously this method had its flaws in that the lowest degrees needed to be truncated as they had a very large effect on the fit of the model as a result of using theory developed for trees and applying it to general networks. Hopefully, as the field progresses we will be able to apply theory developed for general networks using a similar method to this, allowing us to compare the results here something that is more accurate.
 
+GPA is also a fairly simplistic one on its own despite having large flexibility in the preference function allowing for edges to only be added at times when a new node is introduced into the network and not allowing for anything like vertex/edge death, reciprocal edges and rewiring steps. [@deijfen2015] introduces some theory for GPA with vertex death based on the work by [@rudas07], but is unable to come to an expression for the degree distribution. However, adding something like fitness scores into the GPA model seems fairly simple to do even going so far as making each of the parameters used in the class of functions here node-wise instead of universal. For example having the preference weight for a vertex be given by $b(k_i, \underline{\gamma_i})$  where $\underline{\gamma_i}\sim G$ is the vertex's fitness and $k_i$ is the vertex's degree, it is reasonable to expect that the degree distribution for a model like this to be given by:
 
-# Conclusion and Discussion
+$$
+\bar F(k) = \mathbb E_G\left[\prod_{i=0}^k \frac{b(i, \gamma)}{\lambda^* + b(i,\gamma)}\right],\qquad \gamma\sim G,\, k=0,1,2,\ldots
+$$
 
+# Appendix {.appendix}
 
-# Additional Results {.appendix}
-
-## Tail heaviness of general preferential attachment model
+## Additional Results 
+### Tail heaviness of general preferential attachment model
 
 
 Recall the limiting survival function:
@@ -506,13 +535,9 @@ $$ {#eq-omegares} (see appendix for full proof).
 Whilst there are many classes of functions that satisfy @eq-condb1 and @eq-condb2, the vast majority of these result in $\Omega(F,n) \rightarrow 0$, meaning that the limiting degree distribution is light tailed. In fact, in order for the limiting degree distribution to be heavy tailed, $b$ must be asymptotically linear ($b(k)\sim k$).
 
 
+## Proofs  
 
-
-
-
-# Proofs {.appendix}
-
-## Tail heaviness of GPA
+### Tail heaviness of GPA
 
 Taking the form of the GPA degree survival: $$
 \bar F(n) = \prod_{i=0}^n\frac{b(i)}{\lambda+b(i)}
@@ -543,9 +568,9 @@ Then if $\lim_{n\rightarrow\infty}b(n)=\infty$ it follows that:
 &=\frac{1}{\lambda}\lim_{n\rightarrow\infty}\left[b(n+2)-b(n+1)\right]\qquad \square
 \end{align*}
 ```
-\newpage
 
-## Removing the infinite sum
+
+### Removing the infinite sum
 
 For a preference function of the form:
 

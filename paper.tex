@@ -259,17 +259,61 @@ issue with \citep{krapivsky01} finding that using a sub/super-linear
 preference function yields a Weibull tail and a degenerate network,
 where one vertex eventually gains all new edges, respectively.
 
-\citep{rudas07} introduces theoretical results for a PA model with a
+The network generative model that we will be focussing on in this paper
+is dubbed General Preferential Attachment in \citep{rudas07} and is
+defined as follows:
+
+Starting at time \(t=0\) with an initial network of \(m\) vertices that
+each have no edges, at times \(t=1,2,\ldots\) a new vertex is added to
+the network bringing with it \(m\) directed edges (with the new vertex
+as the source); the target for each of these edges are selected from the
+vertices already in the network with weights proportional to some
+function \(b\) of their degree.
+
+Special cases of this model include the Barabási-Albert (BA) model when
+\(b(k) = k+\varepsilon\), which leads to a power-law degree distribution
+with index 2 and the Uniform Attachment (UA) model where \(b(k)=c\)
+leading to a degree distribution in the Gumbel maximum domain of
+attraction.
+
+Estimating the preference function used by network generative models
+like this is of great interest, with the potential to provide a deeper
+understanding of the relationships between the vertices in the network.
+Several papers and at least one R package (\texttt{PAfit}) have been
+dedicated to estimating the preference function that may have been used
+when a network was growing; one thing all these have in common is
+requiring access to a networks evolution data, something that is not
+always readily available or feasible to access. A method for estimating
+a preference function without this data available would be extremely
+useful.
+
+\citep{rudas07} introduces theoretical results for this model with a
 general preference function in the cases that the network being
-generated is a tree; presenting an opportunity to design a preference
-function that will capture the behaviours observed in the degree
-distributions of real networks. This paper studies a flexible class of
-preference functions that allow for a power law body and a tail that is
-heavy and flexible, and proposes a strategy for fitting this model to
-real data. With good fits, this method does not only allow the tail
-heaviness to be quantified, but it also allows for some inference on the
-preference function assuming a general preferential attachment model is
-the underlying generating mechanism.
+generated is a tree (\(m=1\)); presenting an opportunity to design a
+preference function that will capture the behaviours observed in the
+degree distributions of real networks. Since they provide theoretical
+results for the limiting degree distribution, a model of this form would
+be able to be fitted to the degree distributions of real networks where
+the full evolution is not available, only a snapshot.
+
+\subsection{Structure of this paper}\label{structure-of-this-paper}
+
+Section~\ref{sec-gpa} looks at the theoretical limiting behaviour of a
+GPA model when \(m=1\) according to the results from \citep{rudas07},
+going on to introduce a flexible class of preference functions that can
+guarantee a heavy tailed degree distribution while still being flexible
+in the body. Section~\ref{sec-rec} shows that the preference function
+parameters can be fairly well recovered from the degree distributions of
+networks simulated from the GPA model using various functions of the
+class introduced in Section~\ref{sec-gpa}. Having shown that for
+simulated data the model parameters are recoverable from the degree
+distribution alone, Section~\ref{sec-real} builds upon this and attempts
+to fit the model to degree distributions of real networks; modelling not
+only the degree distribution itself but also the estimates for the
+parameters of the preference function assuming the networks evolved
+according to the GPA scheme. Ultimately, Section~\ref{sec-conc}
+discusses the main results of the paper, pitfalls of this method and
+future work.
 
 \section{General Preferential Attachment}\label{sec-gpa}
 
@@ -485,7 +529,7 @@ Just like the previous model, the survival can be approximated by:
 Some examples of the possible degree distributions are shown in the
 central row of Figure~\ref{fig-polylinsurv}.
 
-\section{Recovery}\label{recovery}
+\section{Recovery}\label{sec-rec}
 
 The goal of was to provide a possible preference function that is able
 to explain the growth of real networks with varied tail behaviour in
@@ -528,8 +572,22 @@ k_0 &\sim \text{U}(1,10,000),\\
 to obtain a posterior distribution that can then be used in an adaptive
 Metropolis-Hastings Markov chain Monte Carlo (MCMC) algorithm to obtain
 posterior samples. The results of this inference are shown in
-\textbf{?@fig-rec1} and Figure~\ref{fig-rec2}. For these simulated
+Figure~\ref{fig-rec1} and Figure~\ref{fig-rec2}. For these simulated
 networks \(l=0\).
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.8\textwidth,height=\textheight]{paper_files/figure-pdf/fig-rec1-1.pdf}
+
+}
+
+\caption{\label{fig-rec1}Posterior estimates of survival function for
+data simulated from the proposed model with various combinations of
+(\(\alpha\),\(\beta\),\(\varepsilon\)) and \(k_0=20\).}
+
+\end{figure}%
 
 \begin{figure}[H]
 
@@ -555,7 +613,14 @@ proposed model with various combinations of
 
 \end{figure}%
 
-\section{Application to Real Data}\label{application-to-real-data}
+Figure~\ref{fig-rec1} and Figure~\ref{fig-rec2} demonstrate that using
+this methodology it is possible to recover the model parameters fairly
+well from only the final degree distribution of a simulated network.
+This indicates that the method may also be able to be applied to the
+degree distributions of real networks, estimating the model parameters
+assuming they evolved according to the GPA scheme.
+
+\section{Application to Real Data}\label{sec-real}
 
 Turning now to real data, the goal is to fit the model to the degree
 distributions of real networks from various sources. {[}describe
@@ -587,7 +652,15 @@ about the preference function assuming that the network evolved
 according the the GPA scheme. Figure~\ref{fig-shapes} shows the
 posterior of the shape parameter \(\xi\) obtained from the Zipf-IGP
 model alongside the posterior of the equivalent shape parameter
-\(\beta/\lambda^*\) obtained from fitting the GPA model.
+\(\beta/\lambda^*\) obtained from fitting the GPA model. Generally, the
+GPA model performs similarly to the Zipf-IGP when estimating the tail
+behaviour of the degree distribution and where it doesn't it appears to
+either be because it is fitting better at the tail than the Zipf-IGP
+model or because of the threshold being estimated as too low forcing
+almost all of the data to be modelled by the linear part of the GPA.
+This again shows the effects that small degrees have on this model,
+which is somewhat expected as the theory used for this model is for
+trees and none of these real networks (nor many real networks) are.
 
 \begin{figure}[H]
 
@@ -603,6 +676,21 @@ red)}
 
 \end{figure}%
 
+Figure~\ref{fig-pa} shows the estimated preference function \(b\)
+alongside the 95\% credible interval on a log-log plot. Although the
+credible interval becomes very large for the largest degrees, this is
+expected as not all of these networks had data in that region, for those
+that do the credible interval is much narrower as is the case for
+\texttt{sx-mathoverflow}. The most insightful conclusion we can draw
+from these plots come from the shape of the preference function. There
+appears to be two distinct shapes of preference function. The first
+appears mostly flat (similar to UA) for the smallest degrees and then
+after a threshold PA kicks in, some with this shape are
+\texttt{pajek-erdos} and \texttt{sx-mathoverflow}. The second distinct
+shape appears provide some clear PA behaviour that then slows down after
+a certain point, examples of this are seen in the two infrastructure
+networks \texttt{opsahl-openflights} and \texttt{topology}.
+
 \begin{figure}[H]
 
 \centering{
@@ -611,7 +699,8 @@ red)}
 
 }
 
-\caption{\label{fig-pa}df}
+\caption{\label{fig-pa}Posterior estimate for preference function
+(solid) with 95\% credible interval (dashed) on log-log scale.}
 
 \end{figure}%
 
@@ -637,11 +726,52 @@ red)}
 
 \end{figure}%
 
-\section{Conclusion and Discussion}\label{conclusion-and-discussion}
+\section{Conclusion and Discussion}\label{sec-conc}
 
-\section{Additional Results}\label{additional-results}
+In this paper we introduced a flexible class of preference function that
+when used under the GPA scheme (in the tree setting) is guaranteed to
+generate a network with a heavy tailed degree distribution whilst
+remaining flexible in the body. Using simulations from networks using
+this class of preference function we showed that the model parameters
+are quite easily estimated from the degrees alone at a snapshot in time.
+Seeing this we applied this method to the degree distributions of real
+networks, estimating their model parameters assuming they evolved in the
+same way. Not only did this yield fairly good fits for the degree
+distribution, similar to that of the Zipf-IGP, it came with the added
+benefit of giving a posterior estimate for a preference function.
 
-\subsection{Tail heaviness of general preferential attachment
+Obviously this method had its flaws in that the lowest degrees needed to
+be truncated as they had a very large effect on the fit of the model as
+a result of using theory developed for trees and applying it to general
+networks. Hopefully, as the field progresses we will be able to apply
+theory developed for general networks using a similar method to this,
+allowing us to compare the results here something that is more accurate.
+
+GPA is also a fairly simplistic one on its own despite having large
+flexibility in the preference function allowing for edges to only be
+added at times when a new node is introduced into the network and not
+allowing for anything like vertex/edge death, reciprocal edges and
+rewiring steps. \citep{deijfen2015} introduces some theory for GPA with
+vertex death based on the work by \citep{rudas07}, but is unable to come
+to an expression for the degree distribution. However, adding something
+like fitness scores into the GPA model seems fairly simple to do even
+going so far as making each of the parameters used in the class of
+functions here node-wise instead of universal. For example having the
+preference weight for a vertex be given by
+\(b(k_i, \underline{\gamma_i})\) where \(\underline{\gamma_i}\sim G\) is
+the vertex's fitness and \(k_i\) is the vertex's degree, it is
+reasonable to expect that the degree distribution for a model like this
+to be given by:
+
+\[
+\bar F(k) = \mathbb E_G\left[\prod_{i=0}^k \frac{b(i, \gamma)}{\lambda^* + b(i,\gamma)}\right],\qquad \gamma\sim G,\, k=0,1,2,\ldots
+\]
+
+\section{Appendix}\label{appendix}
+
+\subsection{Additional Results}\label{additional-results}
+
+\subsubsection{Tail heaviness of general preferential attachment
 model}\label{tail-heaviness-of-general-preferential-attachment-model}
 
 Recall the limiting survival function:
@@ -690,9 +820,9 @@ limiting degree distribution is light tailed. In fact, in order for the
 limiting degree distribution to be heavy tailed, \(b\) must be
 asymptotically linear (\(b(k)\sim k\)).
 
-\section{Proofs}\label{proofs}
+\subsection{Proofs}\label{proofs}
 
-\subsection{Tail heaviness of GPA}\label{tail-heaviness-of-gpa}
+\subsubsection{Tail heaviness of GPA}\label{tail-heaviness-of-gpa}
 
 Taking the form of the GPA degree survival: \[
 \bar F(n) = \prod_{i=0}^n\frac{b(i)}{\lambda+b(i)}
@@ -722,9 +852,8 @@ Then if \(\lim_{n\rightarrow\infty}b(n)=\infty\) it follows that:
 &=\frac{1}{\lambda}\lim_{n\rightarrow\infty}\left[b(n+2)-b(n+1)\right]\qquad \square
 \end{align*}
 
-\newpage
-
-\subsection{Removing the infinite sum}\label{removing-the-infinite-sum}
+\subsubsection{Removing the infinite
+sum}\label{removing-the-infinite-sum}
 
 For a preference function of the form:
 
