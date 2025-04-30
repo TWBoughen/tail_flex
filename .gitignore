@@ -4,3 +4,5 @@
 .Ruserdata
 mcmc_plot.rds
 pars_plot.rds
+*_cache/*
+*_files/*

@@ -426,9 +426,11 @@ ggpubr::annotate_figure(fig, bottom='Degree', left='Survival')
 
 
 
-:::{#fig-rec2 out.width="80%"}
-![: Posterior estimates of paramters for data simulated from the proposed model with various combinations of ($\alpha$,$\beta$,$\varepsilon$) and $k_0=20$.](mcmc_plot.jpg)
-:::
+```{r fig-rec2, out.width="80%"}
+#| echo: false
+#| fig.cap: Posterior estimates of paramters for data simulated from the proposed model with various combinations of ($\alpha$,$\beta$,$\varepsilon$) and $k_0=20$.
+knitr::include_graphics("mcmc_plot.jpg")
+```
 
 
 @fig-rec1 and @fig-rec2 demonstrate that using this methodology it is possible to recover the model parameters fairly well from only the final degree distribution of a simulated network. This indicates that the method may also be able to be applied to the degree distributions of real networks, estimating the model parameters assuming they evolved according to the GPA scheme.
@@ -482,9 +484,11 @@ plot(plt3)
 ```
 
 
-:::{#fig-rec2 out.width="80%"}
-![: Posterior estimates of paramters for real data.](pars_plot.png)
-:::
+```{r fig-rec3, out.width="80%"}
+#| fig-cap: Posterior estimates of paramters for real data.
+#| echo: false
+knitr::include_graphics("pars_plot.png")
+```
 
 # Conclusion and Discussion {#sec-conc}
 
