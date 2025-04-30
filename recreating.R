@@ -43,7 +43,7 @@ plot(G$degree+1, G$pref,pch=20, col = scales::alpha('blue', 0.3), log='xy', ylim
 
 source('funcs.R')
 
-fits = readRDS('modelfits.rds')
+fits = readRDS('results/modelfits.rds')
 
 
 # -------------------------------------------------------------------------
@@ -80,7 +80,7 @@ degs_mn = mcmc_network(N,par_mat_mn)$degs
 g = function(x){
   return(x^par_vec[1] + par_vec[2])
 }
-dat_list = readRDS('dat_list.rds')
+dat_list = readRDS('results/dat_list.rds')
 par(mfrow = c(2,2))
 
 

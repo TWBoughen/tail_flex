@@ -12,7 +12,7 @@ for(i in 1:length(selected)){
 }
 
 
-saveRDS(fits, 'real_mcmc.rds')
+saveRDS(fits, 'results/real_mcmc.rds')
 
 
 for(i in 1:length(fits)){
@@ -27,7 +27,7 @@ for(i in 1:length(fits)){
 
 real_survs = ggpubr::ggarrange(plotlist = plots)
 
-saveRDS(real_survs,'real_survs.rds')
+saveRDS(real_survs,'results/real_survs.rds')
 
 
 
@@ -36,7 +36,7 @@ real_survs
 # igpd --------------------------------------------------------------------
 
 
-fits = readRDS('real_mcmc.rds')
+fits = readRDS('results/real_mcmc.rds')
 
 gpfit = mev::fit.gpd(counts_to_degs(fits[[1]]$dat),threshold=6)
 
@@ -73,11 +73,11 @@ fit = fit.gpd(degs, threshold=15)
 # -------------------------------------------------------------------------
 
 
-fits = readRDS('modelfits.rds')
+fits = readRDS('results/modelfits.rds')
 
 
 
-plt = readRDS('real_survs.rds')
+plt = readRDS('results/real_survs.rds')
 
 
 
@@ -125,7 +125,7 @@ igp_plt = ggpubr::ggarrange(plotlist = plts,nrow=3,ncol=4)
 plot(igp_plt)
 
 
-saveRDS(igp_plt, 'gp_plt.rds')
+saveRDS(igp_plt, 'results/gp_plt.rds')
 
 
 
@@ -135,13 +135,13 @@ df = data.frame(k0 = fit$mcmc$pars$k0,shape = fit$mcmc$pars$b/fit$mcmc$lambdas)
 df$real = shapes[match(df$k0,xs)]
 
 
-plt = readRDS('real_survs.rds')
+plt = readRDS('results/real_survs.rds')
 
 # -------------------------------------------------------------------------
 
-mixfits = readRDS('mixfits.rds')
-fits = readRDS('fits.rds')
-nms = readRDS('nms.rds')
+mixfits = readRDS('results/mixfits.rds')
+fits = readRDS('results/fits.rds')
+nms = readRDS('results/nms.rds')
 plts = list()
 for(j in 1:length(fits)){
   fit = fits[[j]]
@@ -160,7 +160,7 @@ for(j in 1:length(fits)){
 
   
 shape_plt = ggpubr::ggarrange(plotlist = plts, common.legend = T, legend = 'right')
-saveRDS(shape_plt, 'shape_plt.rds')
+saveRDS(shape_plt, 'results/shape_plt.rds')
 
 
 comp_plot
@@ -170,8 +170,8 @@ library(ggplot2)
 
 
 
-fits = readRDS('fits.rds')
-nms = readRDS('nms.rds')
+fits = readRDS('results/fits.rds')
+nms = readRDS('results/nms.rds')
 plts = list()
 
 
@@ -186,7 +186,7 @@ for(i in 1:length(fits)){
 
 paplot = ggpubr::ggarrange(plotlist = plts)
 
-compplot =  readRDS('comp_plot.rds')
+compplot =  readRDS('results/comp_plot.rds')
 
 dev.new()
 paplot
@@ -195,8 +195,8 @@ paplot
 # -------------------------------------------------------------------------
 
 
-fits = readRDS('fits.rds')
-nms = readRDS('nms.rds')
+fits = readRDS('results/fits.rds')
+nms = readRDS('results/nms.rds')
 
 plts = list()
 

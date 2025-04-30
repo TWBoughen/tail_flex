@@ -16,7 +16,7 @@ trunc.at = 3
 data.files = list.files('./data') 
 nms = tstrsplit(data.files,'out.',keep=2)[[1]]
 
-saveRDS(nms, 'nms.rds')
+saveRDS(nms, 'results/nms.rds')
 
 
 i=4
@@ -39,9 +39,9 @@ for(i in 2:2){
 }
 
 
-saveRDS(dat_list, 'dat_list.rds')
+saveRDS(dat_list, 'results/dat_list.rds')
 
-dat_list = readRDS('dat_list.rds')
+dat_list = readRDS('results/dat_list.rds')
 
 plots = list()
 
@@ -62,22 +62,22 @@ for(i in 1:length(fits)){
 tmp = fits[[4]]
 
 
-fits = readRDS('modelfits.rds')
+fits = readRDS('results/modelfits.rds')
 
 fits[[4]] = tmp
 
-saveRDS(fits, 'modelfits.rds')
+saveRDS(fits, 'results/modelfits.rds')
 
 
 # -------------------------------------------------------------------------
 
 
 # saveRDS(fits,'modelfits.rds')
-mixfits = readRDS('mixfits.rds')
-dat_list = readRDS('dat_list.rds')
+mixfits = readRDS('results/mixfits.rds')
+dat_list = readRDS('results/dat_list.rds')
 real_survs = ggpubr::ggarrange(plotlist = plots)
 real_survs
-saveRDS(real_survs,'real_survs.rds')
+saveRDS(real_survs,'results/real_survs.rds')
 igpplots = list()
 
 for(i in 1:length(selected)){
@@ -102,7 +102,7 @@ mixfits[[i]] = crandep::mcmc_mix2_wrapper(df,seed=123L,burn=1e4L)
 # -------------------------------------------------------------------------
 
 
-mixfits  =readRDS('mixfits.rds')
+mixfits  =readRDS('results/mixfits.rds')
 
 for(i in 1:length(mixfits)){
   udf = as.data.frame(table(mixfits[[i]]$pars$u))
@@ -121,17 +121,17 @@ for(i in 1:length(mixfits)){
 mix_survs = ggpubr::ggarrange(plotlist = igpplots)
 mix_survs
 
-saveRDS(mix_survs,'mix_survs.rds')
+saveRDS(mix_survs,'results/mix_survs.rds')
 
-saveRDS(mixfits,'mixfits.rds')
+saveRDS(mixfits,'results/mixfits.rds')
 
 
-mixplt = readRDS('mix_survs.rds')
+mixplt = readRDS('results/mix_survs.rds')
 
 comp_plot = ggpubr::ggarrange(mixplt, real_survs,labels=c('Zipf-IGP', 'GPA'), ncol=1)
 
-saveRDS(comp_plot, 'comp_plot.rds')
-fits = readRDS('modelfits.rds')
+saveRDS(comp_plot, 'results/comp_plot.rds')
+fits = readRDS('results/modelfits.rds')
 plots = list()
 for(i in 1:length(fits)){
   udf = as.data.frame(table(fits[[i]]$smps$k0))
@@ -160,7 +160,7 @@ comp_plot
 
 # -------------------------------------------------------------------------
 
-mixfits = readRDS('mixfits.rds')
+mixfits = readRDS('results/mixfits.rds')
 plots = list()
 for(i in 1:length(fits)){
   plots[[i]] = ggplot() + geom_boxplot(aes(y=!!fits[[i]]$mcmc$pars[-(1:2e4),4]/!!fits[[i]]$mcmc$lambdas[-(1:2e4)], x='GPA', fill='GPA')) +
@@ -169,7 +169,7 @@ for(i in 1:length(fits)){
 
 shape_plot = ggpubr::ggarrange(plotlist = plots, common.legend = T,label.x='', label.y='\\xi', legend='right')
 shape_plot
-saveRDS(shape_plot, 'shape_plot.rds')
+saveRDS(shape_plot, 'results/shape_plot.rds')
 
 # PA plot -----------------------------------------------------------------
 
@@ -197,12 +197,12 @@ for(i in 1:length(fits)){
 PA_plot = ggpubr::ggarrange(plotlist = plots,common.legend = T,label.x = 'Degree', label.y='Preference')
 PA_plot
 
-saveRDS(PA_plot, 'PA_plot.rds')
+saveRDS(PA_plot, 'results/PA_plot.rds')
 
 
 PA_overlay = PA_overlay + scale_x_log10() + scale_y_log10()
 
-saveRDS(PA_overlay, 'PA_overlay.rds')
+saveRDS(PA_overlay, 'results/PA_overlay.rds')
 
 
 # -------------------------------------------------------------------------
@@ -228,7 +228,7 @@ bplot = ggplot() + geom_density_ridges2(data = full_par_mat, aes(x=b, y=name, fi
 parsplot = ggpubr::ggarrange(aplot, epsplot, k0plot, bplot, common.legend = T, legend='none')
 
 parsplot
-saveRDS(parsplot, 'pars_plot.rds')
+saveRDS(parsplot, 'results/pars_plot.rds')
 
 
 

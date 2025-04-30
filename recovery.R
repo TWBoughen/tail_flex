@@ -223,12 +223,12 @@ plot(recovery_list[[28]]$mcmc$mcmc$pars[1:10,4],type='l')
 
 recovery_list[[28]]$mcmc$mcmc$sig
 
-saveRDS(recovery_list, 'recovery_dat.rds')
+saveRDS(recovery_list, 'results/recovery_dat.rds')
 
-saveRDS(pars, 'recovery_pars.rds')
+saveRDS(pars, 'results/recovery_pars.rds')
 
-recovery_list  =readRDS('recovery_dat.rds')
-recover_pars = readRDS('recovery_pars.rds')
+recovery_list  =readRDS('results/recovery_dat.rds')
+recover_pars = readRDS('results/recovery_pars.rds')
 thin.by = 5
 full_pars = recovery_list[[1]]$mcmc$smps
 for(i in 2:length(recovery_list)){
@@ -269,7 +269,7 @@ full_plot = ggpubr::ggarrange(pa,peps,pk0,pb,common.legend = T, nrow=2,ncol=2,le
 plot(full_plot)
 
 
-saveRDS(full_plot, 'mcmc_plot.rds')
+saveRDS(full_plot, 'results/mcmc_plot.rds')
 
 
 ggplot(data=full_pars) + geom_point(aes(x=a, y=eps, colour = as.character(true_b)),alpha=0.1) + geom_point(aes(x=true_a,y=true_eps)) + facet_grid(true_a~true_eps)

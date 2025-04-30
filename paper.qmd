@@ -391,8 +391,8 @@ to obtain a posterior distribution that can then be used in an adaptive Metropol
 #| label: fig-rec1
 
 surfit_list = list()
-pars = readRDS('recovery_pars.rds')
-recovery_list = readRDS('recovery_dat.rds')
+pars = readRDS('results/recovery_pars.rds')
+recovery_list = readRDS('results/recovery_dat.rds')
 selected = c(1,27,14,35)
 # selected = 1:36
 for(k in 1:length(selected)){
@@ -448,7 +448,7 @@ Turning now to real data, the goal is to fit the model to the degree distributio
 #| fig-cap: Posterior estimates (solid red) of survival for several real data sets and their 95% credible intervals (dotted red)
 #| label: fig-real1
 
-plt1 = readRDS('comp_plot.rds')
+plt1 = readRDS('results/comp_plot.rds')
 
 plot(plt1)
 
@@ -462,7 +462,7 @@ plot(plt1)
 #| fig-cap: Posterior estimates (solid red) of survival for several real data sets and their 95% credible intervals (dotted red)
 #| label: fig-shapes
 
-plt2 = readRDS('shape_plot.rds')
+plt2 = readRDS('results/shape_plot.rds')
 
 plot(plt2)
 
@@ -478,7 +478,7 @@ plot(plt2)
 #| fig-cap: Posterior estimate for preference function (solid) with 95% credible interval (dashed) on log-log scale.
 #| label: fig-pa
 
-plt3 = readRDS('PA_plot.rds')
+plt3 = readRDS('results/PA_plot.rds')
 plot(plt3)
 
 ```
