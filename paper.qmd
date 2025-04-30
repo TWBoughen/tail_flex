@@ -48,15 +48,17 @@ library(RcppArmadillo)
 
 The degree distribution of a network can be very informative about the networks structure, giving some understanding about the inequality in the influence of the nodes. Often the degree distribution is one of the simplest places to look when trying to understand this, as the full evolution of the network is usually not available. This makes modelling the degree distribution an important topic in research with contributions such as [ref]. 
 
-When looking at the degree distributions of real networks, a power law is an attractive option to use when modelling as it is seemingly observed in a lot of networks. Fitting the discrete power law to the degree distribution come with the added benefit of suggesting preferential attachment as the generating mechanism since it has been shown to generate networks with a power law degree distribution. 
+When looking at the degree distributions of real networks, a power law is an attractive option to use when modelling as it is seemingly observed in a lot of networks. Fitting the discrete power law to the degree distribution come with the added benefit of suggesting preferential attachment as the generating mechanism since it has been shown to generate networks with a power law degree distribution.
 
-If the power law is an adequate model to use for real degree distributions has become a heated debate, with alternatives such as [@Broido_2019] seeming to outperform the power law in some cases. Additionally, [ref] find that for many real degree distributions the body may follow a power law, the right tail does not or at least seems to be lighter than is implied by the body whilst still being heavy. One method for modelling the tail of the degree distributions of real networks is to use a discretised variation of the generalised Pareto distribution (GPD) usually dubbed the Integer GPD (GPD) where $X|X>v \sim \mathrm{IGPD}(\xi,\sigma,v)$ is defined by the survival:
+If the power law is an adequate model to use for real degree distributions has become a heated debate, with alternatives such as @Broido_2019 seeming to outperform the power law in some cases. Additionally, @lef24 find that for many real degree distributions the body may follow a power law, the right tail does not or at least seems to be lighter than is implied by the body whilst still being heavy. One method for modelling the tail of the degree distributions of real networks is to use a discretised variation of the generalised Pareto distribution (GPD) usually dubbed the Integer GPD (GPD) where $X|X>v \sim \mathrm{IGPD}(\xi,\sigma,v)$ is defined by the survival:
 
 
 $$
 \Pr(X> x|X> v) = \left(\frac{\xi(x-v)}{\sigma} + 1\right)^{-1/\xi},\qquad x=v+1,v+2,\ldots
 $$
 for $v\in\mathbb Z^+, \sigma>0,\xi\in \mathbb R$.
+
+[CL: Is the precise form of the IGPD needed here? The big picture is probably more important: extreme value methods have not been used in analysing degree distributions until recently, such as @vvvk19 and @lef24. Not using these methods essentially downweights the deviation of the vertices with large degrees, which have far more influence on the network than those with small degrees, from the power law behaviour.]
 
 @shimura12 introduces a quantity that will help in determining what domain of attraction a discrete distribution belongs to, that is:
 
@@ -66,11 +68,13 @@ $$
 \Omega(F,n) = \left(\log\displaystyle\frac{\bar F (n+1)}{\bar F (n+2)}\right)^{-1} - \left(\log\displaystyle\frac{\bar F (n)}{\bar F (n+1)}\right)^{-1}
 $$
 
-[@shimura12] then states that if $\lim_{n\rightarrow\infty} \Omega(F,n) = 1/\alpha$ ($\alpha>0$), then $F$ is heavy tailed with $\bar F(n) \sim n^{-\alpha}$. Additionally, if $\lim_{n\rightarrow\infty} \Omega(F,n) = 0$ then the distribution is light tailed.
+@shimura12 then states that if $\lim_{n\rightarrow\infty} \Omega(F,n) = 1/\alpha$ ($\alpha>0$), then $F$ is heavy tailed with $\bar F(n) \sim n^{-\alpha}$. Additionally, if $\lim_{n\rightarrow\infty} \Omega(F,n) = 0$ then the distribution is light tailed.
 
-These models that seem to outperform the power law do not however come with the added benefit of suggesting a generating mechanism for the networks in the same way the power law does. Efforts to make the preferential attachment model more flexible have not yet remedied this issue with [@krapivsky01] finding that using a sub/super-linear preference function yields a Weibull tail and a degenerate network, where one vertex eventually gains all new edges, respectively.
+[CL: The results of @shimura12 could be moved closer to Proposition 2.1. In the introduction, if you want to include @shimura12, you can mention the paper in passing, when outlining your approach, e.g. "Using the results by @shimura12, we derive the tail index / heaviness of the limiting degree distribution of the GPA model [@rudas07]. This informs us the precise class of preference functions that result in flexible heavy tail. "]
 
-The network generative model that we will be focussing on in this paper is dubbed General Preferential Attachment in [@rudas07] and is defined as follows:
+These models that seem to outperform the power law do not however come with the added benefit of suggesting a generating mechanism for the networks in the same way the power law does. Efforts to make the preferential attachment model more flexible have not yet remedied this issue with @krapivsky01 finding that using a sub/super-linear preference function yields a Weibull tail and a degenerate network, where one vertex eventually gains all new edges, respectively.
+
+The network generative model that we will be focussing on in this paper is dubbed General Preferential Attachment in @rudas07 and is defined as follows:
 
 Starting at time $t=0$ with an initial network of $m$ vertices that each have no edges, at times $t=1,2,\ldots$ a new vertex is added to the network bringing with it $m$ directed edges (with the new vertex as the source); the target for each of these edges are selected from the vertices already in the network with weights proportional to some function $b$ of their degree.
 
@@ -428,7 +432,7 @@ ggpubr::annotate_figure(fig, bottom='Degree', left='Survival')
 
 ```{r fig-rec2, out.width="80%"}
 #| echo: false
-#| fig.cap: Posterior estimates of paramters for data simulated from the proposed model with various combinations of ($\alpha$,$\beta$,$\varepsilon$) and $k_0=20$.
+#| fig.cap: Posterior estimates of parameters for data simulated from the proposed model with various combinations of ($\alpha$,$\beta$,$\varepsilon$) and $k_0=20$.
 knitr::include_graphics("mcmc_plot.jpg")
 ```
 
@@ -438,7 +442,7 @@ knitr::include_graphics("mcmc_plot.jpg")
 
 # Application to Real Data {#sec-real}
 
-Turning now to real data, the goal is to fit the model to the degree distributions of real networks from various sources. [describe networks being used]. Alongside fitting this model to the degree distributions, we then compare the fit to that of an mixture distribution that was used in [clement] and is similar to others that have been used to model degree distributions [others]. 
+Turning now to real data, the goal is to fit the model to the degree distributions of real networks from various sources. [describe networks being used]. Alongside fitting this model to the degree distributions, we then compare the fit to that of an mixture distribution that was used in @lef24 and is similar to others that have been used to model degree distributions [others]. 
 
 
 
@@ -485,7 +489,7 @@ plot(plt3)
 
 
 ```{r fig-rec3, out.width="80%"}
-#| fig-cap: Posterior estimates of paramters for real data.
+#| fig-cap: Posterior estimates of parameters for real data.
 #| echo: false
 knitr::include_graphics("pars_plot.png")
 ```
