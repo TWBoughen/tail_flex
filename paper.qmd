@@ -28,7 +28,7 @@ author:
       - ref: 1
 abstract: |
   Devising the underlying generating mechanism of a real-life network is difficult as, more often than not, only its snapshots are available, but not its full evolution. One candidate for the generating mechanism is preferential attachment which, in its simplest form, results in a degree distribution that follows the power law. Consequently, the growth of real-life networks that roughly display such power-law behaviour is commonly modelled by preferential attachment. However, the validity of the power law has been challenged by the presence of alternatives with comparable performance, as well as the recent findings that the right tail of the degree distribution is often lighter than implied by the body, whilst still being heavy. In this paper, we study a modified version of the model with a flexible preference function that allows super/sub-linear behaviour whilst also guaranteeing that the limiting degree distribution has a heavy tail. We relate the distributions tail heaviness directly to the model parameters, allowing direct inference of the parameters from the degree distribution alone.
-keywords: [networks, extremes]
+keywords: [networks, discrete extremes, degree distribution]
 bibliography: refs.bib  
 
 ---
@@ -85,10 +85,7 @@ Estimating the preference function used by network generative models like this i
 
 [@rudas07] introduces theoretical results for this model with a general preference function in the cases that the network being generated is a tree ($m=1$); presenting an opportunity to design a preference function that will capture the behaviours observed in the degree distributions of real networks. Since they provide theoretical results for the limiting degree distribution, a model of this form would be able to be fitted to the degree distributions of real networks where the full evolution is not available, only a snapshot.
 
-
-## Structure of this paper
-
-@sec-gpa looks at the theoretical limiting behaviour of a GPA model when $m=1$ according to the results from [@rudas07], going on to introduce a flexible class of preference functions that can guarantee a heavy tailed degree distribution while still being flexible in the body. @sec-rec shows that the preference function parameters can be fairly well recovered from the degree distributions of networks simulated from the GPA model using various functions of the class introduced in @sec-gpa. Having shown that for simulated data the model parameters are recoverable from the degree distribution alone, @sec-real builds upon this and attempts to fit the model to degree distributions of real networks; modelling not only the degree distribution itself but also the estimates for the parameters of the preference function assuming the networks evolved according to the GPA scheme. Ultimately, @sec-conc discusses the main results of the paper, pitfalls of this method and future work.
+The rest of this paper is as follows: @sec-gpa looks at the theoretical limiting behaviour of a GPA model when $m=1$ according to the results from [@rudas07], going on to introduce a flexible class of preference functions that can guarantee a heavy tailed degree distribution while still being flexible in the body. @sec-rec shows that the preference function parameters can be fairly well recovered from the degree distributions of networks simulated from the GPA model using various functions of the class introduced in @sec-gpa. Having shown that for simulated data the model parameters are recoverable from the degree distribution alone, @sec-real builds upon this and attempts to fit the model to degree distributions of real networks; modelling not only the degree distribution itself but also the estimates for the parameters of the preference function assuming the networks evolved according to the GPA scheme. Ultimately, @sec-conc discusses the main results of the paper, pitfalls of this method and future work.
 
 
 # General Preferential Attachment {#sec-gpa}
@@ -126,9 +123,9 @@ $$
 f(k) = \frac{\lambda^*}{\lambda^* + b(k)}\prod_{i=0}^{k-1}\frac{b(i)}{\lambda^*+b(i)},\qquad k\in\mathbb N.
 $$
 
-which aligns with the result from [@rudas07], where the expression is derived using the same branching process results. 
+which aligns with the result from @rudas07, where the expression is derived using the same branching process results. 
 
-Using results from [@shimura12] the domain of attraction of this limiting degree distribution can be found.
+Using results from @shimura12, the domain of attraction of this limiting degree distribution can be found.
 
 :::{#prp-omega}
 If $b(k) \rightarrow \infty$ as $k\rightarrow \infty$ then
@@ -146,7 +143,7 @@ $$
 
 ## Preferential Attachment with flexible heavy tail {#sec-model}
 
-Previously, in [@krapivsky01], a preference function of the form $k^\alpha +\varepsilon$ has been considered. However, it has been noted that super-linear preferential attachment ($\alpha > 1$) leads to a degenerate limiting degree distribution where at some point one vertex gains the connection from every vertex that joins the network, additionally sub-linear preferential attachment ($\alpha <1$) has been shown to lead to a light tailed limiting degree distribution. Consider a preference function of the form:
+Previously, in @krapivsky01, a preference function of the form $k^\alpha +\varepsilon$ has been considered. However, it has been noted that super-linear preferential attachment ($\alpha > 1$) leads to a degenerate limiting degree distribution where at some point one vertex gains the connection from every vertex that joins the network, additionally sub-linear preferential attachment ($\alpha <1$) has been shown to lead to a light tailed limiting degree distribution. Consider a preference function of the form:
 
 $$
 b(k) = \begin{cases}
@@ -161,18 +158,18 @@ The limiting degree distribution resulting from using a preference function of t
 
 $$
 \bar F(k) = \begin{cases}
-\prod_{i=0}^{k}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon},&k<k_0\\
-\left(\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon}\right)\frac{\Gamma(\lambda^*+k_0^\alpha + \varepsilon)/\beta)}{\Gamma\left((k_0^\alpha + \varepsilon)/\beta\right)} \frac{\Gamma\left(k-k_0 + 1 +\frac{k_0^\alpha + \varepsilon}{\beta}\right)}{\Gamma\left(k-k_0 + 1 +\frac{\lambda^* +k_0^\alpha + \varepsilon}{\beta}\right)},&k\ge k_0.
+\displaystyle\prod_{i=0}^{k}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon},&k<k_0\\
+\displaystyle\left(\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon}\right)\frac{\Gamma(\lambda^*+k_0^\alpha + \varepsilon)/\beta)}{\Gamma\left((k_0^\alpha + \varepsilon)/\beta\right)} \frac{\Gamma\left(k-k_0 + 1 +\frac{k_0^\alpha + \varepsilon}{\beta}\right)}{\Gamma\left(k-k_0 + 1 +\frac{\lambda^* +k_0^\alpha + \varepsilon}{\beta}\right)},&k\ge k_0,
 \end{cases}
 $${#eq-polysurv}
 
-with $\lambda^*$ satisfying $\hat \rho(\lambda^*)=1$ where:
+with $\lambda^*$ satisfying
 
 $$
-\hat\rho(\lambda) = \sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{i^\alpha + \varepsilon}{\lambda+i^\alpha + \varepsilon} + \left(\frac{k_0^\alpha + \varepsilon}{\lambda-\beta}\right)\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda + i^\alpha + \varepsilon} 
+\hat\rho(\lambda^{*}) = \sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{i^\alpha + \varepsilon}{\lambda^{*}+i^\alpha + \varepsilon} + \left(\frac{k_0^\alpha + \varepsilon}{\lambda^{*}-\beta}\right)\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda^{*} + i^\alpha + \varepsilon} = 1,
 $$
 
-which must be solved numerically for most parameter choices. Also, note that $\lambda>\beta$ since when $\lambda\le \beta$ the infinite sum no longer converges and instead goes to infinity.
+which has to be solved numerically for most parameter choices. Note that $\lambda>\beta$ since when $\lambda\le \beta$ the infinite sum no longer converges and instead goes to infinity.
 
 Some examples of what the degree distribution looks like are shown below in @fig-polylinsurv:
 
@@ -180,7 +177,7 @@ Some examples of what the degree distribution looks like are shown below in @fig
 source('funcs.R')
 ```
 
-```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="80%"}
+```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="95%"}
 #| fig-width: 8
 #| fig-height: 4
 #| fig-cap: Theoretical survival distributions of the limiting degree distributions, according to various combinations of $(\alpha, \beta, \varepsilon)$ and $k_0=20$ of the proposed preferential attachment model.
@@ -190,7 +187,7 @@ as = c(0.5,1,1.5)
 bs = c(0.1,0.5,1,1.5)
 eps = c(.01,.1,.5,1)
 k0s = 20
-x = 0:200
+x = seq(0, 2000, by = 10)
 pars = expand.grid(as,bs,eps,k0s,x)
 names(pars) = c('a','b','eps','k0','x')
 lambdas = numeric(nrow(pars))
@@ -210,11 +207,11 @@ library(latex2exp)
 labeller = label_bquote(rows = `epsilon`==.(eps),cols = `alpha`==.(a))
 
 ggplot(data = pars) + geom_line(aes(x=(x+1),y=surv, linetype=as.character(b),colour =as.character(b))) +
-  scale_x_log10() + scale_y_log10(limits=c(1e-5,1))+theme(aspect.ratio = 1/2) + theme_bw() + xlab('Total Degree')  +ylab('Survival') + labs(linetype=TeX('\\beta'), colour =TeX('\\beta')) + 
+  scale_x_log10() + scale_y_log10(limits=c(1e-8,1))+theme(aspect.ratio = 1/2) + theme_bw() + xlab('Total Degree')  +ylab('Survival') + labs(linetype=TeX('\\beta'), colour =TeX('\\beta')) + 
   facet_grid(eps~a,labeller = labeller, scales='free')
 ```
 
-The survival (@eq-polysurv) can be connected to the IGPD mentioned in [@sec-intro] by using Sterling's approximation of the gamma function to obtain:
+Applying Stirling's approximation of the gamma function to the second case of @eq-polysurv, we obtain, for $k\geq k_0$,
 
 <!-- $$ -->
 <!-- \frac{\Gamma(x+y)}{\Gamma(x)}\approx x^{y}, -->
@@ -231,16 +228,16 @@ The survival (@eq-polysurv) can be connected to the IGPD mentioned in [@sec-intr
 
 $$
 \bar F(k) 
-\begin{cases}
-=\prod_{i=0}^{k}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon},&k<k_0,\\
-\approx \left(\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon}\right) \left(\frac{\beta(k+1-k_0)}{k_0^{\alpha}+\varepsilon} + 1\right)^{-\lambda^*/\beta},&k\ge k_0,
-\end{cases}
-$$ meaning that for $k\ge k_0$ the limiting degree distribution is similar to $\text{IGPD}\left(\frac{\beta}{\lambda^*}, \frac{k_0^\alpha + \varepsilon}{\lambda^*},k_0-1\right)$.
+%\begin{cases}
+%=\displaystyle\prod_{i=0}^{k}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon},&k<k_0,\\
+\displaystyle\approx \left(\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon}\right) \left(\frac{\beta(k+1-k_0)}{k_0^{\alpha}+\varepsilon} + 1\right)^{-\lambda^*/\beta},%&k\ge k_0,
+%\end{cases}
+$$ which is the survival function of the $\text{IGPD}\left(\frac{\beta}{\lambda^*}, \frac{k_0^\alpha + \varepsilon}{\lambda^*},k_0-1\right)$ distribution. This means that, above the threshold of the piecewise preference function, the limiting degree distribution can be approximated by the IGPD with shape parameter $\beta/\lambda^{*}$.
 
-To assess how close of an approximation this is the theoretical conditional survivals are shown in @fig-approx_surv in colour and their IGPD approximations are shown in grey. The approximation seems to hold up fairly well even for large degrees.
+To assess the quality of the approximation, the conditional survivals are shown in @fig-approx_surv in colour and their IGPD approximations are shown in grey. The approximation seems to hold up fairly well even for large degrees.
 
 
-```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="80%"}
+```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="95%"}
 #| fig-width: 8
 #| fig-height: 4
 #| fig-cap: Theoretical conditional survivals (grey) alongside their IGPD approximations (coloured).
@@ -294,10 +291,10 @@ ggplot(data = pars) + geom_line(aes(x=(x),y=surv, linetype=as.character(b),colou
 Since $\beta>0$, the shape parameter of the IGPD is positive and thus the distribution is heavy tailed. Additionally the value of the shape parameter $\xi$ is shown in @fig-polyheat for various parameter choices:
 
 
-```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="80%"}
+```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="95%"}
 #| fig-width: 12
 #| fig-height: 6
-#| fig-cap: Heat maps of $\xi$ for various combinations of the parameters of the proposed model.
+#| fig-cap: Heatmaps of $\xi$ for various combinations of the parameters of the proposed model.
 #| label: fig-polyheat
 #| 
 rho_optim_ba= Vectorize(function(a,eps, b, k0){
@@ -327,7 +324,7 @@ labeller = label_bquote(cols = `epsilon`==.(eps),rows = ~k[0]==.(k0))
 ggplot(pars) + geom_raster(aes(x=a,y=b,fill=b/lambda)) +
   geom_line(aes(x=ba, y=b),linetype='dashed', colour='red',lwd=1)+
   scale_fill_paletteer_c(palette='grDevices::Blues',limits=c(0,1),direction=-1)+theme(aspect.ratio = 1)+ylim(min(bs), max(bs))+xlim(min(as), max(as))+
-  facet_grid(k0~eps,labeller = labeller) + labs(fill=TeX('\\xi')) + xlab(TeX('\\alpha')) + ylab(TeX('\\beta')) + theme_minimal()
+  facet_grid(k0~eps,labeller = labeller) + labs(fill=TeX('\\xi')) + xlab(TeX('\\alpha')) + ylab(TeX('\\beta')) + theme_minimal(15)
 
 
 ```
@@ -346,26 +343,27 @@ Following @eq-polysurv the limiting degree distribution is:
 
 $$
 \bar F(k) = \begin{cases}
-\frac{\Gamma(\lambda^*+\varepsilon)\Gamma(k+1+\varepsilon)}{\Gamma(\varepsilon)\Gamma(k+1+\lambda^*+\epsilon)},&k<k_0\\
-\frac{\Gamma(\lambda^*+\varepsilon)\Gamma(k_0+\varepsilon)}{\Gamma(\varepsilon)\Gamma(k_0+\lambda^*+\varepsilon)}\times \frac{\Gamma\left(\frac{k_0+\varepsilon+\lambda^*}{\beta}\right)}{\Gamma\left(\frac{k_0+\varepsilon}{\beta}\right)}\times\frac{\Gamma\left(k-k_0 + \frac{k_0+\varepsilon}{\beta}+1\right)}{\Gamma\left(k-k_0 + \frac{k_0+\varepsilon+\lambda^*}{\beta}+1\right)},&k\ge k_0
+\displaystyle\frac{\Gamma(\lambda^*+\varepsilon)\Gamma(k+1+\varepsilon)}{\Gamma(\varepsilon)\Gamma(k+1+\lambda^*+\epsilon)},&k<k_0,\\
+\displaystyle\frac{\Gamma(\lambda^*+\varepsilon)\Gamma(k_0+\varepsilon)}{\Gamma(\varepsilon)\Gamma(k_0+\lambda^*+\varepsilon)}\times \frac{\Gamma\left(\frac{k_0+\varepsilon+\lambda^*}{\beta}\right)}{\Gamma\left(\frac{k_0+\varepsilon}{\beta}\right)}\times\frac{\Gamma\left(k-k_0 + \frac{k_0+\varepsilon}{\beta}+1\right)}{\Gamma\left(k-k_0 + \frac{k_0+\varepsilon+\lambda^*}{\beta}+1\right)},&k\ge k_0.
 \end{cases}
 $$ {#eq-linsurv}
 
-Just like the previous model, the survival can be approximated by:
+Similar to the general case, the survival function can be approximated by:
 
 $$
 \bar F(k) \approx \begin{cases}
-\frac{\Gamma(\lambda^*+\varepsilon)}{\Gamma(\varepsilon)} (1+\varepsilon)^{\lambda^*}\left(\frac{k}{1+\varepsilon} + 1\right)^{-\lambda^*},&k<k_0\\
-\frac{\Gamma(\lambda^*+\varepsilon)\Gamma(k_0+\varepsilon)}{\Gamma(\varepsilon)\Gamma(k_0+\lambda^*+\varepsilon)}\times\left(\frac{\beta(k+1-k_0)}{k_0+\varepsilon} + 1\right)^{-\lambda^*/\beta},&k\ge k_0
+\displaystyle\frac{\Gamma(\lambda^*+\varepsilon)}{\Gamma(\varepsilon)} (1+\varepsilon)^{\lambda^*}\left(\frac{k}{1+\varepsilon} + 1\right)^{-\lambda^*},&k<k_0,\\
+\displaystyle\frac{\Gamma(\lambda^*+\varepsilon)\Gamma(k_0+\varepsilon)}{\Gamma(\varepsilon)\Gamma(k_0+\lambda^*+\varepsilon)}\times\left(\frac{\beta(k+1-k_0)}{k_0+\varepsilon} + 1\right)^{-\lambda^*/\beta},&k\ge k_0.
 \end{cases}
 $$
 
 Some examples of the possible degree distributions are shown in the central row of @fig-polylinsurv.
 
 
-# Recovery {#sec-rec}
+# Simulation study {#sec-rec}
 
-The goal of was to provide a possible preference function that is able to explain the growth of real networks with varied tail behaviour in their degree distributions. This section aims to show that the parameters of the model in @sec-model can be recovered from the degree distribution of a network simulated from it.
+<!-- The goal of was to provide a possible preference function that is able to explain the growth of real networks with varied tail behaviour in their degree distributions. -->
+This section aims to show that the parameters of the model in @sec-model can be recovered from the degree distribution of a network simulated from it.
 
 The procedure for recovering the parameters begins with simulating a network from the model with $N=100,000$ vertices and $m=1$ given some set of parameters $\pmb\theta = (\alpha, \beta, \varepsilon, k_0)$, obtaining the degree counts in the form of a vector of degrees $\pmb x = (1,2,\ldots,M)$ and the number of vertices with those degrees $\pmb n$ where $M$ is the maximum degree. However, when it comes to fitting this model to real data in the next section, small degrees are extremely influential and will often cause the model to have a bad fit even though the rest of the data looks similar to that of the simulations; truncating the data above some value, say $l<k_0$, should allow the model to be more effectively fitted. This accounts in some way for the fact that this model only applies to trees, and could not possibly capture the behaviour for nodes with small degrees. Using the p.m.f derived in [@rudas07], the likelihood given that $x_i \ge l$ for all $i =1,2,\ldots,M$ is:
 

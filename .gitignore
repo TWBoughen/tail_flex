@@ -9,3 +9,4 @@ pars_plot.rds
 results/*
 *rds
 paper/*
+*.pdf
