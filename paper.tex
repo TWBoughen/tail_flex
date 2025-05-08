@@ -199,7 +199,7 @@ Networks}
 \author[1]{\fnm{Thomas William} \sur{Boughen}}\author[1]{\fnm{Clement} \sur{Lee}}\author[1]{\fnm{Vianey Palacios} \sur{Ramirez}}
 % affil setup
 \affil[1]{\orgdiv{School of Mathematics, Statistics and
-Physics}, \orgname{Newcastle University}}
+Physics}, \orgname{Newcastle University, UK}}
 
 % abstract 
 
@@ -228,6 +228,194 @@ distribution alone.}
 \maketitle
 
 
+\section*{CL: Overall comments}\label{cl-overall-comments}
+\addcontentsline{toc}{section}{CL: Overall comments}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The introduction section is not quite clear and needs a lot of
+  improvement, so here are my suggestions on the outline, in a hopefully
+  more logical flow:
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \tightlist
+  \item
+    Start with the broad picture e.g.~that networks exist in many fields
+    (name some for which you can cite applications), and that
+    statistical methods are have been used to study networks. Some are
+    for revealing the latent / underlying structures of the networks
+    (stochastic block models), some are for explaining some response
+    variables by network properties (ERGMs), and some are for
+    postulating how the network grows and evolves (mechanistic models).
+    Find some references, either the groundbreaking ones or
+    comprehensive reviews to back this up.
+  \item
+    Introduce the general PA model as one of the mechanistic models.
+    This will be a natural point to mention the rules (in terms as
+    simple as possible) and introduce the preference function. Mention
+    the special case when \(b(k)=k\) and cite \citet{Barabasi99}.
+  \item
+    Then talk about PA model and mechanistic models in general being
+    useful to \textbf{simulate} networks but not be fitted to real data
+    because usually only snapshots are available. This leads well into
+    the point on the degree distribution being informative.
+  \item
+    Then in the paragraph starting ``When looking at \ldots{}'', point
+    out that it is the BA model \citep{Barabasi99} that leads to a power
+    law degree distribution.
+  \item
+    Then point out that while it's attempting to attribute to the BA
+    model when degrees seemingly follow the power law, there are two
+    main concerns: first, a general preference function doesn't lead to
+    the power law \citep{krapivsky01}; second, some claim that a lot of
+    real data don't actually follow the power law. Mention not only
+    \citet{Broido_2019} but also responses to them e.g. \citet{vvvk19}.
+  \item
+    \citet{vvvk19} leads naturally to the point that extreme value
+    methods have not been used in analysing degree distributions until
+    recently, such as \citet{vvvk19} and \citet{lef24}. Not using these
+    methods essentially downweights the deviation of the vertices with
+    large degrees, which have far more influence on the network than
+    those with small degrees, from the power law behaviour.
+  \item
+    Also mention Resnick's works (and others) on the crossroads of
+    networks and extremes. Summarise what these papers do.
+  \item
+    Come back to the focus on the degree distribution, and point out
+    that most methods, whether extremes are incorporated or not, are
+    descriptive in the sense that no information about the preference
+    function \(b(\cdot)\) is revealed, even if PA model was indeed the
+    underlying mechanism.
+  \item
+    Then mention that this paper addresses that gap. Specifically,
+    \textbf{given the degree distribution of the network assumed to come
+    from the PA model, can we directly infer the model parameters?}
+    While \citet{rudas07} have derived the limiting degree distribution
+    in terms of \(b(\cdot)\) and its parameters, we build upon it by
+    finding the class of preference functions that result in realistic
+    tails (heavy but not as heavy as implied by the power law).
+  \item
+    Then go straight to the division of the rest of the paper, and
+    conclude the introduction section. The remaining materials should
+    mostly go to the next section, but you can retain some materials if
+    you think they complement (or already address) the above points.
+  \end{enumerate}
+\item
+  Rough outline of Section 2, which should be on the PA model and
+  deriving the tail heaviness of the limiting degree distribution in
+  terms of \(b(\cdot)\):
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \tightlist
+  \item
+    Start with the general description of the PA model. You can move
+    here the paragraphs in the introduction section, starting with ``The
+    network generative model \ldots{}'', ``Starting at time \ldots{}'',
+    and ``Special cases of this model \ldots{}''. Most of what you have
+    written up till the pmf can be kept.
+  \item
+    Next, first state that of interest is the tail heaviness (which here
+    refers to the shape parameter of the (integer) GPD approximation of
+    the tail). Then move here the paragraphs on \citet{shimura12} from
+    the introduction.
+  \item
+    Then state proposition 2.1 and point to the Appendix for the proof.
+  \item
+    Next, we need a bit more discussion and explanation before stating
+    that \(b(\cdot)\) has to be asymptotically linear for a heavy tail.
+    First point out that this result covers and aligns with the
+    previously obtained result i.e. \citet{krapivsky01}. This is pretty
+    much the paragraph currently under Section 2.1, but with a better
+    flow. You might even include the special case of the special case
+    i.e.~\(b(k)=k+\epsilon\), to briefly illustrate how a tail heaviness
+    of \(0.5\) is obtained for the BA model.
+  \item
+    Now, argue that \(b(\cdot)\) has to be (asymptotically) linear above
+    a threshold, in order to have a positive tail heaviness, then
+    introduce the proposed preference function as our model, with tail
+    heaviness \(\beta/\lambda^{*}\).
+  \item
+    Conclude the section by saying that we will examine its property in
+    the next Section (see next point).
+  \end{enumerate}
+\item
+  The section could be called ``Preferential attachment with flexible
+  heavy tail'', essentially making the subsection a section itself.
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \tightlist
+  \item
+    Most of the materials can be kept, and the form of the IGPD should
+    be inserted when approximating the survival using Stirling's (not
+    Sterling's) approximation. The survival of the IGPD was in the
+    introduction but I suggest moving it here.
+  \item
+    The piecewise linear model doesn't add much, so I would consider
+    excluding it unless there's a point e.g.~computational simplicity?
+  \item
+    I would conclude the section by moving the likelihood expression
+    here, and say that the parameters can be inferred in a standard way,
+    via the frequentist or Bayesian approach, as the likelihood is an
+    explicit function of the parameters.
+  \end{enumerate}
+\item
+  For simplicity, it's easier to use \(m=1\) throughout and only mention
+  the general case \(m>1\) as future work in the discussion section.
+  Also, it might be worth just calling the general preferential
+  attachment model without the word ``general'' throughout, as it is
+  unambiguous that it is the model with a flexible / general
+  \(b(\cdot)\), while the BA model is the one with \(\b(k)=k+\epsilon\).
+\item
+  There are inconsistencies and duplications in various places, probably
+  because you edited at one place and didn't update associated instances
+  elsewhere. Do go back and forth when making edits.
+\item
+  The presentation can use many incremental improvements:
+
+  \begin{enumerate}
+  \def\labelenumii{\alph{enumii}.}
+  \tightlist
+  \item
+    use \(k\) or \(n\) for the integer but not both, unless necessary
+    and in a consistent way. There were places where \(n\) was used as
+    the subject initially but it changed to \(k\).
+  \item
+    ensure that the text in plots are legible.
+  \item
+    when citing, use the parentheses correctly, as they have been used
+    inappropriately; in Quarto syntax, the square brackets will
+    automatically put the parentheses (similar to citep in LaTeX).
+  \item
+    ensure that the maths don't over the linewidth.
+  \item
+    introduce the full term with the acronym in parentheses when using
+    it for the first time, e.g.~GPA.
+  \item
+    some references of equations are not working e.g.~eq-surv?
+  \item
+    unless necessary, avoid strong adverbs / adjectives.
+  \end{enumerate}
+\item
+  It seems that you version control all the files, which I won't
+  recommend. Only track the files that you manually change, not the
+  generated ones (cache, pdf, and tex unless you manually created one).
+  This will facilitate the reproducibility. I have removed the generated
+  files in my branch.
+\item
+  Consider creating subfolders to store the results, data, figures, etc.
+  This will streamline your file structure. I have accordingly edited
+  the R scripts so that if you run them, the rds files will be stored in
+  results/.
+\item
+  Accents in names in bib / tex / qmd might not work on some computers.
+  Here's the conversion chart: https://www.bibtex.org/SpecialSymbols/
+\end{enumerate}
+
 \section{Introduction}\label{sec-intro}
 
 The degree distribution of a network can be very informative about the
@@ -245,28 +433,23 @@ degree distribution come with the added benefit of suggesting
 preferential attachment as the generating mechanism since it has been
 shown to generate networks with a power law degree distribution.
 
-If the power law is an adequate model to use for real degree
-distributions has become a heated debate, with alternatives such as
-\citet{Broido_2019} seeming to outperform the power law in some cases.
-Additionally, \citet{lef24} find that for many real degree distributions
-the body may follow a power law, the right tail does not or at least
-seems to be lighter than is implied by the body whilst still being
-heavy. One method for modelling the tail of the degree distributions of
-real networks is to use a discretised variation of the generalised
-Pareto distribution (GPD) usually dubbed the Integer GPD (GPD) where
+Whether the power law is adequate for real degree distributions has
+become a heated debate, with alternatives such as \citet{Broido_2019}
+seeming to outperform the power law in some cases. Additionally,
+\citet{lef24} find that for many real degree distributions the body may
+follow a power law, the right tail does not or at least seems to be
+lighter than is implied by the body whilst still being heavy. One method
+for modelling the tail of the degree distributions of real networks is
+to use a discretised variation of the generalised Pareto distribution
+(GPD) usually dubbed the Integer GPD (GPD) where
 \(X|X>v \sim \mathrm{IGPD}(\xi,\sigma,v)\) is defined by the survival:
 
 \[
 \Pr(X> x|X> v) = \left(\frac{\xi(x-v)}{\sigma} + 1\right)^{-1/\xi},\qquad x=v+1,v+2,\ldots
 \] for \(v\in\mathbb Z^+, \sigma>0,\xi\in \mathbb R\).
 
-\citep[CL: Is the precise form of the IGPD needed here? The big picture
-is probably more important: extreme value methods have not been used in
-analysing degree distributions until recently, such as][ and
-\citet{lef24}. Not using these methods essentially downweights the
-deviation of the vertices with large degrees, which have far more
-influence on the network than those with small degrees, from the power
-law behaviour.]{vvvk19}
+{[}CL: Is the precise form of the IGPD needed here? The big picture is
+probably more important (point 3f in overall comments){]}
 
 \citet{shimura12} introduces a quantity that will help in determining
 what domain of attraction a discrete distribution belongs to, that is:
@@ -320,15 +503,15 @@ attraction.
 Estimating the preference function used by network generative models
 like this is of great interest, with the potential to provide a deeper
 understanding of the relationships between the vertices in the network.
-Several papers and at least one R package (\texttt{PAfit}) have been
-dedicated to estimating the preference function that may have been used
-when a network was growing; one thing all these have in common is
-requiring access to a networks evolution data, something that is not
-always readily available or feasible to access. A method for estimating
-a preference function without this data available would be extremely
+Several papers and an R package (\texttt{PAfit}) have been dedicated to
+estimating the preference function that may have been used when a
+network was growing; one thing all these have in common is requiring
+access to a networks evolution data, something that is not always
+readily available or feasible to access. A method for estimating a
+preference function without this data available would be extremely
 useful.
 
-\citep{rudas07} introduces theoretical results for this model with a
+\citet{rudas07} introduces theoretical results for this model with a
 general preference function in the cases that the network being
 generated is a tree (\(m=1\)); presenting an opportunity to design a
 preference function that will capture the behaviours observed in the
@@ -339,7 +522,7 @@ the full evolution is not available, only a snapshot.
 
 The rest of this paper is as follows: Section~\ref{sec-gpa} looks at the
 theoretical limiting behaviour of a GPA model when \(m=1\) according to
-the results from \citep{rudas07}, going on to introduce a flexible class
+the results from \citet{rudas07}, going on to introduce a flexible class
 of preference functions that can guarantee a heavy tailed degree
 distribution while still being flexible in the body.
 Section~\ref{sec-rec} shows that the preference function parameters can
@@ -351,15 +534,15 @@ alone, Section~\ref{sec-real} builds upon this and attempts to fit the
 model to degree distributions of real networks; modelling not only the
 degree distribution itself but also the estimates for the parameters of
 the preference function assuming the networks evolved according to the
-GPA scheme. Ultimately, Section~\ref{sec-conc} discusses the main
-results of the paper, pitfalls of this method and future work.
+GPA scheme. Section~\ref{sec-conc} discusses the main results, proposes
+future work and concludes the paper.
 
-\section{General Preferential Attachment}\label{sec-gpa}
+\section{General Preferential Attachment Model}\label{sec-gpa}
 
-The focus of this section is the limiting degree distribution of a
-preferential attachment network with preference function \(b(\cdot)\)
-where each vertex brings with it \(m\) edges. This preference function
-is subject to the following conditions:
+In this section, we introduce a general preferential attachment model,
+with the focus on the limiting degree distribution as a function of the
+preference function \(b(\cdot)\) where each vertex brings with it \(m\)
+edges. This preference function is subject to the following conditions:
 
 \[
 b:\mathbb N \mapsto \mathbb R^+\setminus\{0\},
@@ -372,12 +555,13 @@ b:\mathbb N \mapsto \mathbb R^+\setminus\{0\},
 Given these two conditions an expression for the survival of the
 limiting degree distribution can be found in the case that \(m=1\);
 obtained by considering a branching process that is equivalent to the
-growth of the network, as in \citep{rudas07}. Theorem 1 from
-\citep{rudas07} states that for the tree \(\Upsilon(t)\) at time \(t\):
+growth of the network, as in \citet{rudas07}. Theorem 1 from
+\citet{rudas07} states that for the tree \(\Upsilon(t)\) at time \(t\):
 
 \[
 \lim_{t\rightarrow\infty}\frac{1}{|\Upsilon(t)|}\sum_{x\in\Upsilon(t)}\varphi(\Upsilon(t)_{\downarrow x}) = \lambda^* \int_0^\infty e^{-\lambda^* t}\mathbb E\left[\varphi(\Upsilon(t))\right]dt
-\] where \(\lambda^*\) satisfies \(\hat\rho(\lambda^*)=1\).
+\] where \(\lambda^*\) satisfies \(\hat\rho(\lambda^*)=1\). (CL:
+\(\hat{\rho}\) has not been defined yet.)
 
 The limiting survival can be viewed as the limit of the empirical
 proportion of vertices with degree over a threshold \(k\), that is:
@@ -387,12 +571,12 @@ proportion of vertices with degree over a threshold \(k\), that is:
 \] which by the previously stated theorem can also be written as:
 
 \[
-\bar F(k) = \frac{\int_0^\infty e^{-\lambda^* t}\mathbb E\left[\mathbb I\left\{\text{deg}(x,\Upsilon(t))>k\right\}\right]dt}{\int_0^\infty e^{-\lambda^* t}dt} = \prod_{i=0}^k\frac{b(i)}{\lambda^* + b(i)}
-\] Additionally, using the fact that \(f(k) = \bar F(k-1) - \bar F(k)\)
-the probability mass function (p.m.f.) can be shown to be:
+\bar F(k) = \frac{\int_0^\infty e^{-\lambda^* t}\mathbb E\left[\mathbb I\left\{\text{deg}(x,\Upsilon(t))>k\right\}\right]dt}{\int_0^\infty e^{-\lambda^* t}dt} = \prod_{i=0}^k\frac{b(i)}{\lambda^* + b(i)}.
+\] Using the fact that \(f(k) = \bar F(k-1) - \bar F(k)\) the
+probability mass function (pmf) is
 
 \[
-f(k) = \frac{\lambda^*}{\lambda^* + b(k)}\prod_{i=0}^{k-1}\frac{b(i)}{\lambda^*+b(i)},\qquad k\in\mathbb N.
+f(k) = \frac{\lambda^*}{\lambda^* + b(k)}\prod_{i=0}^{k-1}\frac{b(i)}{\lambda^*+b(i)},\qquad k\in\mathbb N,
 \]
 
 which aligns with the result from \citet{rudas07}, where the expression
@@ -408,7 +592,7 @@ If \(b(k) \rightarrow \infty\) as \(k\rightarrow \infty\) then \[
 \] and
 
 \[
-\lim_{k\rightarrow\infty}\Omega(F,n) = \lim_{k\rightarrow\infty}\frac{b(k+1)-b(k)}{\lambda^*}.
+\lim_{k\rightarrow\infty}\Omega(F,k) = \lim_{k\rightarrow\infty}\frac{b(k+1)-b(k)}{\lambda^*}.
 \]
 
 \end{proposition}
@@ -422,19 +606,19 @@ that provide flexible behaviour but guarantee a heavy tail.
 \subsection{Preferential Attachment with flexible heavy
 tail}\label{sec-model}
 
-Previously, in \citet{krapivsky01}, a preference function of the form
+In \citet{krapivsky01}, a preference function of the form
 \(k^\alpha +\varepsilon\) has been considered. However, it has been
 noted that super-linear preferential attachment (\(\alpha > 1\)) leads
 to a degenerate limiting degree distribution where at some point one
-vertex gains the connection from every vertex that joins the network,
-additionally sub-linear preferential attachment (\(\alpha <1\)) has been
-shown to lead to a light tailed limiting degree distribution. Consider a
-preference function of the form:
+vertex gains the connection (CL: edge?) from every vertex that joins the
+network, additionally sub-linear preferential attachment (\(\alpha <1\))
+has been shown to lead to a light tailed limiting degree distribution.
+Consider a preference function of the form:
 
 \[
 b(k) = \begin{cases}
-k^\alpha + \varepsilon,&k<k_0\\
-k_0^\alpha + \varepsilon + \beta(k-k_0), &k\ge k_0
+k^\alpha + \varepsilon,&k<k_0,\\
+k_0^\alpha + \varepsilon + \beta(k-k_0), &k\ge k_0,
 \end{cases}
 \] for \(\alpha,\beta, \varepsilon>0\) and \(k_0\in\mathbb N\).
 
@@ -448,20 +632,21 @@ function of this form can be found to have survival:
 
 \begin{equation}\phantomsection\label{eq-polysurv}{
 \bar F(k) = \begin{cases}
-\displaystyle\prod_{i=0}^{k}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon},&k<k_0\\
+\displaystyle\prod_{i=0}^{k}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon},&k<k_0,\\
 \displaystyle\left(\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon}\right)\frac{\Gamma(\lambda^*+k_0^\alpha + \varepsilon)/\beta)}{\Gamma\left((k_0^\alpha + \varepsilon)/\beta\right)} \frac{\Gamma\left(k-k_0 + 1 +\frac{k_0^\alpha + \varepsilon}{\beta}\right)}{\Gamma\left(k-k_0 + 1 +\frac{\lambda^* +k_0^\alpha + \varepsilon}{\beta}\right)},&k\ge k_0,
 \end{cases}
 }\end{equation}
 
-with \(\lambda^*\) satisfying
+with \(\lambda^*\) satisfying \(\hat{\rho}(\lambda^{*})=1\), where
 
 \[
-\hat\rho(\lambda^{*}) = \sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{i^\alpha + \varepsilon}{\lambda^{*}+i^\alpha + \varepsilon} + \left(\frac{k_0^\alpha + \varepsilon}{\lambda^{*}-\beta}\right)\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda^{*} + i^\alpha + \varepsilon} = 1,
+\hat\rho(\lambda) = \sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{i^\alpha + \varepsilon}{\lambda+i^\alpha + \varepsilon} + \left(\frac{k_0^\alpha + \varepsilon}{\lambda-\beta}\right)\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda + i^\alpha + \varepsilon} = 1,
 \]
 
 which has to be solved numerically for most parameter choices. Note that
-\(\lambda>\beta\) since when \(\lambda\le \beta\) the infinite sum no
-longer converges and instead goes to infinity.
+\(\lambda\) has to be greater than \(\beta\) since when
+\(\lambda\le \beta\) the infinite sum diverges. (CL: Where is the
+infinite sum?)
 
 Some examples of what the degree distribution looks like are shown below
 in Figure~\ref{fig-polylinsurv}:
@@ -491,7 +676,7 @@ case of Equation~\ref{eq-polysurv}, we obtain, for \(k\geq k_0\),
 \displaystyle\approx \left(\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon}\right) \left(\frac{\beta(k+1-k_0)}{k_0^{\alpha}+\varepsilon} + 1\right)^{-\lambda^*/\beta},%&k\ge k_0,
 %\end{cases}
 \] which is the survival function of the
-\(\text{IGPD}\left(\frac{\beta}{\lambda^*}, \frac{k_0^\alpha + \varepsilon}{\lambda^*},k_0-1\right)\)
+\(\text{IGPD}\displaystyle\left(\frac{\beta}{\lambda^*}, \frac{k_0^\alpha + \varepsilon}{\lambda^*},k_0-1\right)\)
 distribution. This means that, above the threshold of the piecewise
 preference function, the limiting degree distribution can be
 approximated by the IGPD with shape parameter \(\beta/\lambda^{*}\).
@@ -567,8 +752,8 @@ by:
 \end{cases}
 \]
 
-Some examples of the possible degree distributions are shown in the
-central row of Figure~\ref{fig-polylinsurv}.
+Some examples of the limiting degree distributions are shown in the
+central column of Figure~\ref{fig-polylinsurv}.
 
 \section{Simulation study}\label{sec-rec}
 
@@ -589,7 +774,7 @@ data looks similar to that of the simulations; truncating the data above
 some value, say \(l<k_0\), should allow the model to be more effectively
 fitted. This accounts in some way for the fact that this model only
 applies to trees, and could not possibly capture the behaviour for nodes
-with small degrees. Using the p.m.f derived in \citep{rudas07}, the
+with small degrees. Using the p.m.f derived in \citet{rudas07}, the
 likelihood given that \(x_i \ge l\) for all \(i =1,2,\ldots,M\) is:
 
 \begin{align*}
@@ -618,13 +803,13 @@ networks \(l=0\).
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-rec1-1.pdf}
+\includegraphics[width=0.95\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-rec1-1.pdf}
 
 }
 
 \caption{\label{fig-rec1}Posterior estimates of survival function for
 data simulated from the proposed model with various combinations of
-(\(\alpha\),\(\beta\),\(\varepsilon\)) and \(k_0=20\).}
+(\(\alpha,\beta,\varepsilon\)) and \(k_0=20\).}
 
 \end{figure}%
 
