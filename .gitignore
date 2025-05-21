@@ -7,5 +7,6 @@ mcmc_plot.rds
 pars_plot.rds
 *.tex
 *.rmarkdown
-
+*.bst
 !paper.tex
+!sn-basic.bst
