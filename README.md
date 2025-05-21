@@ -1,6 +1,6 @@
 ## Viewing
 
-Click [**here**](https://github.com/TWBoughen/tail_flex/main/paper.pdf) to download the latest version of the draft.
+Click [**here**](https://raw.githubusercontent.com/TWBoughen/tail_flex/main/paper.pdf) to download the latest version of the draft.
 
 ## Editing
 1. paper.qmd` contains the source code for compiling the document, you should not need to compile the quarto document yourself as if you want to make changes to the text  you need only to change the text in that file.
