@@ -151,9 +151,9 @@
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
 \theoremstyle{plain}
-\newtheorem{proposition}{Proposition}[section]
-\theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposition}[section]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -796,10 +796,17 @@ from these plots come from the shape of the preference function. There
 appears to be two distinct shapes of preference function. The first
 appears mostly flat (similar to UA) for the smallest degrees and then
 after a threshold PA kicks in, some with this shape are
-\texttt{pajek-erdos} and \texttt{sx-mathoverflow}. The second distinct
-shape appears provide some clear PA behaviour that then slows down after
-a certain point, examples of this are seen in the two infrastructure
-networks \texttt{opsahl-openflights} and \texttt{topology}.
+\texttt{pajek-erdos} and \texttt{sx-mathoverflow}, maybe suggesting that
+most vertices are just as liekly to gain connections as each other but
+after gaining a number of connections become much more attractive
+gaining more influence based on the number of connections they have. The
+second distinct shape appears provide some clear PA behaviour that then
+slows down after a certain point, examples of this are seen in the two
+infrastructure networks \texttt{opsahl-openflights} and
+\texttt{topology}. This slowing down could be viewed as a kind of
+diminishing returns on the degree of a vertex i.e.~as a vertex gets
+larger gaining more connections has less of an effect than it did before
+some threshold \(k_0\).
 
 \begin{figure}
 
@@ -838,12 +845,12 @@ same way. Not only did this yield fairly good fits for the degree
 distribution, similar to that of the Zipf-IGP, it came with the added
 benefit of giving a posterior estimate for a preference function.
 
-Obviously this method had its flaws in that the lowest degrees needed to
-be truncated as they had a very large effect on the fit of the model as
-a result of using theory developed for trees and applying it to general
-networks. Hopefully, as the field progresses we will be able to apply
-theory developed for general networks using a similar method to this,
-allowing us to compare the results here something that is more accurate.
+One limitation of this method is that the lowest degrees needed to be
+truncated as they had a very large effect on the fit of the model as a
+result of using theory developed for trees and applying it to general
+networks. Future work could apply theory developed for general networks
+using a similar method to this, allowing us to compare the results here
+something that is more accurate.
 
 \setcounter{section}{0}
 \renewcommand{\thesection}{\Alph{section}}
