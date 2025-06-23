@@ -131,7 +131,7 @@ mixplt = readRDS('mix_survs.rds')
 comp_plot = ggpubr::ggarrange(mixplt, real_survs,labels=c('Zipf-IGP', 'GPA'), ncol=1)
 
 saveRDS(comp_plot, 'comp_plot.rds')
-fits = readRDS('modelfits.rds')
+fits = readRDS('../results/modelfits.rds')
 plots = list()
 for(i in 1:length(fits)){
   udf = as.data.frame(table(fits[[i]]$smps$k0))
@@ -206,9 +206,9 @@ saveRDS(PA_overlay, 'PA_overlay.rds')
 
 
 # -------------------------------------------------------------------------
-
+library(latex2exp)
 library(ggridges)
-
+nms = readRDS('../results/nms.rds')
 full_par_mat = data.frame(a=NA, eps=NA, k0=NA, b=NA, name=NA)
 
 for(i in 1:length(fits)){
@@ -219,10 +219,10 @@ for(i in 1:length(fits)){
 full_par_mat = full_par_mat[-1,]
 
 meanmat = full_par_mat |> aggregate(.~name, FUN=mean)
-aplot = ggplot() + geom_density_ridges2(data = full_par_mat, aes(x=a, y=name, fill=name))+theme(aspect.ratio = 1, axis.title.x = element_blank(), axis.title.y =element_blank()) + ggtitle('a')
-epsplot =ggplot() + geom_density_ridges2(data = full_par_mat, aes(x=eps, y=name, fill=name))+theme(aspect.ratio = 1, axis.title.x = element_blank(), axis.title.y =element_blank())+ ggtitle('eps')
-k0plot=ggplot() + geom_density_ridges2(data = full_par_mat, aes(x=k0, y=name, fill=name))+theme(aspect.ratio = 1, axis.title.x = element_blank(), axis.title.y =element_blank())+ ggtitle('k0')
-bplot = ggplot() + geom_density_ridges2(data = full_par_mat, aes(x=b, y=name, fill=name))+theme(aspect.ratio = 1, axis.title.x = element_blank(), axis.title.y =element_blank())+ ggtitle('b')
+aplot = ggplot() + geom_density_ridges2(data = full_par_mat, aes(x=a, y=name, fill=name))+theme(aspect.ratio = 1, axis.title.x = element_blank(), axis.title.y =element_blank()) + ggtitle(TeX('\\alpha'))
+epsplot =ggplot() + geom_density_ridges2(data = full_par_mat, aes(x=eps, y=name, fill=name))+theme(aspect.ratio = 1, axis.title.x = element_blank(), axis.title.y =element_blank())+ ggtitle(TeX('\\epsilon'))
+k0plot=ggplot() + geom_density_ridges2(data = full_par_mat, aes(x=k0, y=name, fill=name))+theme(aspect.ratio = 1, axis.title.x = element_blank(), axis.title.y =element_blank())+ ggtitle(TeX('$k_0$'))
+bplot = ggplot() + geom_density_ridges2(data = full_par_mat, aes(x=b, y=name, fill=name))+theme(aspect.ratio = 1, axis.title.x = element_blank(), axis.title.y =element_blank())+ ggtitle(TeX('\\beta'))
 
 
 parsplot = ggpubr::ggarrange(aplot, epsplot, k0plot, bplot, common.legend = T, legend='none')
@@ -233,7 +233,7 @@ saveRDS(parsplot, 'pars_plot.rds')
 
 
 
-ggsave('pars_plot.png', parsplot)
+ggsave('../images/pars_plot.png', parsplot)
 
 
 

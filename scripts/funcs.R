@@ -78,8 +78,6 @@ sample_gpa_tree = function(n, g, b, k0, m=1,quiet=T){
   return(df)
 }
 
-
-
 rho = Vectorize(function(lambda, g, b, k0){
   n1 = 1:k0
   n2 = 0:(k0-1)
