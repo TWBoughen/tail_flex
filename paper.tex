@@ -162,9 +162,9 @@
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
 \theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\theoremstyle{plain}
 \newtheorem{proposition}{Proposition}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -182,7 +182,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={Learning Network Growth Mechanisms from Degree Distributions in Preferential Attachment Networks},
+  pdftitle={Learning growth mechanisms of tail realistic preferential attachment models from network degree distributions},
   pdfauthor={Thomas William Boughen; Clement Lee; Vianey Palacios Ramirez},
   pdfkeywords={networks, discrete extremes, power law, preferential
 attachment},
@@ -194,9 +194,10 @@ attachment},
   pdfcreator={LaTeX via pandoc}}
 
 
-\title[Learning Network Growth Mechanisms from Degree Distributions in
-Preferential Attachment Networks]{Learning Network Growth Mechanisms
-from Degree Distributions in Preferential Attachment Networks}
+\title[Learning growth mechanisms of tail realistic preferential
+attachment models from network degree distributions]{Learning growth
+mechanisms of tail realistic preferential attachment models from network
+degree distributions}
 
 % author setup
 \author[1]{\fnm{Thomas William} \sur{Boughen}}\author[1]{\fnm{Clement} \sur{Lee}}\author[1]{\fnm{Vianey Palacios} \sur{Ramirez}}
@@ -237,99 +238,113 @@ attachment}
 \section{Introduction}\label{introduction}
 
 Networks have become very powerful tools for representing and analysing
-complex systems, with uses in a large array of fields, from using
-stochastic block models to detect communities online \citep{Latouche11},
-to using Exponential Random Graph Models (ERGMs) to analyse the global
-trade network \citep{Setayesh22}, and even using mechanistic models to
-investigate the patterns in neural systems \citep{Betzel17}.
+complex systems, with uses in a large array of fields. In network
+science and statistics, they have been studies by various families of
+models, from stochastic block models for detecting communities online
+\citep{Latouche11}, to exponential random graph models (ERGMs) for
+analysing the global trade network \citep{Setayesh22}, and mechanistic
+models for investigating patterns in neural systems \citep{Betzel17}.
 
-Along with the recent rise of interest in networks, has been a debate
-amongst those that study them regarding the claims that most real
-networks are scale-free. This claim is most often equivalent to claiming
-that the degree distributions of real networks follow a power law, that
-is the fraction of nodes with degree \(k\) is proportional to
-\(k^{-\alpha}\), and therefore has a regularly varying tail with extreme
-value index \(1/\alpha\). \citet{Broido_2019} provide empirical
-evidence, using almost one thousand networks, that these scale-free
-networks do not make up a large majority of real networks. They compare
-the fits of a power law model against that of several non-scale-free
-models only finding strong evidence for scale-freeness in four percent
-and weak evidence in fifty-two percent of the networks. On the other
-side of this debate is \citet{Voitalov_2019} who disagrees and claims
-that these networks are not nearly as rare and only appear to so as a
-result of an unrealistic expectation of a power law without deviations
-or noise. Evidence of these deviations from a power law is shown by
+Amid the recent rise of interest in networks, there has been a debate on
+whether most real networks are scale-free. Claiming a real network is
+scale-free is equivalent to saying that its degree distribution follows
+a power law, that is the fraction of nodes with degree \(k\) is
+proportional to \(k^{-\alpha}\), and therefore has a regularly varying
+tail with tail index \(\alpha\). On the side against the claim is
+\citet{Broido_2019who} compared the fits of a power law model against
+that of several non-scale-free models to nearly a thousand networks,
+only to find strong evidence for scale-freeness in four percent and weak
+evidence in over half of the networks, thus claiming that scale-free
+networks do not make up a majority in real networks. They compare the
+fits of a power law model against that of several non-scale-free models
+only finding strong evidence for scale-freeness in four percent and weak
+evidence in fifty-two percent of the networks. On the other side of this
+debate is \citet{Voitalov_2019} who disagrees and claims that these
+networks are not nearly as rare and only appear to so as a result of an
+unrealistic expectation of a power law without deviations or noise.
+Additional evidence of these deviations from a power law is shown by
 \citet{Lee24} who demonstrate that a lot of networks are partially
-scale-free, in that the body of the degree distribution is modelled well
-by a power law while the tail is lighter than what is implied by the
-body (although still regularly varying).
+scale-free, in that the body of the degree distribution is often
+modelled well by a power law, while the tail is lighter than what is
+implied by the body, albeit still regularly varying..
 
-Most of the study into the degrees of real networks, including those
-mentioned here, has been purely descriptive in the sense that no
-information about the networks growth is revealed (aside from relating a
-power law to preferential attachment).
+Nevertheless, most studies into the appropriateness of a power law for
+the degrees of real networks, the aforementioned references included,
+have been largely descriptive in the sense that no information about the
+growth of the networks is revealed.
 
-The study of network growth began to gain popularity when
-\citet{Barabasi99} showed that a network that has grown in such a way
-that nodes gain edges at a rate proportional to their degree results in
-a network that is scale-free. This is why the presence of real
-scale-free networks is such a hot topic, since if it is shown that they
-are often scale-free then a model such as preferential attachment gains
-a lot of justification for being used to model network growth. The
-preferential attachment model they introduced uses a preference
-function, \(b(k)=k+1\) where \(k\) is a node in-degree, that is fairly
-simple and provided the foundations for many modifications and
-extensions to the model. \citet{krapivsky01} considered a more general
-preference function of the form \(b(k) = (k+1)^\alpha\) and showed that
-the degree distribution only has regular variation in the tail when
-\(\alpha=1\), no regular variation when \(0<\alpha<1\) (and therefore
-not power law), and when \(\alpha>1\) a finite number of nodes end up
-with all edges after a certain point resulting in a degenerate degree
-distribution. \citet{wang2022random} returns to a linear preference
-function of the form \(b(k) = k+\varepsilon\) but adds the possibility
-for reciprocal edges to be sent, this results in joint in-degree
-out-degree distribution that is multivariate regular varying and has the
-property of hidden regular variation. \citet{rudas07} follows in the
-footsteps of \citet{krapivsky01} and considers a preferential attachment
-tree with a preference function \(b(\cdot)\) and uses theory from
-continuous time branching processes to derive a limiting degree
-distribution in terms of the preference function \(b(\cdot)\). Research
-in this area tends to only focus on the theoretical asymptotic results
-of network growth models with little analysis of real networks. This
-paper aims to address this gap, asking if a network is assumed to come
-from a preferential attachment model can we use the degree distribution
-alone to directly infer the model parameters?
+The popularity of using the power law for network degrees can be traced
+back to the preferential attachment (PA) model popularised by
+\citet{Barabasi99}. In the general model, as new nodes join the network,
+an existing node with degree k gains edges at a rate proportional to
+\(b(k)\), where b is a non-negative preference function.
+\citet{Barabasi99} showed that, when \(b(k) = k + 1\), in the limit the
+resulting degree distribution is regularly varying with index 3.
+Subsequently, if a real network is shown to be scale-free, one can
+loosely justify preferential attachment as the underlying mechanism of
+its growth.
+
+The model from \citet{Barabasi99} provided the foundations for various
+generalisations.
+
+\citet{krapivsky01} considered \(b(k) = (k+1)^\alpha\), and showed that
+the degree distribution is not regularly varying (and therefore not
+following the power law) when \(0<\alpha<1\), and when \(\alpha>1\) a
+finite number of nodes end up with all edges after a certain point
+resulting in a degenerate degree distribution. \citet{wang2022random}
+returns to a linear preference function of the form
+\(b(k) = k+\varepsilon\) but adds the possibility for reciprocal edges
+to be sent, resulting in the joint distribution of in-degree and
+out-degree being multivariate regularly varying and having the property
+of hidden regular variation. \citet{rudas07} follows in the footsteps of
+\citet{krapivsky01} , by considering a preferential attachment tree and
+using theory from continuous branching processes, derives a limiting
+degree distribution in terms of the preference function \(b(\cdot)\).
+Nevertheless, research in this area tends to only focus on the
+theoretical asymptotic results of network growth models with little
+analysis of real networks.
+
+This paper aims to address the gap between the applied and theoretical
+works, by asking if a network is assumed to come from a preferential
+attachment model, can we use the degree distribution alone to directly
+infer the parameters of the the preference function and learn about the
+growth mechanisms? Moreover, proper consideration is given to the tail
+of the degree distribution, because otherwise the effects of the largest
+degrees, which correspond to the most influential nodes, deviating from
+the power law will be discounted.
 
 It is important to think about how we intend to consider the tail of the
 degree distributions, because if not done correctly we may end up
 essentially discounting the effects of the largest degrees (often the
-most influential nodes) deviating from a power law. For this reason we
-will use methods from discrete extreme value theory, as they best
-capture the nature of the data involved, more specifically we will use
-results from \citet{shimura12} to study how the tail of the degree
-distribution is affected by the preference function since we wish to
-align what we do with the recent findings that the a lot of real degree
-distributions are regularly varying.
+most influential nodes) deviating from a power law.
+
+For the above reason, we will use methods from discrete extreme value
+theory, in particular those by \citet{shimura12}, who provided
+theoretical guarantees for a discrete distribution to be regularly
+varying or not. Using these results, we demonstrate how the tail of the
+degree distribution is affected by \(b(\cdot)\), and subsequently
+propose a class of preference functions that is tail realistic for real
+networks. These analytical results enables the likelihood of the degree
+distribution to be expressed in terms of the parameters of \(b(\cdot)\),
+which in turn allows the underlying mechanism of the network, assumed to
+grow according to preferential attachment, to be inferred directly.
 
 The remainder of the paper is as follows: Section~\ref{sec-tail} gives a
 detailed description of the preferential attachment model alongside the
-theoretical results for the survival of the limiting degrees with a
+theoretical results for the survival of the limiting degrees, with a
 focus on the tail behaviour in terms of the preference function
-\(b(\cdot)\). It is shown that a regularly varying degree distribution
-can only be the result of an asymptotically linear preference function.
-This section also introduces a preference function that can guarantee
-regular variation in the degrees while remaining flexible via a set of
-parameters that can provide behaviour similar to that in
-\citet{krapivsky01} up until a threshold. Section~\ref{sec-model}
-utilises the preference function proposed at the end of
-Section~\ref{sec-tail}, and illustrates how the extreme value index
-(EVI) of the degree distribution varies with the model parameters.
-Section~\ref{sec-sim} consists of a simulation study where networks are
-simulated from the proposed model for various parameter combinations,
-demonstrating that the parameters can be recovered from fitting the
-model to only the degree distribution. Section~\ref{sec-real} fits the
-model to some real data and provides posterior estimates for the
-preference function. Section~\ref{sec-conc} concludes the article.
+\(b(\cdot)\). A class of asymptotically linear preference functions will
+be introduced and shown to guarantee regular variation in the degrees
+while remaining flexible up until a threshold. Section~\ref{sec-model}
+utilises the proposed preference function and illustrates numerically
+how the tail index of the degree distribution varies with the model
+parameters. Section~\ref{sec-sim} consists of a simulation study where
+networks are simulated from the proposed model for various parameter
+combinations, demonstrating that the parameters can be recovered from
+fitting the model to only the degree distribution.
+Section~\ref{sec-real} fits the model to some real data and provides
+posterior estimates for the preference function. Section~\ref{sec-conc}
+concludes the article.
 
 \newpage
 
@@ -342,11 +357,11 @@ follows:
 
 Starting at time \(t=0\) with an initial network of \(m\) vertices that
 each have no edges, at times \(t=1,2,\ldots\) a new vertex is added to
-the network bringing with it \(m\) directed edges (with the new vertex
-as the source); the target for each of these edges are selected from the
-vertices already in the network with weights proportional to some
+the network bringing with it \(m\) directed edges from the new vertex;
+the target for each of these edges are selected from the vertices
+already in the network with weights proportional to some non-decreasing
 preference function \(b(\cdot)\) of their degree, where
-\(b: N \mapsto \mathbb R^+\setminus\{0\}\) is such that:
+\(b: \mathbb N \mapsto \mathbb R^+\setminus\{0\}\) is such that:
 
 \begin{equation}\phantomsection\label{eq-condb2}{
 \sum_{k=0}^\infty\frac{1}{b(k)} = \infty.
@@ -354,16 +369,16 @@ preference function \(b(\cdot)\) of their degree, where
 
 Special cases of this model include the Barabási-Albert (BA) model when
 \(b(k) = k+\varepsilon\), which leads to a power-law degree distribution
-with EVI \(\xi=1/2\), and the Uniform Attachment (UA) model where
+with tail index 2, and the Uniform Attachment (UA) model where
 \(b(k)=c\) leading to a degree distribution that is not regularly
 varying.
 
 The survival function of the limiting degree distribution, called the
 limiting survival hereafter, under condition \ref{eq-condb2} can be
-analytically derived in the case where \(m=1\).
+analytically derived in the case where \(m=1\), this is presented below.
 
 Consider a continuous time branching process \(\zeta(t)\) driven by a
-Markovian pure birth process, with \(\zeta(0)=0\) abd birth rates
+Markovian pure birth process, with \(\zeta(0)=0\) and birth rates
 depending on a non-negative function \(b(\cdot)\):
 
 \[
@@ -376,18 +391,16 @@ where \(\mathrm{deg}(x, \Upsilon(t))\) is the degree of node \(x\) in
 the tree \(\Upsilon(t)\) at time \(t\).
 
 Theorem 1 from \citet{rudas07} states that for the tree \(\Upsilon(t)\)
-at time \(t\):
+at time \(t\) and a characteristic function of the tree
+\(\varphi(\cdot)\) :
 
 \begin{equation}\phantomsection\label{eq-survlim}{
 \lim_{t\rightarrow\infty}\frac{1}{|\Upsilon(t)|}\sum_{x\in\Upsilon(t)}\varphi(\Upsilon(t)_{\downarrow x}) = \lambda^* \int_0^\infty e^{-\lambda^* t}\mathbb E\left[\varphi(\Upsilon(t))\right]dt
 }\end{equation} where \(\lambda^*\) satisfies \(\hat\rho(\lambda^*)=1\)
 and \(\hat\rho\) is the Laplace transform of the density of the point
-process associated with the pure birth process that corresponds to a
-nodes individual growth, that is:
-
-\[
-\hat\rho(\lambda) \coloneq \int_0^\infty e^{-\lambda t}\rho(t)\mathrm{d}t.
-\]
+process associated with the pure birth process that corresponds to the
+growth of an individual node, that is
+\(\hat\rho(\lambda) \coloneq \int_0^\infty e^{-\lambda t}\rho(t)\mathrm{d}t\)
 
 The limiting survival can be viewed as the limit of the empirical
 proportion of vertices with degree over a threshold \(k\in\mathbb N\),
@@ -397,31 +410,28 @@ that is:
 \bar F(k) = \lim_{t\rightarrow\infty}\frac{\sum_{x\in\Upsilon(t)}\mathbb I\left\{\text{deg}(x,\Upsilon(t)_{\downarrow x})>k\right\}}{\sum_{x\in\Upsilon(t)} 1}
 \] which can also be written using Equation~\ref{eq-survlim} as:
 
-\[
+\begin{equation}\phantomsection\label{eq-surv-origin}{
 \bar F(k) = \frac{\int_0^\infty e^{-\lambda^* t}\mathbb E\left[\mathbb I\left\{\text{deg}(x,\Upsilon(t))>k\right\}\right]dt}{\int_0^\infty e^{-\lambda^* t}dt} = \prod_{i=0}^k\frac{b(i)}{\lambda^* + b(i)}.
-\] Therefore, the corresponding probability mass function of the degree
+}\end{equation}
+
+Therefore, the corresponding probability mass function of the degree
 distribution \(f(k) = \bar F(k-1) - \bar F(k)\) is
 
-\[
+\begin{equation}\phantomsection\label{eq-pmf-origin}{
 f(k) = \frac{\lambda^*}{\lambda^* + b(k)}\prod_{i=0}^{k-1}\frac{b(i)}{\lambda^*+b(i)}.
-\]
+}\end{equation}
 
 We are interested in how the tail behaviour of the discrete limiting
 degree distribution is affected by the preference function \(b\).
 
-For a distribution \(F\) with survival function \(\bar F\) and some
+For a distribution \(F\) with survival function \(\bar F\) and
 \(k\in\mathbb Z^+\) let
 
 \[
 \Omega(F,k) = \left(\log\displaystyle\frac{\bar F (k+1)}{\bar F (k+2)}\right)^{-1} - \left(\log\displaystyle\frac{\bar F (k)}{\bar F (k+1)}\right)^{-1}.
 \]
 
-\citet{shimura12} states that if
-\(\lim_{k\rightarrow\infty} \Omega(F,k) = 1/\alpha\) (\(\alpha>0\)),
-then \(F\) is regularly varying with \(\bar F(k) \sim k^{-\alpha}\). On
-the other hand, if \(\lim_{k\rightarrow\infty} \Omega(F,k) = 0\) then we
-will refer to the distribution as light-tailed. This allows us to show
-the following:
+This allows us to show the following:
 
 \begin{proposition}[]\protect\hypertarget{prp-omega}{}\label{prp-omega}
 
@@ -434,26 +444,31 @@ If \(\bar F(k) = \prod_{i=0}^k\frac{b(i)}{\lambda^* + b(i)}\) and
 
 See Appendix \ref{sec-proofs} for the details of the proof.
 
+\citet{shimura12} states that if
+\(\lim_{k\rightarrow\infty} \Omega(F,k) = 1/\alpha\) (\(\alpha>0\)),
+then \(F\) is regularly varying with \(\bar F(k) \sim k^{-\alpha}\). On
+the other hand, if \(\lim_{k\rightarrow\infty} \Omega(F,k) = 0\) then we
+will refer to the distribution as light-tailed.
+
 Proposition~\ref{prp-omega} aligns with the result from
 \citet{krapivsky01} demonstrating that a sub-linear preference function
 will lead to a light-tailed distribution, as
 \(\lim_{k\rightarrow\infty} b(k+1)-b(k) = 0\) if \(b(k)=k^\alpha\) where
 \(\alpha < 1\). Proposition 2.1 also aligns with the fact that BA model
-produces a regularly varying degree distribution with EVI \(\xi=0.5\) by
+produces a regularly varying degree distribution, with tail index 2, by
 considering the preference function \(b(k) = k + \varepsilon\), as
 \(\lim_{k\rightarrow\infty}b(k+1)-b(k)=1\) leaving the tail index to be
 \(1/\lambda^*\) which using \(\hat\rho\) can be found to be \(1/2\). So,
 in order for the degree distribution to be regularly varying we need
 that the limit \(\lim_{k\rightarrow\infty} b(k+1)-b(k)\) exists and is
-positive. To determine the class of functions that will result in
-regularly varying limiting degree distributions, we use the following
-result:
+positive. The following proposition determines the class of functions
+that will result in regular varying degree distributions.
 
 \begin{proposition}[]\protect\hypertarget{prp-omega2}{}\label{prp-omega2}
 
 Consider a GPA model with preference function \(b(\cdot)\) satisfying
 Proposition~\ref{prp-omega}. Then the limiting degree distribution is
-regularly varying with EVI \(c/\lambda^{*}\) if and only if
+regularly varying with tail index \(\lambda^{*}/c\) if and only if
 \(\lim_{k\rightarrow\infty}b(k)/k = c > 0\).
 
 \emph{Proof}
@@ -464,7 +479,8 @@ From Proposition~\ref{prp-omega}, we have that: \[
 
 \[
 \lim_{k\rightarrow\infty}[b(k+1)-b(k)] = \lim_{k\rightarrow\infty}\frac{b_{k+1} - b_k}{a_{k+1} - a_k} = c>0,
-\] meaning by Theorem~\ref{thm-stolz} in Appendix \ref{sec-sup}:
+\] Using the Stolz-Cesaro Theorem
+\href{Appendix\%20-@sec-sup}{@thm-stolz},
 
 \[
 \lim_{k\rightarrow\infty}\frac{b_k}{a_k} = \lim_{k\rightarrow\infty}\frac{b(k)}{k} = c>0\qquad \square.
@@ -473,14 +489,16 @@ From Proposition~\ref{prp-omega}, we have that: \[
 \end{proposition}
 
 Using this result we can understand how the preference function is
-directly connected with the EVI and regular variation of the degree
-distribution. We use this result to create a preference function that
-guarantees regular variation in the tail of the degree distribution,
-aligning with analysis of real networks, whilst allowing for the tail to
-deviate from the shape implied by the body. This gives the model the
-capability to produce realistic behaviour in the degrees like what was
-in \citet{Lee24} by using a piecewise function inspired by the observed
-deviation from the power law after a certain threshold.
+directly connected with the tail behaviour of the degree distribution.
+Specifically, regular variation is achieved if and only if \(b(k)\) is
+asymptotically linear with \(k\). We use this result to create a
+preference function that guarantees regular variation in the tail of the
+degree distribution, aligning with analysis of real networks, whilst
+allowing for the tail to deviate from the shape implied by the body.
+This gives the model the capability to produce realistic behaviour in
+the degrees like what was in \citet{Lee24} by using a piecewise function
+inspired by the observed deviation from the power law after a certain
+threshold:
 
 \begin{equation}\phantomsection\label{eq-pref}{
 b(k) = \begin{cases}
@@ -490,22 +508,23 @@ k_0^\alpha + \varepsilon + \beta(k-k_0), &k\ge k_0
 }\end{equation} for \(\alpha,\beta, \varepsilon>0\) and
 \(k_0\in\mathbb N\).
 
-This preference function, as per Proposition~\ref{prp-omega}, will
-produce a degree distribution with EVI \(\xi=\beta/\lambda^*\)
-guaranteeing regular variation. We study this preference function
-further in the next section.
+Using Proposition~\ref{prp-omega}, we can show that
+\(\lim_{n\rightarrow\infty}\Omega(F,k)=\lambda^{*}/\beta\), meaning the
+degree distribution obtained using this preference funnction is
+regularly varying with tail index \(\lambda^*/\beta\).
 
 \newpage
 
 \section{A Preferential Attachment Model with Flexible Regular
 Variation}\label{sec-model}
 
-In the previous section, we found that using a preference function with
-linearity in the limit allows for the inclusion of sub/super-linear
+In the previous section, we found that using an asymptotically linear
+preference function allows for the inclusion of sub/super-linear
 behaviour below the threshold, while simultaneously guaranteeing regular
-varation of the degrees. In this section, we study how the limiting
-degree distribution varies with the preference function according to
-Equation~\ref{eq-pref}. Its survival is
+varation of the degrees. In this section, we demonstrate the flexibility
+of the preference function in Equation~\ref{eq-pref}, with regard to the
+tail behaviour of the limiting degree distribution. Using
+Equation~\ref{eq-surv-origin}, the limiting survival is
 
 \begin{equation}\phantomsection\label{eq-polysurv}{
 \bar F(k) = \begin{cases}
@@ -520,12 +539,11 @@ with \(\lambda^*\) satisfying \(\hat \rho(\lambda^*)=1\) where
 \hat\rho(\lambda) = \sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{i^\alpha + \varepsilon}{\lambda+i^\alpha + \varepsilon} + \left(\frac{k_0^\alpha + \varepsilon}{\lambda-\beta}\right)\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda + i^\alpha + \varepsilon} 
 }\end{equation}
 
-which must be solved numerically for most parameter choices. Also, note
-that \(\lambda>\beta\).
+which has to be solved numerically for most parameter choices. Also,
+note that \(\lambda>\beta\).
 
-Some examples of the limiting degree distribution for various parameter
-combinations are shown below on log-log scale in
-Figure~\ref{fig-polylinsurv}:
+For some parameter combinations, the limiting survival \(\bar F(k)\) is
+shown on log-log scale in Figure~\ref{fig-polylinsurv}:
 
 \begin{figure}
 
@@ -535,26 +553,27 @@ Figure~\ref{fig-polylinsurv}:
 
 }
 
-\caption{\label{fig-polylinsurv}Theoretical survival distributions of
-the limiting degree distributions, according to various combinations of
-\((\alpha, \beta, \varepsilon)\) and \(k_0=20\) of the proposed
-preferential attachment model.}
+\caption{\label{fig-polylinsurv}The limiting survival, according to
+various combinations of \((\alpha, \beta, \varepsilon)\) and \(k_0=20\)
+of the proposed preferential attachment model.}
 
 \end{figure}%
 
 Figure~\ref{fig-polylinsurv} demonstrates that this model can capture a
-wide variety of shapes for the survival function, including a large
-range of possible tail indices ranging from 0.035
-(\(\alpha=1.5, \beta=0.1, \varepsilon=1\)) to 0.999
-(\(\alpha=0.5, \beta=1.5, \varepsilon=0.01\)).
+range of tail behaviour, including a large range of possible tail
+indices ranging from 0.035 (\(\alpha=1.5, \beta=0.1, \varepsilon=1\)) to
+0.999 (\(\alpha=0.5, \beta=1.5, \varepsilon=0.01\)).
 
-The survival function (\ref{eq-polysurv}) can be connected to the
-discrete version of the generalised Pareto distribution (GP), called the
-Integer GP (IGP) \citep{Rohrbeck_2018} with conditional survival: \[
+The analytic form of the survival function in (\ref{eq-polysurv}),
+offers a natural connection to the discrete version of the generalised
+Pareto distribution (GP), providing a link to a well established
+component of discrete extremes in the literature. Specifically,
+connecting to the Integer GP (IGP) seen in \citet{Rohrbeck_2018} with
+conditional survival: \[
 \Pr(X> x|X> v) = \left(\frac{\xi(x-v)}{\sigma} + 1\right)^{-1/\xi},\qquad x=v+1,v+2,\ldots
 \] for \(v\in\mathbb Z^+, \sigma>0,\xi\in \mathbb R\), denoted as
 \(X|X>u \sim  \mathrm {IGP}(\xi, \sigma, u)\) where \(\xi\) is the shape
-parameter controlling the tail index
+parameter controlling the tail index.
 
 By Equation~\ref{eq-polysurv} and using Stirling's approximation:
 
@@ -562,24 +581,25 @@ By Equation~\ref{eq-polysurv} and using Stirling's approximation:
 \bar F(k|k\ge k_0) &= \frac{\Gamma\left(\frac{\lambda^* + k_0^\alpha + \varepsilon}{\beta}\right)}{\Gamma\left(\frac{k_0^\alpha + \varepsilon}{\beta}\right)}\times\frac{\Gamma\left(k-k_0  +1 + \frac{k_0^\alpha + \varepsilon}{\beta}\right)}{\Gamma\left(k-k_0  +1 + \frac{\lambda^*+ k_0^\alpha + \varepsilon}{\beta}\right)}\\
 &\approx\left(\frac{k_0^\alpha+\varepsilon}{\beta}\right)^{\lambda^*/\beta}\left(k-k_0+1+\frac{k_0^\alpha + \varepsilon}{\beta}\right)^{-\lambda^*/\beta}\\
 &=\left(\frac{k_0^\alpha+\varepsilon}{k_0^\alpha+\varepsilon + \beta}\right)^{\lambda^*/\beta}\left(\frac{\beta(k-k_0)}{\beta + k_0^\alpha+\varepsilon} + 1\right)^{-\lambda^*/\beta}\\
-&=\left(\frac{\beta(k+1-k_0)}{k_0^{\alpha}+\varepsilon} + 1\right)^{-\lambda^{*}/\beta}
+&=\left(\frac{\beta(k+1-k_0)}{k_0^{\alpha}+\varepsilon} + 1\right)^{-\lambda^{*}/\beta}.
 \end{align*}
 
-Therefore, \[
+Therefore, \[{#eq-igp-est}
 \bar F(k) 
 \begin{cases}
 =\prod_{i=0}^{k}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon},&k<k_0,\\
 \approx \left(\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon}\right) \left(\frac{\beta(k+1-k_0)}{k_0^{\alpha}+\varepsilon} + 1\right)^{-\lambda^*/\beta},&k\ge k_0,
 \end{cases}
 \] meaning that for \(k\ge k_0\) the limiting degree distribution (for
-large \(k_0^\alpha\)) is approximated by
+large \(k_0^\alpha\)) is approximated by the
 \(\text{IGP}\left(\frac{\beta}{\lambda^*}, \frac{k_0^\alpha + \varepsilon}{\lambda^*},k_0-1\right)\).
 
 To assess how close of an approximation this is, the theoretical
-conditional survivals are shown in Figure~\ref{fig-approx_surv} in
-colour and their IGP approximations are shown in grey. The approximation
-seems to hold up fairly well even for large degrees and more so when
-\(\alpha\) is larger.
+conditional survival Equation~\ref{eq-polysurv} are shown in
+Figure~\ref{fig-approx_surv} in colour and their IGP approximations
+\textbf{?@eq-igp-est} are shown in grey. The approximation seems to hold
+up fairly well even for large degrees and more so when \(\alpha\) is
+larger.
 
 \begin{figure}
 
@@ -601,15 +621,14 @@ is shown in Figure~\ref{fig-polyheat} for various parameter choices. The
 darker and lighter regions on the heat maps correspond to a heavier and
 a lighter tail, respectively, the red dashed line shows combinations of
 \(\alpha\) and \(\beta\) that produce a limiting degree distribution
-with the same tail index as the Barabási-Albert model, that is,
-\(\xi=0.5\).
+with the same tail index as the Barabási-Albert model.
 
 Through the connection to the IGP, fitting this model is almost
-equivalent to fitting the IGP to the degree and estimating the
-parameters but instead of only describing the shape of the degree
-distribution we would also gain estimates for the shape of the
-preference function while can help understand the mechanisms underlying
-the growth of the network.
+equivalent to fitting the IGP to the degrees and estimating its
+parameters. However, instead of only describing the shape of the degree
+distribution, we would also gain estimates for the shape of the
+preference function, thus gaining a direct understanding the mechanisms
+underlying the growth of the network.
 
 \begin{figure}
 
@@ -628,24 +647,26 @@ combinations of the parameters of the proposed model.}
 
 To perform inference of the model parameters, we consider a network with
 degree count vector \(\pmb n = (n_0, n_1, \ldots, n_M)\), where \(M\) is
-the maximum degree. We can then write the likelihood as:
+the maximum degree. Using Equation~\ref{eq-pmf-origin}, the likelihood
+is:
 
 \begin{align*}
-L(\pmb x,\pmb n | \pmb \theta) = &\left(\frac{\lambda^*}{\lambda^*+\varepsilon}\right)^{n_0}\left(\prod_{j=l}^{k_0-1}\frac{j^\alpha +\varepsilon}{\lambda^* + j^\alpha +\varepsilon}\right)^{\left(\sum_{i\ge k_0}n_{i}\right)} \\ &\times \prod_{l \le i<k_0}\left(\frac{\lambda^*}{\lambda^* +i^\alpha + \varepsilon } \prod_{j=l}^{k_0-1}\frac{j^\alpha + \varepsilon}{\lambda^* + j^\alpha + \varepsilon}\right)^{n_i}\\ &\times \prod_{i\ge k_0}\left(\frac{\text{B}(i-k_0 + (k_0^\alpha + \varepsilon)/\beta,1+\lambda^*/\beta)}{\text{B}((k_0^\alpha + \varepsilon)/\beta,\lambda^*/\beta)}\right)^{n_i}
+L(\pmb n | \pmb \theta,l) = &\left(\frac{\lambda^*}{\lambda^*+\varepsilon}\right)^{n_0}\left(\prod_{j=l}^{k_0-1}\frac{j^\alpha +\varepsilon}{\lambda^* + j^\alpha +\varepsilon}\right)^{\left(\sum_{i\ge k_0}n_{i}\right)} \\ &\times \prod_{l \le i<k_0}\left(\frac{\lambda^*}{\lambda^* +i^\alpha + \varepsilon } \prod_{j=l}^{k_0-1}\frac{j^\alpha + \varepsilon}{\lambda^* + j^\alpha + \varepsilon}\right)^{n_i}\\ &\times \prod_{i\ge k_0}\left(\frac{\text{B}(i-k_0 + (k_0^\alpha + \varepsilon)/\beta,1+\lambda^*/\beta)}{\text{B}((k_0^\alpha + \varepsilon)/\beta,\lambda^*/\beta)}\right)^{n_i}
 \end{align*}\label{eq-lh}
 
-where \(B(y,z)\) is the the beta function, and \(l\ge0\) is a variable
-that allows truncating the data such that the minimum degree is \(l\).
-This will allow the model to be fitted whilst ignoring the influence of
-the lower degrees (those less than \(l\)) as the model does not capture
-the behaviour well at the lower degrees since \citet{rudas07} only
-provides results for the case of a preferential attachment tree.
+where \(\text{B}(\cdot,\cdot)\) is the the beta function, and \(l\ge0\)
+is a quantity that allows truncating the data such that the minimum
+degree is \(l\). This will allow the model to be fitted whilst ignoring
+the influence of the lower degrees (those less than \(l\)) as the model
+does not capture the behaviour well at the lower degrees since
+\citet{rudas07} only provides results for the case of a preferential
+attachment tree.
 
 \section{Applications}\label{applications}
 
 \subsection{Simulated Data}\label{sec-sim}
 
-This first subsection aims to show that the parameters of the model (and
+This subsection aims to show that the parameters of the model (and
 therefore the preference function) in Section~\ref{sec-model} can be
 recovered from simulating a network from the model, and fitting it to
 the observed degree distribution, using the likelihood in \eqref{eq-lh}.
@@ -664,12 +685,12 @@ k_0 &\sim \text{U}(1,10,000),\\
 \varepsilon &\sim \text{Gamma(1,0.01)},
 \end{align*}
 
-where Gamma(a, b) is the Gamma distribution with shape a and rate b, and
-U(a, b) is uniform distribution with lower and upper bounds a and b, to
-obtain a posterior distribution, up to the proportionality constant.
-Posterior samples can then be obtained by an adaptive
-Metropolis-Hastings Markov chain Monte Carlo (MCMC) algorithm. For these
-simulated networks \(l=0\).
+where Gamma(\(a\), \(b\)) is the Gamma distribution with shape \(a\) and
+rate \(b\), and U(\(a\), \(b\)) is uniform distribution with lower and
+upper bounds a and b, to obtain a posterior distribution, up to the
+proportionality constant. Posterior samples can then be obtained by an
+adaptive Metropolis-Hastings Markov chain Monte Carlo (MCMC) algorithm.
+For these simulated networks \(l=0\).
 
 \begin{figure}
 
@@ -681,7 +702,7 @@ simulated networks \(l=0\).
 
 \caption{\label{fig-rec1}Posterior estimates of survival function for
 data simulated from the proposed model with various combinations of
-(\(\alpha\),\(\beta\),\(\varepsilon\)) and \(k_0=20\).}
+\((\alpha,\beta,\varepsilon)\) and \(k_0=20\).}
 
 \end{figure}%
 
@@ -689,7 +710,7 @@ data simulated from the proposed model with various combinations of
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{images/mcmc_plot.jpg}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{images/mcmc_plot.jpg}
 
 }
 
@@ -699,12 +720,11 @@ simulated from the proposed model with various combinations of
 
 \end{figure}%
 
-Figure~\ref{fig-rec1} and Figure~\ref{fig-rec2} shows the estimations
-demonstrates the usefulness of the model, as we can recover the model
-parameters well from only the final degree distribution of the simulated
-network. This indicates that the method may also be applied to the
-degree distributions of real networks, estimating the model parameters
-assuming they evolved according to the GPA scheme.
+Figures \ref{fig-rec1} and \ref{fig-rec2} demonstrate the usefulness of
+the model, as we can recover the model parameters well from only the
+final degree distribution of the simulated network. This indicates that
+the method may also be applied to real networks, with the assumption
+that they evolved according to the GPA scheme.
 
 \subsection{Real Data}\label{sec-real}
 
@@ -743,7 +763,7 @@ inference results. The data consists of 12 networks sourced from
   \texttt{opsahl−openflights}: network containing flights between
   airports of the world.
 \item
-  \texttt{pajek-erdos}: co-authorship network around Paul Erd\o``s
+  \texttt{pajek-erdos}: co-authorship network around Paul Erdős
 \item
   \texttt{reactome}: network of protein--protein interactions in humans
 \item
@@ -758,7 +778,7 @@ inference results. The data consists of 12 networks sourced from
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-real1-1.pdf}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-real1-1.pdf}
 
 }
 
@@ -784,15 +804,13 @@ cases of substantial discrepancies, it is either because the GPA model
 fits the tail better than the Zipf-IGP model does, or because of the
 threshold being estimated as too low forcing almost all of the data to
 be modelled by the linear part of the GPA. This again shows the effects
-that small degrees have on this model, which is somewhat expected as the
-theory used for this model is for trees and none of these real networks
-(nor many real networks) are.
+that small degrees have on this model.
 
 \begin{figure}
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-shapes-1.pdf}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-shapes-1.pdf}
 
 }
 
@@ -803,7 +821,7 @@ red).}
 \end{figure}%
 
 Figure~\ref{fig-pa} shows the estimated preference function \(b(k)\)
-alongside the 95\% credible interval on a log-log plot. Although the
+alongside the 95\% credible interval on a log-log scale. Although the
 credible interval becomes very large for the largest degrees, this is
 expected as not all of these networks had data in that region, and for
 those that do the credible interval is much narrower, as is the case for
@@ -838,7 +856,7 @@ an effect than it did before some threshold \(k_0\).
 \section{Conclusion and Discussion}\label{sec-conc}
 
 In this paper we introduced a class of preference functions that, under
-the GPA scheme, generate a network with a flexible yet heavy-tailed
+the GPA scheme, generate a network with a flexible yet regularly varying
 degree distribution. From the simulation study we showed that the
 parameters can be recovered from fitting the model to the degrees alone.
 We also applied this method to the degree distributions of real
@@ -855,6 +873,23 @@ using a similar method to this, allowing us to compare the results here
 something that is more accurate. This could include fixing the
 out-degree of new nodes at a constant greater than one, or allowing the
 out-degree of new nodes to vary.
+
+Its worth noting the recent work by \citet{banerjee25}, that provides
+results for more general networks beyond trees utilising the same
+underlying branching process. They consider a model that grows in the
+exact same way as the model that we have considered, but then they
+collapse the nodes of the tree resulting in a more general network much
+more like those in reality. However, there is no expression for the
+probability mass function of the degrees and therefore no likelihood
+that can be used for modeling in the same way that we have. In spite of
+this, using Remark 2 from \citet{banerjee25} it can be shown that the
+degree distribution is still heavy tailed although not necessarily
+regularly varying.
+
+Obtaining an expression for the degree distributions of more general
+cases of preferential attachment models are, for the moment, seemingly
+inaccessible and provide a real barrier to using more realistic models
+in a way similar to what we have in this paper.
 
 \setcounter{section}{0}
 \renewcommand{\thesection}{\Alph{section}}
@@ -901,8 +936,9 @@ sequence and the following limit exists:
 \subsection{\texorpdfstring{Proof of
 Proposition~\ref{prp-omega}}{Proof of Proposition~}}\label{proof-of-prp-omega}
 
-Taking the form of the GPA degree survival: \[
-\bar F(k) = \prod_{i=0}^k\frac{b(i)}{\lambda+b(i)}
+Taking the form of the GPA degree survival from
+Equation~\ref{eq-surv-origin} : \[
+\bar F(k) = \prod_{i=0}^k\frac{b(i)}{\lambda^*+b(i)}
 \] and substituting into the formula for \(\Omega(F,n)\):
 
 \begin{align*}
@@ -911,9 +947,9 @@ Taking the form of the GPA degree survival: \[
 &=\left(\log\left[1+\frac{\lambda}{b(k+2)}\right]\right)^{-1}-\left(\log\left[1+\frac{\lambda}{b(k+1)}\right]\right)^{-1}.
 \end{align*}
 
-Clearly if \(b(k)=c\) or \(\lim_{k\rightarrow\infty}b(k)=c\) for some
-\(c>0\) then \(\Omega(F,k)=0\). Now consider a non-constant \(b(k)\) and
-re-write \(\Omega(F,k)\) as:
+Clearly if \(\lim_{k\rightarrow\infty}b(k)=c\) for some \(c>0\) then
+\(\Omega(F,k)= 0 (= \lim_{k\rightarrow\infty}\frac{1}{\lambda^{*}} [b(k+2)-b(k+1)])\).
+Now consider a non-constant \(b(k)\) and re-write \(\Omega(F,k)\) as:
 
 \begin{align*}
 \Omega(F,k) &= \left(\log\left[1+\frac{\lambda}{b(k+2)}\right]\right)^{-1}-\frac{b(k+2)}{\lambda}+\frac{b(k+2)}{\lambda}-\left(\log\left[1+\frac{\lambda}{b(k+1)}\right]\right)^{-1}\\&+\frac{b(k+1)}{\lambda}  -\frac{b(k+1)}{\lambda}\\
@@ -949,7 +985,7 @@ g(k_0) + \beta(k-k_0), &k\ge k_0,
 Now using the fact that:
 
 \[
-\prod_{i=0}^n(x+yi) = x^{n+1}\frac{\Gamma(\frac{x}{y}+n+1)}{\Gamma(\frac{x}{y})}
+\prod_{i=0}^n(x+yi) = x^{n+1}\frac{\Gamma\left(\frac{x}{y}+n+1\right)}{\Gamma\left(\frac{x}{y}\right)}
 \] and reindexing the product in the second sum,
 
 \begin{align*}
