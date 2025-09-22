@@ -1,1 +1,1 @@
-This repository contains the files used in producing the article "Learning growth mechanisms of tail realistic preferential attachment models from network degree distributions".
+This repository contains the files used in producing the article "Learning growth mechanisms of tail realistic preferential attachment models from network degree distributions". You can click [here](https://raw.githubusercontent.com/TWBoughen/tail_flex/main/paper.pdf) to download a version of the paper, or use the DOI in the about section.
