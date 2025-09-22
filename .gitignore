@@ -2,7 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-README.md
 mcmc_plot.rds
 pars_plot.rds
 *.tex
