@@ -13,9 +13,9 @@ trunc.at = 3
 
 
 
-data.files = list.files('./data') 
+data.files = list.files('../data') 
 nms = tstrsplit(data.files,'out.',keep=2)[[1]]
-
+nms=nms[!is.na(nms)]
 saveRDS(nms, 'nms.rds')
 
 
@@ -62,7 +62,7 @@ for(i in 1:length(fits)){
 tmp = fits[[4]]
 
 
-fits = readRDS('modelfits.rds')
+fits = readRDS('../results/modelfits.rds')
 
 fits[[4]] = tmp
 
@@ -160,14 +160,14 @@ comp_plot
 
 # -------------------------------------------------------------------------
 
-mixfits = readRDS('mixfits.rds')
+mixfits = readRDS('../results/mixfits.rds')
 plots = list()
 for(i in 1:length(fits)){
   plots[[i]] = ggplot() + geom_boxplot(aes(y=!!fits[[i]]$mcmc$pars[-(1:2e4),4]/!!fits[[i]]$mcmc$lambdas[-(1:2e4)], x='GPA', fill='GPA')) +
     geom_boxplot(aes(y = !!mixfits[[i]]$pars$shape, x='Zipf-IGP', fill = 'Zipf-IGP')) + ylim(-1,1) + ggtitle(nms[i]) + xlab('')+ylab('')
 }
 
-shape_plot = ggpubr::ggarrange(plotlist = plots, common.legend = T,label.x='', label.y='\\xi', legend='right')
+shape_plot = ggpubr::ggarrange(plotlist = plots, common.legend = T,label.x='', label.y='\\xi', legend='right', nrow=4, ncol=3)
 shape_plot
 saveRDS(shape_plot, 'shape_plot.rds')
 
@@ -206,6 +206,9 @@ saveRDS(PA_overlay, 'PA_overlay.rds')
 
 
 # -------------------------------------------------------------------------
+
+
+
 library(latex2exp)
 library(ggridges)
 nms = readRDS('../results/nms.rds')

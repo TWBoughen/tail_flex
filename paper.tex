@@ -8,6 +8,7 @@
   sn-basic,
 ]{sn-jnl}
 
+\setlength\evensidemargin{\oddsidemargin}
 
 \usepackage{xcolor}
 \usepackage{amsmath,amssymb}
@@ -145,9 +146,9 @@
   \newcommand\listtablename{List of Tables}
 \fi
 \ifdefined\figurename
-  \renewcommand*\figurename{Figure}
+  \renewcommand*\figurename{\textbf{Fig.}}
 \else
-  \newcommand\figurename{Figure}
+  \newcommand\figurename{\textbf{Fig.}}
 \fi
 \ifdefined\tablename
   \renewcommand*\tablename{Table}
@@ -164,7 +165,7 @@
 \theoremstyle{plain}
 \newtheorem{proposition}{Proposition}[section]
 \theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[section]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -200,7 +201,7 @@ mechanisms of tail realistic preferential attachment models from network
 degree distributions}
 
 % author setup
-\author[1]{\fnm{Thomas William} \sur{Boughen}}\author[1]{\fnm{Clement} \sur{Lee}}\author[1]{\fnm{Vianey Palacios} \sur{Ramirez}}
+\author*[1]{\fnm{Thomas William} \sur{Boughen}}\email{t.w.boughen1@newcastle.ac.uk}\author[1]{\fnm{Clement} \sur{Lee}}\author[1]{\fnm{Vianey Palacios} \sur{Ramirez}}
 % affil setup
 \affil[1]{\orgdiv{School of Mathematics, Statistics and
 Physics}, \orgname{Newcastle University}}
@@ -212,7 +213,7 @@ network is difficult as, more often than not, only its snapshots are
 available, but not its full evolution. One candidate for the generating
 mechanism is preferential attachment which, in its simplest form,
 results in a degree distribution that follows the power law.
-Consequently, the growth of real-life networks that roughly display such
+Consequently, the growth of real-life networks that display such
 power-law behaviour is commonly modelled by preferential attachment.
 However, the validity of the power law has been challenged by the
 presence of alternatives with comparable performance, as well as the
@@ -356,11 +357,7 @@ preference function \(b(\cdot)\) of their degree, where
 \sum_{k=0}^\infty\frac{1}{b(k)} = \infty.
 }\end{equation}
 
-Special cases of this model include the Barabási-Albert (BA) model when
-\(b(k) = k+1\), which in the limit of \(t\rightarrow \infty\) leads to a
-power-law degree distribution with tail index 2, and the Uniform
-Attachment (UA) model where \(b(k)=c\) leading to a degree distribution
-that is not regularly varying.
+Special cases of this model include the Barab\'asi-Albert (BA) model when $b(k) = k+1$, which in the limit of $t\rightarrow \infty$ leads to a power-law degree distribution with tail index 2, and the Uniform Attachment (UA) model where $b(k)=c$ leading to a degree distribution that is not regularly varying.
 
 The survival function of the limiting degree distribution, called the
 limiting survival hereafter, under condition \ref{eq-condb2} can be
@@ -373,7 +370,16 @@ depending on a non-negative function \(b(\cdot)\):
 
 \[
 \Pr(\zeta(t+\text{d}t)=k+1|\zeta(t)=k) = b(k)\text{d}t + o(\text{d}t).
-\] Now let \(\Upsilon(t)\) be the tree determined by \(\zeta(t)\) as
+\]
+
+Denote the density of the point process associated with the pure birth
+process corresponding to the growth of an individual node by
+\(\rho(t)\), and its Laplace transform by
+\(\hat \rho(\lambda)\coloneq \int_0^\infty e^{-\lambda t}\rho(t)\text{d}t\).
+Next, denote the Malthusian parameter of this process by \(\lambda^*\),
+that is \(\lambda^*\) satisfies \(\hat\rho(\lambda^*) = 1\).
+
+Now, let \(\Upsilon(t)\) be the tree determined by \(\zeta(t)\) as
 follows: \(\Upsilon(t)=\{\emptyset\}\) and \(\Upsilon(t)=G\) where each
 existing node \(x\) in \(\Upsilon(t)\) gives birth to a child with rate
 \(b(\mathrm{deg}(x, \Upsilon(t))\) independently of the other nodes
@@ -387,21 +393,15 @@ at time \(t\) and a characteristic function of the tree
 \(\varphi(\cdot)\) :
 
 \begin{equation}\phantomsection\label{eq-survlim}{
-\lim*{t*\rightarrow\infty}\frac{1}{|\Upsilon(t)|}\sum{x\in\Upsilon(t)}\varphi(\Upsilon(t)\_{\downarrow x}) = \lambda\^\* \int\_0\infty e{-\lambda\^\* t}\mathbb E\left[\varphi(\Upsilon(t))\right]\text{d}t 
+\lim_{t\rightarrow\infty}\frac{1}{|\Upsilon(t)|}\sum_{x\in\Upsilon(t)}\varphi(\Upsilon(t)_{\downarrow x}) = \lambda \int_0^\infty e^{-\lambda t}\mathbb E\left[\varphi(\Upsilon(t))\right]\text{d}t.
 }\end{equation}
-
-where \(\lambda^*\) satisfies \(\hat\rho(\lambda^*)=1\) and \(\hat\rho\)
-is the Laplace transform of the density of the point process associated
-with the pure birth process that corresponds to the growth of an
-individual node, that is
-\(\hat\rho(\lambda) \coloneq \int_0^\infty e^{-\lambda t}\rho(t)\mathrm{d}t\).
 
 The limiting survival can be viewed as the limit of the empirical
 proportion of vertices with degree over a threshold \(k\in\mathbb N\),
 that is:
 
 \[
-\bar F(k) = \lim_{t\rightarrow\infty}\frac{\sum_{x\in\Upsilon(t)}\mathbb I\left\{\text{deg}(x,\Upsilon(t)_{\downarrow x})>k\right\}}{\sum_{x\in\Upsilon(t)} 1}
+\bar F(k) = \lim_{t\rightarrow\infty}\frac{\sum_{x\in\Upsilon(t)}\mathbb I\left\{\text{deg}(x,\Upsilon(t)_{\downarrow x})>k\right\}}{\sum_{x\in\Upsilon(t)} 1},
 \] which can also be written using Equation~\ref{eq-survlim} as:
 
 \begin{equation}\phantomsection\label{eq-surv-origin}{
@@ -415,122 +415,101 @@ distribution \(f(k) = \bar F(k-1) - \bar F(k)\) is
 f(k) = \frac{\lambda^*}{\lambda^* + b(k)}\prod_{i=0}^{k-1}\frac{b(i)}{\lambda^*+b(i)}.
 }\end{equation}
 
-We are interested in how the tail behaviour of the discrete limiting
-degree distribution is affected by the preference function \(b\). In
-order to study this, we use the quantity \(\Omega(F, k)\) as stated in
-\citet{shimura12} and is repeated below:
+We investigate how the tail behaviour of the discrete limiting degree
+distribution is influenced by the preference function \(b(·)\). Since
+the limiting degree distribution is discrete, standard tools for
+analysing extremes of continuous distributions are not directly
+applicable. A key difficulty arises because many standard discrete
+distributions, such as the Poisson, Geometric, or Negative Binomial, do
+not satisfy the conditions required to belong to an MDA.
+\citet{shimura12} showed that for a discrete random variable X to lie in
+an MDA, its distribution must be long-tailed and introduced the notion
+of recoverability to the MDA, sometimes referred to as the discrete MDA
+(see e.g. \citet{hitz24}). In particular, if a distribution is both
+long-tailed and recoverable, then it can be placed in the appropriate
+MDA.
 
+A central tool in this characterisation is the quantity \(\Omega(F,k)\).
 For a discrete distribution \(F\) with survival function \(\bar F\) and
-\(k\in\mathbb Z^+\) let
+\(k\in\mathbb Z^+\) define:
 
 \[
 \Omega(F,k) = \left(\log\displaystyle\frac{\bar F (k+1)}{\bar F (k+2)}\right)^{-1} - \left(\log\displaystyle\frac{\bar F (k)}{\bar F (k+1)}\right)^{-1}.
 \]
 
-The following proposition gives the limiting behaviour of
-\(\Omega(F,k)\) when \$F\$ is a limiting degree distribution resulting
-from the GPA model with preference function \(b(\cdot)\).
+\citet{shimura12} established that if
+\(\lim_{k\rightarrow\infty} \Omega(F,k) = 1/\alpha\) (\(\alpha>0\)),
+then \(F\) is regularly varying with \(\bar F(k) \sim k^{-\alpha}\), and
+hence belongs to the Frechet MDA. If instead,
+\(\lim_{k\rightarrow\infty} \Omega(F,k) = 0\) then the distribution is
+recoverable to the Gumbel MDA; in this cases we say that the
+distribution is light-tailed. Moreover, if the distribution is also
+long-tailed, we can conclude that \(F\) itself lies in the Gumbel MDA.
+
+This framework offers a natural approach for analysing the tail
+behaviour of the limiting degree distribution. The following proposition
+gives the limiting behaviour of \(\Omega(F,k)\) when \(F\) is a limiting
+degree distribution resulting from the GPA model with preference
+function \(b(\cdot)\).
 
 \begin{proposition}[]\protect\hypertarget{prp-omega}{}\label{prp-omega}
 
-If \(\bar F(k) = \prod_{i=0}^k\frac{b(i)}{\lambda^* + b(i)}\) and
+If \(\bar F(k) = \prod_{i=0}^k\frac{b(i)}{\lambda^* + b(i)}\) with
 \(b(k) \rightarrow \infty\) as \(k\rightarrow \infty\), then \[
 \lim_{k\rightarrow\infty}\Omega(F,k) = \lim_{k\rightarrow\infty}\frac{b(k+1)-b(k)}{\lambda^*}.
 \]
 
-\end{proposition}
-
-See Appendix \ref{sec-proofs} for the details of the proof.
-
-\citet{shimura12} states that if
-\(\lim_{k\rightarrow\infty} \Omega(F,k) = 1/\alpha\) (\(\alpha>0\)),
-then \(F\) is regularly varying with \(\bar F(k) \sim k^{-\alpha}\). On
-the other hand, if \(\lim_{k\rightarrow\infty} \Omega(F,k) = 0\) then we
-will refer to the distribution as light-tailed.
-
-Proposition~\ref{prp-omega} aligns with the result from
-\citet{krapivsky01} demonstrating that a sub-linear preference function
-will lead to a light-tailed distribution, as
-\(\lim_{k\rightarrow\infty} b(k+1)-b(k) = 0\) if \(b(k)=k^\alpha\) where
-\(\alpha < 1\). Proposition~\ref{prp-omega} also aligns with the fact
-that BA model produces a regularly varying degree distribution, with
-tail index 2, by considering the preference function
-\(b(k) = k + \varepsilon\), as
-\(\lim_{k\rightarrow\infty}b(k+1)-b(k)=1\), leaving the tail index to be
-\(1/\lambda^*\) which using \(\hat\rho\) can be found to be \(1/2\). So,
-in order for the degree distribution to be regularly varying we need
-that the limit \(\lim_{k\rightarrow\infty} b(k+1)-b(k)\) exists and is
-positive. The following proposition determines the class of functions
-that will result in regular varying degree distributions.
-
-\begin{proposition}[]\protect\hypertarget{prp-omega2}{}\label{prp-omega2}
-
-The limiting survival of a GPA model is regularly varying if and only if
-the preference function is \emph{eventually} of the form:
-
-\begin{align*}
-b(k) &= \beta k + r(k),\\
-&\text{and}\\
-r(k+1)-r(k)&\rightarrow 0,
-\end{align*}
-
-and if the preference function is of this form then the tail index is
-exactly \(\lambda^*/\beta\) where \(\hat\rho(\lambda\^\*) = 1\).
-
-\emph{Proof}
-
-Letting \(b(k) = \beta k  + o(k)\) and using Proposition~\ref{prp-omega}
-we have that:
-
-\[
-\lim_{k\rightarrow\infty}\Omega(F,k) = \lim_{k\rightarrow\infty}\frac{b(k+1)-b(k)}{\lambda^*} = \lim_{k\rightarrow\infty} \frac{\beta + o(k+1) - o(k)}{\lambda^*} = \frac{\beta}{\lambda^*},
-\]
-
-and thus the tail index of the limiting survival must be
-\(\lambda^*/\beta\).
-
-\hfill\break
-If we now assume that the limiting survival is regularly varying with
-tail index \(\delta\), we must have that:
-
-\[
-\lim_{k\rightarrow\infty}\Omega(F,k) = \delta
-\]
-
-and again by Proposition~\ref{prp-omega}
-
-\[
-\lim_{k\rightarrow\infty}\frac{b(k+1)-b(k)}{\lambda^*} = \delta
-\]
-
-Letting \(b_k=b(k)\) and \(a_k = k\) we can use the Stolz-Cesàro theorem
-(Theorem~\ref{thm-stolz}) to obtain:
-
-\[
-\lim_{k\rightarrow\infty}\frac{b_{k+1}-b_k}{a_{k+1}-a_k} = \delta \implies \lim_{k\rightarrow\infty}\frac{b_k}{a_k} = \delta
-\]
-
-and so
-
-\[
-\lim_{k\rightarrow\infty}\frac{b(k)}{k} = \delta
-\]
-
-which \(b(k) = \beta k + o(k)\) fulfills.\(\square\)
+Here, \(\lambda^*\) is the Malthusian parameter of the corresponding
+branching process. See Appendix \ref{sec-proofs} for the details of the
+proof.
 
 \end{proposition}
 
-Using this result we can understand how the preference function is
-directly connected with the tail behaviour of the degree distribution.
-Specifically, regular variation is achieved if and only if \(b(k)\) is
-asymptotically linear with \(k\). We use this result to create a
-preference function that guarantees regular variation in the tail of the
-degree distribution, aligning with analysis of real networks, whilst
-allowing for the tail to deviate from the shape implied by the body.
-This gives the model the capability to produce realistic behaviour in
-the degrees like what was in \citet{Lee24} by using a piecewise function
-inspired by the observed deviation from the power law after a certain
-threshold:
+\begin{refremark}
+If \(b(k)\rightarrow <\infty\), then \(\Omega(F, k) = 0\).
+
+\label{rem-omega}
+
+\end{refremark}
+
+\begin{corollary}[]\protect\hypertarget{cor-omega2}{}\label{cor-omega2}
+
+Let \(\bar F (k)\) bet he limiting survival function of degree in a GPA
+network with preference function \(b\) such that
+\(b(k)\rightarrow\infty\). Then:
+
+\begin{itemize}
+\item
+  \(\bar F(k)\) is regularly varying if and only if
+  \(\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=c>0\), in which case the tail
+  index is \(\lambda^*/c\), where \(\lambda^*\) is the Malthusian
+  parameter of the corresponding branching process.
+\item
+  \(\bar F(k)\) is light-tailed if and only if
+  \(\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=0\).
+\end{itemize}
+
+\end{corollary}
+
+Corollary~\ref{cor-omega2} is a direct consequence of
+Proposition~\ref{prp-omega} and the results of \citet{shimura12}, and it
+aligns with previous findings in the literature. In particular it is
+consistent with \citet{krapivsky01}, who showed that a sub-linear
+preference function leads to a light-tailed distributions, since for
+\(b(k)=k^\alpha\) with \(\alpha<1\), we have
+\(\lim_{k\rightarrow}[b(k+1)-b(k)]=0\). Conversely, it also agrees with
+the limiting behavior of BA model, which produces a regularly degree
+distribution with tail index 2; for the preference function
+\(b(k)=k+\varepsilon\), \(\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=1\),
+giving a tail index of \(1/\lambda^*\), in which cases the Malthusian
+parameter \(\lambda^*\) is 2.
+
+Using Corollary~\ref{cor-omega2} we can directly connect the preference
+function to the tail behaviour of the degree distribution. By choosing
+an appropriate preference function, we can ensure that the tail of the
+degree distribution is regularly varying while allowing the body to
+deviate from the power-law shape, as observed in real networks. Inspired
+by \citet{Lee24}, we consider a piecewise function:
 
 \begin{equation}\phantomsection\label{eq-pref}{
 b(k) = \begin{cases}
@@ -538,12 +517,26 @@ k^\alpha + \varepsilon,&k<k_0,\\
 k_0^\alpha + \varepsilon + \beta(k-k_0), &k\ge k_0
 \end{cases}
 }\end{equation} for \(\alpha,\beta, \varepsilon>0\) and
-\(k_0\in\mathbb N\).
+\(k_0\in\mathbb N\). By Corollary~\ref{cor-omega2}, the resulting degree
+distribution is regularly varying with tail index \(\lambda^*/\beta\),
+since
 
-Using Proposition~\ref{prp-omega}, we can show that
-\(\lim_{n\rightarrow\infty}\Omega(F,k)=\lambda^{*}/\beta\), meaning the
-degree distribution obtained using this preference function is regularly
-varying with tail index \(\lambda^*/\beta\).
+\[
+\lim_{k\rightarrow\infty}\Omega(F,k) = \frac{\beta}{\lambda}.
+\]
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-ex-1.pdf}
+
+}
+
+\caption{\label{fig-ex}Example construction of the preference function
+in Equation~\ref{eq-pref}}
+
+\end{figure}%
 
 \newpage
 
@@ -630,8 +623,7 @@ To assess how close of an approximation this is, the theoretical
 conditional survival Equation~\ref{eq-polysurv} are shown in
 Figure~\ref{fig-approx_surv} in colour and their IGP approximations
 Equation~\ref{eq-igp-est} are shown in grey. The approximation holds up
-fairly well even for large degrees and more so when \(\alpha\) is
-larger.
+well even for large degrees and more so when \(\alpha\) is larger.
 
 \begin{figure}
 
@@ -646,7 +638,7 @@ of the proposed model alongside their IGP approximations (coloured).}
 
 \end{figure}%
 
-In agreement with Proposition~\ref{prp-omega2}, \(\beta>0\) ensures that
+In agreement with Corollary~\ref{cor-omega2}, \(\beta>0\) ensures that
 the shape parameter of the IGP distribution is positive and thus the
 distribution is regularly varying. Additionally the shape parameter
 \(\xi\) is shown in Figure~\ref{fig-polyheat} for various parameter
@@ -730,7 +722,7 @@ algorithm. For these simulated networks \(l=0\).
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-rec1-1.pdf}
+\includegraphics[width=0.9\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-rec1-1.pdf}
 
 }
 
@@ -815,7 +807,7 @@ from \href{konect.cc}{KONECT} and the
 
 \centering{
 
-\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-real1-1.pdf}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-real1-1.pdf}
 
 }
 
@@ -832,17 +824,6 @@ model gives a similar fit to the Zipf-IGP model but where the GPA model
 fits well we gain additional information about the preference function,
 assuming that the network evolved according the the GPA scheme.
 
-\begin{figure}[H]
-
-{\centering \includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{images/pars_plot.png}
-
-}
-
-\caption{Posterior densities of the parameters of the proposed model
-fitted to real data.}
-
-\end{figure}%
-
 Figure~\ref{fig-shapes} shows the posterior of the shape parameter
 \(\xi\) obtained from the Zipf-IGP model alongside the posterior of the
 equivalent shape parameter \(\beta/\lambda^*\) obtained from fitting the
@@ -853,6 +834,19 @@ fits the tail better than the Zipf-IGP model does, or because of the
 threshold being too low, forcing almost all of the data to be modelled
 by the linear part of the GPA. This again shows the effects that small
 degrees have on this model.
+
+\begin{figure}
+
+\centering{
+
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{images/pars_plot.jpg}
+
+}
+
+\caption{\label{fig-parplot}Posterior densities of the parameters of the
+proposed model fitted to real data.}
+
+\end{figure}%
 
 \begin{figure}
 
@@ -903,24 +897,27 @@ some threshold \(k_0\).
 
 \section{Conclusion and Discussion}\label{sec-conc}
 
-In this paper we introduced a class of preference functions that, under
-the GPA scheme, generate a network with a flexible yet regularly varying
-degree distribution. From the simulation study we showed that the
-parameters can be recovered from fitting the model to the degrees alone.
-We also applied this method to the degree distributions of real
-networks, estimating their model parameters assuming they evolved in the
-same way. Not only did this yield fairly good fits for the degree
-distribution, similar to that of the Zipf-IGP, it also came with the
-added benefit of giving a posterior estimate for a preference function.
+We introduced a class of preference functions that, under the GPA
+scheme, generate a network with a flexible yet regularly varying degree
+distribution. From the simulation study we showed that the parameters
+can be recovered from fitting the model to the degrees alone. We also
+applied this method to the degree distributions of real networks,
+estimating their model parameters assuming they evolved in the same way.
+Not only did this yield good fits for the degree distribution, similar
+to that of the Zipf-IGP, it also came with the added benefit of giving a
+posterior estimate for a preference function.
 
 This paper contributes to the understanding of the relationship between
 the mechanism underlying a networks growth and the resulting degree
-distribution. As well as, demonstrating that under certain conditions
+distribution. As well as demonstrating that under certain conditions
 information about this mechanism can be garnered from the degrees alone.
-Perhaps in future, something similar could be done by looking at another
+In future, something similar could be done by looking at another
 statistic for the network (e.g.~the triangle distribution) and using it
 in combination with the degrees to gain further insights into the growth
-mechanism.
+mechanism when the networks full evolution is not available. The
+triangle distribution would be a good avenue for future work within the
+realm of extremes as it has also been shown by \citet{kang11} that many
+real networks seem to have power law triangle distributions.
 
 One limitation of this method is that the lowest degrees needed to be
 truncated as they had a very large effect on the fit of the model, as a
@@ -941,8 +938,8 @@ probability mass function of the degrees and therefore no likelihood
 that can be used for modeling in the same way that we have. In spite of
 this, using Remark 2 from \citet{banerjee25} it can be shown that the
 survival function of the limiting degree distribution (when using a
-preference function of the form from Proposition~\ref{prp-omega2}) can
-be bounded by two regularly varying functions showing that the degree
+preference function of the form from Corollary~\ref{cor-omega2}) can be
+bounded by two regularly varying functions showing that the degree
 distribution is still heavy tailed, although not necessarily regularly
 varying.
 
@@ -960,25 +957,6 @@ problems for future analysis.
 \renewcommand{\thefigure}{A\arabic{figure}}
 
 \newpage
-
-\section{Supplementary Results}\label{sec-sup}
-
-\begin{theorem}[Stolz-Cesàro Theorem
-\citep{cesaro}]\protect\hypertarget{thm-stolz}{}\label{thm-stolz}
-
-Let \((a_k)_{k\ge1}\) and \((b_k)_{k\ge1}\) be two sequence of real
-numbers. Assume \((a_k)_{k\ge1}\) is a strictly monotone and divergent
-sequence and the following limit exists:
-
-\[
-\lim_{k\rightarrow\infty}\frac{b_{k+1} - b_k}{a_{k+1} - a_k} = l.
-\] Then,
-
-\[
-\lim_{k\rightarrow\infty}\frac{b_k}{a_k} = l.
-\]
-
-\end{theorem}
 
 \section{Proofs and Derivations}\label{sec-proofs}
 
