@@ -258,15 +258,15 @@ only to find strong evidence for scale-freeness in four percent and weak
 evidence in over half of the networks, thus claiming that scale-free
 networks do not make up a majority in real networks. On the other side
 of this debate is \citet{Voitalov_2019} who disagrees and claims that
-these networks are not nearly as rare and only appear to so as a result
-of an unrealistic expectation of a power law without deviations or
-noise. Additional evidence of these deviations from a power law is shown
-by \citet{Lee24} who demonstrate that a lot of networks are partially
-scale-free, in that the body of the degree distribution is often
-modelled well by a power law, while the tail is lighter than what is
-implied by the body, albeit still regularly varying. Nevertheless, most
-studies into the appropriateness of a power law for the degrees of real
-networks, the aforementioned references included, have been largely
+these networks are not nearly as rare and only appear to be so as a
+result of an unrealistic expectation of a power law without deviations
+or noise. Additional evidence of these deviations from a power law is
+shown by \citet{Lee24} who demonstrate that a lot of networks are
+partially scale-free, in that the body of the degree distribution is
+often modelled well by a power law, while the tail is lighter than what
+is implied by the body, albeit still regularly varying. Nevertheless,
+most studies into the appropriateness of a power law for the degrees of
+real networks, the aforementioned references included, have been largely
 descriptive in the sense that no information about the growth of the
 networks is revealed.
 
@@ -290,9 +290,9 @@ distribution. \citet{wang2022random} returns to a linear preference
 function of the form \(b(k) = k+\varepsilon\) but adds the possibility
 for reciprocal edges to be sent, resulting in the joint distribution of
 in-degree and out-degree being multivariate regularly varying and having
-the property of hidden regular variation. \citet{rudas07} follows in the
-footsteps of \citet{krapivsky01}, by considering a PA tree and using
-theory from continuous branching processes, derives a limiting degree
+the property of hidden regular variation. \citet{rudas07} followed in
+the footsteps of \citet{krapivsky01}, by considering a PA tree and using
+theory from continuous branching processes, deriving a limiting degree
 distribution in terms of the preference function \(b(\cdot)\).
 Nevertheless, research in this area tends to only focus on the
 theoretical asymptotic results of network growth models with little
@@ -313,7 +313,7 @@ who provided theoretical guarantees for a discrete distribution to be
 regularly varying or not. Using these results, we demonstrate how the
 tail of the degree distribution is affected by \(b(\cdot)\), and
 subsequently propose a class of preference functions that is tail
-realistic for real networks. These analytical results enables the
+realistic for real networks. These analytical results enable the
 likelihood of the degree distribution to be expressed in terms of the
 parameters of \(b(\cdot)\), which in turn allows the underlying
 mechanism of the network, assumed to grow according to PA, to be
@@ -328,13 +328,12 @@ be introduced and shown to guarantee regular variation in the degree
 distribution while remaining flexible up until a threshold.
 Section~\ref{sec-model} utilises the proposed preference function and
 illustrates numerically how the tail index of the degree distribution
-varies with the model parameters. The simulation study in
-Section~\ref{sec-sim} demonstrates that the parameters can be recovered
-from fitting the model to only the degree distribution.
-Section~\ref{sec-real} fits the model to some real data and provides
-posterior estimates for the preference function. Section~\ref{sec-conc}
-provides a discussion of this paper and possible avenues for future
-work.
+varies with the model parameters. The simulation study in Subsection
+\ref{sec-sim} demonstrates that the parameters can be recovered from
+fitting the model to only the degree distribution. Subsection
+\ref{sec-real} fits the model to some real data and provides posterior
+estimates for the preference function. Section~\ref{sec-conc} provides a
+discussion of this paper and possible avenues for future work.
 
 \newpage
 
@@ -466,7 +465,7 @@ proof.
 \end{proposition}
 
 \begin{refremark}
-If \(b(k)\rightarrow <\infty\), then \(\Omega(F, k) = 0\).
+If \(\lim_{k\rightarrow\infty}b(k)<\infty\), then \(\Omega(F, k) = 0\).
 
 \label{rem-omega}
 
@@ -474,7 +473,7 @@ If \(b(k)\rightarrow <\infty\), then \(\Omega(F, k) = 0\).
 
 \begin{corollary}[]\protect\hypertarget{cor-omega2}{}\label{cor-omega2}
 
-Let \(\bar F (k)\) bet he limiting survival function of degree in a GPA
+Let \(\bar F (k)\) be the limiting survival function of degrees in a GPA
 network with preference function \(b\) such that
 \(b(k)\rightarrow\infty\). Then:
 
@@ -497,9 +496,9 @@ aligns with previous findings in the literature. In particular it is
 consistent with \citet{krapivsky01}, who showed that a sub-linear
 preference function leads to a light-tailed distributions, since for
 \(b(k)=k^\alpha\) with \(\alpha<1\), we have
-\(\lim_{k\rightarrow}[b(k+1)-b(k)]=0\). Conversely, it also agrees with
-the limiting behavior of BA model, which produces a regularly degree
-distribution with tail index 2; for the preference function
+\(\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=0\). Conversely, it also agrees
+with the limiting behavior of BA model, which produces a regularly
+degree distribution with tail index 2; for the preference function
 \(b(k)=k+\varepsilon\), \(\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=1\),
 giving a tail index of \(1/\lambda^*\), in which cases the Malthusian
 parameter \(\lambda^*\) is 2.
@@ -522,7 +521,7 @@ distribution is regularly varying with tail index \(\lambda^*/\beta\),
 since
 
 \[
-\lim_{k\rightarrow\infty}\Omega(F,k) = \frac{\beta}{\lambda}.
+\lim_{k\rightarrow\infty}\Omega(F,k) = \frac{\beta}{\lambda^*}.
 \]
 
 \begin{figure}
