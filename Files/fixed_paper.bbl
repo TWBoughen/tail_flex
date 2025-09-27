@@ -1,0 +1,54 @@
+\begin{thebibliography}{15}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{\url{https://doi.org/#1}}
+\providecommand{\eprint}[2][]{\url{#2}}
+ \bibcommenthead
+
+\bibitem[{Banerjee et~al(2025)Banerjee, Deka, and Olvera-Cravioto}]{banerjee25}
+Banerjee S, Deka P, Olvera-Cravioto M (2025) Local weak limits for collapsed branching processes with random out-degrees. Stochastic Processes and their Applications 182:104566. \doi{https://doi.org/10.1016/j.spa.2025.104566}, \urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0304414925000055}
+
+\bibitem[{Barabási and Albert(1999)}]{Barabasi99}
+Barabási AL, Albert R (1999) Emergence of scaling in random networks. Science 286(5439):509--512. \doi{10.1126/science.286.5439.509}
+
+\bibitem[{Betzel and Bassett(2017)}]{Betzel17}
+Betzel RF, Bassett DS (2017) Generative models for network neuroscience: prospects and promise. Journal of The Royal Society Interface 14(136):20170623. \doi{10.1098/rsif.2017.0623}
+
+\bibitem[{Broido and Clauset(2019)}]{Broido_2019}
+Broido AD, Clauset A (2019) Scale-free networks are rare. Nature Communications 10(1). \doi{10.1038/s41467-019-08746-5}
+
+\bibitem[{Kang et~al(2011)Kang, Meeder, and Faloutsos}]{kang11}
+Kang U, Meeder B, Faloutsos C (2011) Spectral analysis for billion-scale graphs: Discoveries and implementation. pp 13--25, \doi{10.1007/978-3-642-20847-8_2}
+
+\bibitem[{Krapivsky and Redner(2001)}]{krapivsky01}
+Krapivsky PL, Redner S (2001) Organization of growing random networks. Phys Rev E 63:066123. \doi{10.1103/PhysRevE.63.066123}
+
+\bibitem[{Latouche et~al(2011)Latouche, Birmel{\'e}, and Ambroise}]{Latouche11}
+Latouche P, Birmel{\'e} E, Ambroise C (2011) {Overlapping stochastic block models with application to the French political blogosphere}. The Annals of Applied Statistics 5(1):309 -- 336. \doi{10.1214/10-AOAS382}
+
+\bibitem[{Lee et~al(2024)Lee, Eastoe, and Farrell}]{Lee24}
+Lee C, Eastoe EF, Farrell A (2024) Degree distributions in networks: Beyond the power law. Statistica Neerlandica 78(4):702--718. \doi{https://doi.org/10.1111/stan.12355}
+
+\bibitem[{Rohrbeck et~al(2018)Rohrbeck, Eastoe, Frigessi, and Tawn}]{Rohrbeck_2018}
+Rohrbeck C, Eastoe EF, Frigessi A, et~al (2018) {Extreme value modelling of water-related insurance claims}. The Annals of Applied Statistics 12(1):246 -- 282. \doi{10.1214/17-AOAS1081}
+
+\bibitem[{Rossi and Ahmed(2015)}]{nr}
+Rossi RA, Ahmed NK (2015) The network data repository with interactive graph analytics and visualization. In: AAAI, \urlprefix\url{https://networkrepository.com}
+
+\bibitem[{Rudas et~al(2007)Rudas, Tóth, and Valkó}]{rudas07}
+Rudas A, Tóth B, Valkó B (2007) Random trees and general branching processes. Random Structures \& Algorithms 31(2):186--202. \doi{https://doi.org/10.1002/rsa.20137}
+
+\bibitem[{Setayesh et~al(2022)Setayesh, Sourati Hassan~Zadeh, and Bahrak}]{Setayesh22}
+Setayesh A, Sourati Hassan~Zadeh Z, Bahrak B (2022) Analysis of the global trade network using exponential random graph models. Applied Network Science 7. \doi{10.1007/s41109-022-00479-7}
+
+\bibitem[{Shimura(2012)}]{shimura12}
+Shimura T (2012) Discretization of distributions in the maximum domain of attraction. Extremes 15:1--19. \doi{10.1007/s10687-011-0137-7}
+
+\bibitem[{Voitalov et~al(2019)Voitalov, van~der Hoorn, Hofstad, and Krioukov}]{Voitalov_2019}
+Voitalov I, van~der Hoorn P, Hofstad R, et~al (2019) Scale-free networks well done. Physical Review Research 1. \doi{10.1103/PhysRevResearch.1.033034}
+
+\bibitem[{Wang and Resnick(2024)}]{wang2022random}
+Wang T, Resnick S (2024) Random networks with heterogeneous reciprocity. Extremes 27(1):123--161. \doi{10.1007/s10687-023-00478-6}
+
+\end{thebibliography}
