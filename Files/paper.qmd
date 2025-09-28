@@ -184,7 +184,7 @@ ggplot() +
   geom_text(aes(x=k0, y=0, label='k[0]'), parse = TRUE, size=textsize)+
   geom_text(aes(x=6.3, y=4.3, label='beta'), parse=TRUE, size=textsize)+
   stat_brace(aes(x=c(0, 0), y=c(0, eps)), rotate=90, width=0.2)+
-  geom_text(aes(x=0.3, y=eps/2, label='epsilon'), parse=TRUE, size=textsize)+
+  geom_text(aes(x=0.5, y=eps/2, label='epsilon'), parse=TRUE, size=textsize)+
   theme_bw() + xlab('Degree')+ylab('Preference') + ylim(0,6)+
   theme(axis.ticks = element_blank(),
         axis.text = element_blank(), legend.position='bottom')
