@@ -172,6 +172,10 @@
                \itemsep \parsep}%
    \belowdisplayskip \abovedisplayskip}%
 %
+%
+
+
+
 \renewcommand\small{%
    \@setfontsize\small\@ixpt{11}%
    \abovedisplayskip 5\p@ \@plus3\p@ \@minus4\p@

@@ -73,8 +73,8 @@ saveRDS(fits, 'modelfits.rds')
 
 
 # saveRDS(fits,'modelfits.rds')
-mixfits = readRDS('mixfits.rds')
-dat_list = readRDS('dat_list.rds')
+mixfits = readRDS('../results/mixfits.rds')
+dat_list = readRDS('../results/dat_list.rds')
 real_survs = ggpubr::ggarrange(plotlist = plots)
 real_survs
 saveRDS(real_survs,'real_survs.rds')
@@ -130,7 +130,7 @@ mixplt = readRDS('mix_survs.rds')
 
 comp_plot = ggpubr::ggarrange(mixplt, real_survs,labels=c('Zipf-IGP', 'GPA'), ncol=1)
 
-saveRDS(comp_plot, 'comp_plot.rds')
+saveRDS(comp_plot, '../results/comp_plot.rds')
 fits = readRDS('../results/modelfits.rds')
 plots = list()
 for(i in 1:length(fits)){
@@ -140,12 +140,12 @@ for(i in 1:length(fits)){
   ptrunc = sdf$surv[sdf$degree==min(fits[[i]]$dat[,1])]
   ptrunc_mix = sdf$surv[sdf$degree==min(mixfits[[i]]$data[,1])]
   plots[[i]] = ggplot() + scale_x_log10(limits = c(1, max(dat_list[[i]][,1]))) + scale_y_log10(limits=c(1/sum(dat_list[[i]][,2]),1)) +
-    geom_segment(aes(x = jitter(!!fits[[i]]$smps$k0[seq(1,length(fits[[i]]$smps$k0),by=20)]),yend=0.5,y=1, colour='GPA'), alpha=0.1)+
+    geom_segment(aes(x = jitter(!!fits[[i]]$smps$k0[seq(1,length(fits[[i]]$smps$k0),by=20)]),yend=0.5,y=1, colour='Proposed GPA'), alpha=0.1)+
     geom_segment(data=NULL,aes(x = jitter(mixfits[[i]]$pars$u[seq(1,length(mixfits[[i]]$pars$u),by=20)]),yend=0.5,y=1, colour='Zipf-IGP'), alpha=0.5)+
     geom_point(data = twbfn::deg_surv(counts_to_degs(dat_list[[i]])),aes(x=degree, y=surv))+
-    geom_line(aes(x=!!fits[[i]]$dat[,1],y=!!fits[[i]]$surv$est*!!ptrunc/fits[[i]]$surv$est[1], colour='GPA')) + 
-    geom_line(aes(x=!!fits[[i]]$dat[,1],y= !!fits[[i]]$surv$CI[1,]*!!ptrunc/fits[[i]]$surv$CI[1,1], colour='GPA'),linetype=2) + 
-    geom_line(aes(x=!!fits[[i]]$dat[,1],y= !!fits[[i]]$surv$CI[2,]*!!ptrunc/fits[[i]]$surv$CI[2,1], colour='GPA'),linetype=2)+
+    geom_line(aes(x=!!fits[[i]]$dat[,1],y=!!fits[[i]]$surv$est*!!ptrunc/fits[[i]]$surv$est[1], colour='Proposed GPA')) + 
+    geom_line(aes(x=!!fits[[i]]$dat[,1],y= !!fits[[i]]$surv$CI[1,]*!!ptrunc/fits[[i]]$surv$CI[1,1], colour='Proposed GPA'),linetype=2) + 
+    geom_line(aes(x=!!fits[[i]]$dat[,1],y= !!fits[[i]]$surv$CI[2,]*!!ptrunc/fits[[i]]$surv$CI[2,1], colour='Proposed GPA'),linetype=2)+
     geom_line(data = mixfits[[i]]$fitted,aes(x=x, y=S_975*!!ptrunc_mix/S_975[1], colour='Zipf-IGP'), lty=2)+
     geom_line(data = mixfits[[i]]$fitted,aes(x=x, y=S_025*!!ptrunc_mix/S_025[1], colour='Zipf-IGP'),lty=2)+
     geom_line(data = mixfits[[i]]$fitted,aes(x=x, y=S_med*!!ptrunc_mix/S_med[1], colour='Zipf-IGP'))+
@@ -163,8 +163,8 @@ comp_plot
 mixfits = readRDS('../results/mixfits.rds')
 plots = list()
 for(i in 1:length(fits)){
-  plots[[i]] = ggplot() + geom_boxplot(aes(y=!!fits[[i]]$mcmc$pars[-(1:2e4),4]/!!fits[[i]]$mcmc$lambdas[-(1:2e4)], x='GPA', fill='GPA')) +
-    geom_boxplot(aes(y = !!mixfits[[i]]$pars$shape, x='Zipf-IGP', fill = 'Zipf-IGP')) + ylim(-1,1) + ggtitle(nms[i]) + xlab('')+ylab('')
+  plots[[i]] = ggplot() + geom_boxplot(aes(y=!!fits[[i]]$mcmc$pars[-(1:2e4),4]/!!fits[[i]]$mcmc$lambdas[-(1:2e4)], x='Proposed GPA', fill='Proposed GPA')) +
+    geom_boxplot(aes(y = !!mixfits[[i]]$pars$shape, x='Zipf-IGP', fill = 'Zipf-IGP')) + ylim(-1,1) + ggtitle(nms[i]) + xlab('')+ylab('') + labs(fill='Model')
 }
 
 shape_plot = ggpubr::ggarrange(plotlist = plots, common.legend = T,label.x='', label.y='\\xi', legend='right', nrow=4, ncol=3)

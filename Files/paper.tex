@@ -33,16 +33,6 @@
   \usepackage[]{microtype}
   \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\makeatletter
-\@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
-}{% if KOMA class
-  \KOMAoptions{parskip=half}}
-\makeatother
 % Make \paragraph and \subparagraph free-standing
 \makeatletter
 \ifx\paragraph\undefined\else
@@ -124,6 +114,7 @@
 \usepackage{algpseudocode}%
 \usepackage{listings}%
 
+
 %%%%
 
 \raggedbottom
@@ -163,9 +154,9 @@
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
 \theoremstyle{plain}
-\newtheorem{proposition}{Proposition}[section]
-\theoremstyle{plain}
 \newtheorem{corollary}{Corollary}[section]
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposition}[section]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -184,7 +175,9 @@
 \urlstyle{same}
 \hypersetup{
   pdftitle={Learning growth mechanisms of tail realistic preferential attachment models from network degree distributions},
-  pdfauthor={Thomas William Boughen; Clement Lee; Vianey Palacios Ramirez},
+  pdfauthor={Thomas William Boughen; Clement Lee; Vianey Palacios Ramírez},
+  pdfkeywords={extremes, discrete extremes, power law, preferential
+attachment},
   colorlinks=true,
   linkcolor={blue},
   filecolor={Maroon},
@@ -193,13 +186,14 @@
   pdfcreator={LaTeX via pandoc}}
 
 
+
 \title[Learning growth mechanisms of tail realistic preferential
 attachment models from network degree distributions]{Learning growth
 mechanisms of tail realistic preferential attachment models from network
 degree distributions}
 
 % author setup
-\author*[1]{\fnm{Thomas William} \sur{Boughen}}\email{t.w.boughen1@newcastle.ac.uk}\author[1]{\fnm{Clement} \sur{Lee}}\author[1]{\fnm{Vianey Palacios} \sur{Ramirez}}
+\author*[1]{\fnm{Thomas William} \sur{Boughen}}\email{t.w.boughen1@newcastle.ac.uk}\author[1]{\fnm{Clement} \sur{Lee}}\author[1]{\fnm{Vianey Palacios} \sur{Ramírez}}
 % affil setup
 \affil[1]{\orgdiv{School of Mathematics, Statistics and
 Physics}, \orgname{Newcastle University}}
@@ -226,6 +220,11 @@ supported by simulation studies. Results of applications to real data
 are promising and comparable to alternatives.}
 
 % keywords
+\keywords{extremes, discrete extremes, power law, preferential
+attachment}
+
+
+\pacs[MSC 2020]{05C82, 60G70}
 
 \begin{document}
 \maketitle
@@ -454,13 +453,16 @@ If \(\bar F(k) = \prod_{i=0}^k\frac{b(i)}{\lambda^* + b(i)}\) with
 \]
 
 Here, \(\lambda^*\) is the Malthusian parameter of the corresponding
-branching process. See Appendix \ref{sec-proofs} for the details of the
+branching process.See Appendix \ref{sec-proofs} for the details of the
 proof.
 
 \end{proposition}
 
 \begin{refremark}
 If \(\lim_{k\rightarrow\infty}b(k)<\infty\), then \(\Omega(F, k) = 0\).
+Furthermore, \(F\) is recovered to the Gumbel MDA but does not belong to
+the Gumbel MDA itself as it is not long-tailed. See Appendix
+\ref{sec-proofs} for the proof.
 
 \label{rem-omega}
 
@@ -480,7 +482,8 @@ network with preference function \(b\) such that
   parameter of the corresponding branching process.
 \item
   \(\bar F(k)\) is light-tailed if and only if
-  \(\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=0\).
+  \(\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=0\). Further, \(F\) is in the
+  Gumbel MDA as it is also long-tailed.
 \end{itemize}
 
 \end{corollary}
@@ -513,10 +516,7 @@ k_0^\alpha + \varepsilon + \beta(k-k_0), &k\ge k_0
 \(k_0\in\mathbb N\). By Corollary~\ref{cor-omega2}, the resulting degree
 distribution is regularly varying with tail index \(\lambda^*/\beta\),
 since
-
-\[
-\lim_{k\rightarrow\infty}\Omega(F,k) = \frac{\beta}{\lambda^*}.
-\]
+\(\lim_{k\rightarrow\infty}\Omega(F,k) = \frac{\beta}{\lambda^*}\).
 
 \begin{figure}
 
@@ -533,15 +533,15 @@ in Equation~\ref{eq-pref}}
 
 \newpage
 
-\section{A PA Model with Flexible Regular Variation}\label{sec-model}
+\section{A Tail-realistic GPA model}\label{sec-model}
 
-In the previous section, we found that using an asymptotically linear
-preference function allows for the inclusion of sub/super-linear
+In the previous section, we constructed an asymptotically linear
+preference function that allows for the inclusion of sub/super-linear
 behaviour below the threshold, while simultaneously guaranteeing regular
 variation of the degrees. In this section, we demonstrate the
 flexibility of the preference function in Equation~\ref{eq-pref}, with
-regard to the tail behaviour of the limiting degree distribution. Using
-Equation~\ref{eq-surv-origin}, the limiting survival is
+regard to the tail behaviour of the limiting degree distribution. The
+limiting survival if the proposed GPA model is:
 
 \begin{equation}\phantomsection\label{eq-polysurv}{
 \bar F(k) = \begin{cases}
@@ -550,7 +550,8 @@ Equation~\ref{eq-surv-origin}, the limiting survival is
 \end{cases}
 }\end{equation}
 
-with \(\lambda^*\) satisfying \(\hat \rho(\lambda^*)=1\) where
+with Malthusian parameter \(\lambda^*\) satisfying
+\(\hat \rho(\lambda^*)=1\) where
 
 \begin{equation}\phantomsection\label{eq-rho}{
 \hat\rho(\lambda) = \sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{i^\alpha + \varepsilon}{\lambda+i^\alpha + \varepsilon} + \left(\frac{k_0^\alpha + \varepsilon}{\lambda-\beta}\right)\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda + i^\alpha + \varepsilon} 
@@ -581,18 +582,19 @@ range of tail behaviour, including a large range of possible tail
 indices ranging from 0.035 (\(\alpha=1.5, \beta=0.1, \varepsilon=1\)) to
 0.999 (\(\alpha=0.5, \beta=1.5, \varepsilon=0.01\)).
 
-The analytic form of the survival function in (\ref{eq-polysurv}),
-offers a natural connection to the discrete version of the generalised
-Pareto (GP) distribution , providing a link to a well established
-component of discrete extremes in the literature. Specifically, it is
-connected to the Integer GP (IGP) distribution seen in
-\citet{Rohrbeck_2018} with conditional survival: \[
+An interesting property is that the analytic form of the survival
+function in (\ref{eq-polysurv}), offers a natural connection to the
+discrete version of the generalised Pareto (GP) distribution , providing
+a link to a well established component of discrete extremes in the
+literature. Specifically, it is connected to the Integer GP (IGP)
+distribution seen in \citet{Rohrbeck_2018} with conditional survival: \[
 \Pr(X> x|X> v) = \left(\frac{\xi(x-v)}{\sigma} + 1\right)^{-1/\xi},\qquad x=v+1,v+2,\ldots
 \] for \(v\in\mathbb Z^+, \sigma>0,\xi\in \mathbb R\), denoted as
 \(X|X>u \sim  \mathrm {IGP}(\xi, \sigma, u)\) where \(\xi\) is the shape
 parameter and reciprocal of the tail index.
 
-By Equation~\ref{eq-polysurv} and using Stirling's approximation:
+This connection is made explicitly below, let \(\bar F (k|k\ge k_0)\) be
+the conditional limiting survival of the proposed GPA model, then:
 
 \begin{align*}
 \bar F(k|k\ge k_0) &= \frac{\Gamma\left(\frac{\lambda^* + k_0^\alpha + \varepsilon}{\beta}\right)}{\Gamma\left(\frac{k_0^\alpha + \varepsilon}{\beta}\right)}\times\frac{\Gamma\left(k-k_0  +1 + \frac{k_0^\alpha + \varepsilon}{\beta}\right)}{\Gamma\left(k-k_0  +1 + \frac{\lambda^*+ k_0^\alpha + \varepsilon}{\beta}\right)}\\
@@ -640,13 +642,14 @@ heavier and a lighter tail, respectively, and the red dashed line shows
 combinations of \(\alpha\) and \(\beta\) that produce a limiting degree
 distribution with the same tail index as the BA model.
 
-Through the connection implied by Equation~\ref{eq-igp-est}, fitting the
-proposed model is almost equivalent to fitting the IGP distribution to
-the degrees and estimating its parameters. However, instead of only
-describing the shape of the degree distribution, we would also gain
-estimates for the shape of the preference function, thus gaining a
-direct understanding the mechanisms underlying the growth of the
-network.
+The connection implied by Equation~\ref{eq-igp-est} is interesting
+because it shows that fitting the proposed GPA model is almost
+equivalent to fitting the IGP distribution to the degrees and estimating
+its parameters, something that has already been done by \citet{Lee24}
+with promising results. However, instead of only describing the shape of
+the degree distribution, we would learn about the shape of the
+preference function, thus gaining a direct understanding the mechanisms
+underlying the growth of the network.
 
 \begin{figure}
 
@@ -663,10 +666,12 @@ combinations of the parameters of the proposed model.}
 
 \newpage
 
-To perform inference of the model parameters, we consider a network with
-degree count vector \(\pmb n = (n_0, n_1, \ldots, n_M)\), where \(M\) is
-the maximum degree. Using Equation~\ref{eq-pmf-origin}, the likelihood
-is:
+To learn about the growth mechanisms, we estimate the parameters of the
+proposed preference function. In order to do this we first define the
+likelihood. Consider a network with degree count vector
+\(\pmb n = (n_0, n_1, \ldots, n_M)\), where \(M\) is the maximum degree
+and \(n_i\) being the number of nodes in the network with degree \(i\).
+Using Equation~\ref{eq-pmf-origin}, the likelihood is:
 
 \begin{align*}
 L(\pmb n | \pmb \theta,l) = &\left(\frac{\lambda^*}{\lambda^*+\varepsilon}\right)^{n_0}\left(\prod_{j=l}^{k_0-1}\frac{j^\alpha +\varepsilon}{\lambda^* + j^\alpha +\varepsilon}\right)^{\left(\sum_{i\ge k_0}n_{i}\right)} \\ &\times \prod_{l \le i<k_0}\left(\frac{\lambda^*}{\lambda^* +i^\alpha + \varepsilon } \prod_{j=l}^{k_0-1}\frac{j^\alpha + \varepsilon}{\lambda^* + j^\alpha + \varepsilon}\right)^{n_i}\\ &\times \prod_{i\ge k_0}\left(\frac{\text{B}(i-k_0 + (k_0^\alpha + \varepsilon)/\beta,1+\lambda^*/\beta)}{\text{B}((k_0^\alpha + \varepsilon)/\beta,\lambda^*/\beta)}\right)^{n_i}
@@ -680,6 +685,12 @@ influence of the lower degrees (those less than \(l\)) as the model does
 not capture the behaviour well at the lower degrees, since
 \citet{rudas07} only provides results for the case of a preferential
 attachment tree.
+
+In order to carry out the Bayesian inference of the parameters we must
+first assign priors, for the parameters defined on the positive real
+line (\(\alpha, \beta,\varepsilon\)) we use diffuse gamma priors and for
+\(k_0\) we use a discrete uniform prior over a large and reasonable
+range of values.
 
 \section{Applications}\label{applications}
 
@@ -715,7 +726,7 @@ algorithm. For these simulated networks \(l=0\).
 
 \centering{
 
-\includegraphics[width=0.9\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-rec1-1.pdf}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-rec1-1.pdf}
 
 }
 
@@ -805,8 +816,12 @@ from \href{konect.cc}{KONECT} and the
 }
 
 \caption{\label{fig-real1}Empirical (black dots) and posterior medians
-(solid red) of the fitted survival function for several real data sets
-and their 95\% credible intervals (dotted red).}
+of the fitted survival function of the proposed GPA model (solid red)
+for several real data sets and their 95\% credible intervals (dotted
+red). Also shown are the posterior medians (solid blue) and 95\%
+credible intervals (dotted blue) for a model from \citet{Lee24}. The
+corresponding thresholds are shown with short vertical lines towards the
+top of each plot.}
 
 \end{figure}%
 
@@ -845,7 +860,7 @@ proposed model fitted to real data.}
 
 \centering{
 
-\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-shapes-1.pdf}
+\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-shapes-1.pdf}
 
 }
 
