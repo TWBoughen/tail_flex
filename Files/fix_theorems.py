@@ -10,9 +10,9 @@ with open(texfile, "r", encoding="utf-8") as f:
 # Prepare the text to prepend/replace
 text_to = (
     "\\usepackage{amsthm}\n"
-    "\\theoremstyle{plain}\n"
+    "\\theoremstyle{thmstyleone}\n"
     "\\newtheorem{proposition}{Proposition}[section]\n"
-    "\\theoremstyle{plain}\n"
+    "\\theoremstyle{thmstyleone}\n"
     "\\newtheorem{corollary}[proposition]{Corollary}\n"
     "\\theoremstyle{remark}\n"
     "\\AtBeginDocument{\\renewcommand*{\\proofname}{Proof}}\n"

@@ -242,8 +242,8 @@
 %
 \RequirePackage[%
     reversemp,
-    paperwidth=210mm,
-    paperheight=297mm,
+    paperwidth=155mm,
+    paperheight=235mm,
     top={26mm},
     headheight={12pt},
     headsep={5.15mm},
@@ -260,18 +260,27 @@
 %
 \else%
 %% For single column used smallcond design trim and page size %%
-\RequirePackage[%
-    reversemp,
-    paperwidth=210mm,
-    paperheight=297mm,
-    top={26mm},
-    headheight={5.5pt},
-    headsep={5.6mm},
-    text={31pc,194.25mm},
-    marginparsep=5mm,
-    marginparwidth=12mm,
-    bindingoffset=6mm,
-    footskip=10mm]{geometry}
+% \RequirePackage[%
+%     reversemp,
+%     paperwidth=210mm,
+%     paperheight=297mm,
+%     top={26mm},
+%     headheight={5.5pt},
+%     headsep={5.6mm},
+%     text={31pc,194.25mm},
+%     marginparsep=5mm,
+%     marginparwidth=12mm,
+%     bindingoffset=6mm,
+%     footskip=10mm]{geometry}
+
+\RequirePackage[
+    paperwidth=155mm,
+    paperheight=235mm,
+    margin=17.5mm,
+    bindingoffset=0mm
+]{geometry}
+
+
 %
     \setlength\maxdepth{0pt}%
     \setlength\columnsep{5mm}%
@@ -417,7 +426,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Titles %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 \renewcommand\refname{References}%
-\renewcommand\figurename{Fig.}% defined as per springer style 
+\renewcommand\figurename{\sffamily Fig.}% defined as per springer style 
 \renewcommand\tablename{Table}%
 \renewcommand\appendixname{Appendix}%
 \renewcommand\abstractname{Abstract}%
@@ -437,15 +446,19 @@
 %
 %%% Font Def
 \def\Artcatfont{\reset@font\fontsize{8bp}{10bp}\selectfont}%
-\def\Titlefont{\reset@font\fontsize{17bp}{22.5bp}\selectfont\titraggedcenter}%
-\def\SubTitlefont{\reset@font\fontsize{14bp}{16.5bp}\selectfont\titraggedcenter}%
-\def\Authorfont{\reset@font\fontsize{12bp}{14.5bp}\selectfont\boldmath\titraggedcenter}%
-\def\addressfont{\reset@font\fontsize{11bp}{13.5bp}\selectfont\titraggedcenter}%
-\def\abstractheadfont{\reset@font\fontsize{9bp}{11bp}\bfseries\selectfont\titraggedcenter}%
+\def\Titlefont{\reset@font\sffamily\fontsize{13bp}{15.5bp}\bfseries\selectfont}%
+\def\SubTitlefont{\reset@font\sffamily\fontsize{14bp}{16.5bp}\bfseries\selectfont}%
+\def\Authorfont{\reset@font\sffamily\fontsize{10bp}{12.5bp}\bfseries\selectfont\boldmath}%
+\def\addressfont{\reset@font\fontsize{8bp}{10.5bp}\selectfont}%
+\def\abstractheadfont{\reset@font\sffamily\fontsize{9bp}{11bp}\bfseries\selectfont}%
 \def\abstractsubheadfont{\reset@font\fontsize{9bp}{11bp}\bfseries\selectfont}%
-\def\abstractfont{\reset@font\fontsize{9bp}{11bp}\selectfont\leftskip=24pt\rightskip=24pt\parfillskip=0pt plus 1fil}%
-\def\keywordfont{\reset@font\fontsize{8bp}{9.5bp}\selectfont\leftskip=24pt\rightskip=24pt plus0.5fill}%
-\def\historyfont{\reset@font\fontsize{8bp}{9.5bp}\selectfont\leftskip=24pt\rightskip=24pt plus0.5fill}%
+\def\abstractfont{\reset@font\fontsize{9bp}{11bp}\selectfont
+\leftskip=0pt
+\rightskip=0pt
+\parfillskip=0pt plus 1fil
+\parindent=0pt}  % optional: no first-line indent
+\def\keywordfont{\reset@font\fontsize{8bp}{9.5bp}\selectfont\leftskip=0pt\rightskip=24pt plus0.5fill}%
+\def\historyfont{\reset@font\fontsize{8bp}{9.5bp}\selectfont\leftskip=0pt\rightskip=24pt plus0.5fill}%
 
 %% Article Type
 
@@ -644,7 +657,7 @@
 
 %
 %% Keywords
-\def\keywordname{Keywords}%
+\def\keywordname{\sffamily Keywords}%
 \def\keywords#1{\ifx#1\empty\else\def\@keywords{\par\addvspace{10pt}{\keywordfont{\bfseries\keywordname:} #1\par}}\fi}%
 \def\@keywords{}%
 
@@ -728,50 +741,50 @@
 
 %% Article Header Definition
 \renewcommand{\@maketitle}{\newpage\null%
-    \if@remarkboxon\vbox to 0pt{\vspace*{-78pt}\hspace*{-18pt}\FMremark}\else\vskip21pt\fi%%\par%
-    \hsize\textwidth\parindent0pt%%%\vskip7pt%
-    %% Aritle Type
-    {\hbox to \textwidth{{\Artcatfont\ArtType\hfill}\par}}
-    %% Aritle Title
-    \ifx\@title\empty\else%
-        \removelastskip\vskip20pt\nointerlineskip%
+    \if@remarkboxon\vbox to 0pt{\vspace*{-78pt}\hspace*{-18pt}\FMremark}\else\vskip21pt\fi
+    \hsize\textwidth\parindent0pt
+    {\raggedright  % <--- start left-aligned group
+    %% Article Type
+    {\Artcatfont\ArtType\par}
+    %% Article Title
+    \ifx\@title\empty\else
+        \removelastskip\vskip20pt\nointerlineskip
         {\Titlefont\@title\par}
-        %\addcontentsline{toc}{chapter}{\@title}% for bookmarks
-    \fi%
-    %% Aritle SubTitle
-    \ifx\@subtitle\empty\else%
-        \vskip9pt%
-        {{\SubTitlefont\@subtitle\par}}
-    \fi%
-    %% Aritle Authors, Address and Correspondings
+    \fi
+    %% Article SubTitle
+    \ifx\@subtitle\empty\else
+        \vskip9pt
+        {\SubTitlefont\@subtitle\par}
+    \fi
+    %% Article Authors, Address, Correspondings
     \ifnum\aucount>0
-        \global\punctcount\aucount%
-        \vskip20pt%
-        \artauthors\par%%     authors and emails
-        {\vskip7pt\addressfont\auaddress\par%%      corresponding adress
-	 \removelastskip\vskip24pt%
-	\ifnum\emailcnt>0\relax%
-           \ifx\corrauthemail\@empty\else{\ifnum\aucount>1*\fi}%
-	   Corresponding author(s). E-mail(s): \corrauthemail\par\fi%
-	   \ifx\authemail\@empty\else Contributing authors:\ \authemail\fi%
-        \fi%
-        \ifequalcont{\par$^{\dagger}$\@equalconttext\par}\fi%
-	 \removelastskip\vskip24pt%
-        \ifpresentaddress{\par\@presentaddresstext\par}\fi%
-	}
-     \fi%
-     {\printabstract\par}%
-     {\printkeywords\par}%
-     \ifx\@pacs\empty\else%
-       \loop\ifnum\PacsCount>0%
-          \csname\romannumeral\PacsTmpCnt StorePacsTxt\endcsname\par%
+        \global\punctcount\aucount
+        \vskip20pt
+        \artauthors\par
+        {\vskip7pt\addressfont\auaddress\par
+         \removelastskip\vskip24pt
+         \ifnum\emailcnt>0
+             \ifx\corrauthemail\@empty\else{\ifnum\aucount>1*\fi} Corresponding author(s). E-mail(s): \corrauthemail\par\fi
+             \ifx\authemail\@empty\else Contributing authors: \authemail\fi
+         \fi
+         \ifequalcont{\par$^{\dagger}$\@equalconttext\par}\fi
+         \removelastskip\vskip24pt
+         \ifpresentaddress{\par\@presentaddresstext\par}\fi
+        }
+     \fi
+     {\printabstract\par}
+     {\printkeywords\par}
+     \ifx\@pacs\empty\else
+       \loop\ifnum\PacsCount>0
+          \csname\romannumeral\PacsTmpCnt StorePacsTxt\endcsname\par
           \StepDownCounter{\PacsCount}%
           \StepUpCounter{\PacsTmpCnt}%
-       \repeat%
-    \fi%
-    %%{\printhistory\par}%
-    %%{\ifx\@motto\empty\else\@motto\fi}%
-    \removelastskip\vskip36pt\vskip0pt}%
+       \repeat
+    \fi
+    } % <--- end raggedright group
+    \removelastskip\vskip36pt\vskip0pt%
+}
+
 
 \usepackage{cuted}%
 \@ifpackageloaded{cuted}{\gdef\@setmarks{}}{}%
@@ -922,8 +935,8 @@
   \fi
   \@xsect{#5}}
 %
-\def\sectionfont{\reset@font\fontfamily{\rmdefault}\fontsize{14bp}{16bp}\bfseries\selectfont\raggedright\boldmath}%
-\def\subsectionfont{\reset@font\fontfamily{\rmdefault}\fontsize{12bp}{14bp}\bfseries\selectfont\raggedright\boldmath}%
+\def\sectionfont{\reset@font\fontfamily{\sfdefault}\fontsize{11bp}{16bp}\bfseries\selectfont\raggedright\boldmath}%
+\def\subsectionfont{\reset@font\fontfamily{\sfdefault}\fontsize{10bp}{14bp}\bfseries\selectfont\raggedright\boldmath}%
 \def\subsubsectionfont{\reset@font\fontsize{11bp}{13bp}\bfseries\selectfont\raggedright\boldmath}%
 \def\paragraphfont{\reset@font\fontsize{10bp}{12bp}\bfseries\itshape\selectfont\raggedright}%
 %
@@ -1160,7 +1173,7 @@
 \setlength\doublerulesep{2\p@}%
 \setlength\tabbingsep{\labelsep}%
 
-\def\fnum@figure{{\bfseries\figurename\space\thefigure}}%
+\def\fnum@figure{{\sffamily \bfseries\figurename\space\thefigure}}%
 \def\fnum@table{{\bfseries\tablename\space\thetable}}%
 
 \def\FigName{figure}%
@@ -1588,10 +1601,10 @@
 {18pt plus2pt minus1pt}% Space below
 {\small\itshape}% Body font
 {0pt}% Indent amount
-{\small\bfseries}% Theorem head font
+{\small\sffamily\bfseries}% Theorem head font
 {}% Punctuation after theorem head
 {.5em}% Space after theorem headi
-{\thmname{#1}\thmnumber{\@ifnotempty{#1}{ }\@upn{#2}}%
+{\sffamily \bfseries\thmname{#1}\thmnumber{\@ifnotempty{#1}{ }\@upn{#2}}%
   \thmnote{ {\the\thm@notefont(#3)}}}% Theorem head spec (can be left empty, meaning `normal')
 %
 \newtheoremstyle{thmstyletwo}% Numbered
@@ -1599,7 +1612,7 @@
 {18pt plus2pt minus1pt}% Space below
 {\small\normalfont}% Body font
 {0pt}% Indent amount
-{\small\itshape}% Theorem head font
+{\small\sffamily\itshape}% Theorem head font
 {}% Punctuation after theorem head
 {.5em}% Space after theorem headi
 {\thmname{#1}\thmnumber{\@ifnotempty{#1}{ }{#2}}%
@@ -1610,7 +1623,7 @@
 {18pt plus2pt minus1pt}% Space below
 {\small\normalfont}% Body font
 {0pt}% Indent amount
-{\small\bfseries}% Theorem head font
+{\small\sffamily\bfseries}% Theorem head font
 {}% Punctuation after theorem head
 {.5em}% Space after theorem headi
 {\thmname{#1}\thmnumber{\@ifnotempty{#1}{ }\@upn{#2}}%
@@ -1621,7 +1634,7 @@
 {18pt plus2pt minus1pt}% Space below
 {\small\normalfont}% Body font
 {0pt}% Indent amount
-{\small\itshape}% Theorem head font
+{\small\sffamily\itshape}% Theorem head font
 {}% Punctuation after theorem head
 {.5em}% Space after theorem headi
 {\global\proofthmtrue\thmname{#1} \thmnote{#3}}% Theorem head spec (can be left empty, meaning `normal')

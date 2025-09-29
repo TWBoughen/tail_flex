@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d (TeX Live 2025)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: fixed_paper.aux
+The style file: sn-basic.bst
+Database file #1: refs.bib
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Warning--empty booktitle in kang11
+You've used 15 entries,
+            3545 wiz_defined-function locations,
+            839 strings with 8466 characters,
+and the built_in function-call counts, 12135 in all, are:
+= -- 1147
+> -- 404
+< -- 8
++ -- 158
+- -- 117
+* -- 1046
+:= -- 1753
+add.period$ -- 28
+call.type$ -- 15
+change.case$ -- 116
+chr.to.int$ -- 15
+cite$ -- 16
+duplicate$ -- 960
+empty$ -- 1037
+format.name$ -- 172
+if$ -- 2556
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 114
+newline$ -- 54
+num.names$ -- 60
+pop$ -- 288
+preamble$ -- 1
+purify$ -- 99
+quote$ -- 0
+skip$ -- 270
+stack$ -- 0
+substring$ -- 1011
+swap$ -- 291
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 135
+warning$ -- 1
+while$ -- 73
+width$ -- 0
+write$ -- 187
+(There was 1 warning)

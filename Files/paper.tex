@@ -6,9 +6,9 @@
 %
 \documentclass[
   sn-basic,
+  10pt,
 ]{sn-jnl}
 
-\setlength\evensidemargin{\oddsidemargin}
 
 \usepackage{xcolor}
 \usepackage{amsmath,amssymb}
@@ -113,6 +113,9 @@
 \usepackage{algorithmicx}%
 \usepackage{algpseudocode}%
 \usepackage{listings}%
+\usepackage{setspace}%
+
+
 
 
 %%%%
@@ -176,7 +179,7 @@
 \hypersetup{
   pdftitle={Learning growth mechanisms of tail realistic preferential attachment models from network degree distributions},
   pdfauthor={Thomas William Boughen; Clement Lee; Vianey Palacios Ramírez},
-  pdfkeywords={extremes, discrete extremes, power law, preferential
+  pdfkeywords={Extremes · Discrete extremes · Power law · Preferential
 attachment},
   colorlinks=true,
   linkcolor={blue},
@@ -184,6 +187,7 @@ attachment},
   citecolor={Blue},
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
+
 
 
 
@@ -199,7 +203,6 @@ degree distributions}
 Physics}, \orgname{Newcastle University}}
 
 % abstract 
-
 \abstract{Identifying the generating mechanism of a network is
 challenging as, more often than not, only snapshots are available, but
 not the full evolution. One candidate for the generating mechanism is
@@ -220,11 +223,11 @@ supported by simulation studies. Results of applications to real data
 are promising and comparable to alternatives.}
 
 % keywords
-\keywords{extremes, discrete extremes, power law, preferential
+\keywords{Extremes · Discrete extremes · Power law · Preferential
 attachment}
 
 
-\pacs[MSC 2020]{05C82, 60G70}
+\pacs[\sffamily MSC 2020]{05C82· 60G70}
 
 \begin{document}
 \maketitle
@@ -338,8 +341,6 @@ fitting the model to only the degree distribution. Subsection
 \ref{sec-real} fits the model to some real data and provides posterior
 estimates for the preference function. Section~\ref{sec-conc} provides a
 discussion of this paper and possible avenues for future work.
-
-\newpage
 
 \section{Tail Behaviour of Preferential Attachment
 Model}\label{sec-tail}
@@ -522,7 +523,7 @@ since
 
 \centering{
 
-\includegraphics[width=0.6\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-ex-1.pdf}
+\includegraphics[width=119mm,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-ex-1.pdf}
 
 }
 
@@ -539,9 +540,10 @@ In the previous section, we constructed an asymptotically linear
 preference function that allows for the inclusion of sub/super-linear
 behaviour below the threshold, while simultaneously guaranteeing regular
 variation of the degrees. In this section, we demonstrate the
-flexibility of the preference function in Equation~\ref{eq-pref}, with
-regard to the tail behaviour of the limiting degree distribution. The
-limiting survival if the proposed GPA model is:
+flexibility of the proposed GPA model, that is using the preference
+function from Equation~\ref{eq-pref} in the GPA model, with regard to
+the tail behaviour of the limiting degree distribution. The limiting
+survival of the proposed GPA model is:
 
 \begin{equation}\phantomsection\label{eq-polysurv}{
 \bar F(k) = \begin{cases}
@@ -567,7 +569,7 @@ shown on log-log scale in Figure~\ref{fig-polylinsurv}:
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-polylinsurv-1.pdf}
+\includegraphics[width=119mm,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-polylinsurv-1.pdf}
 
 }
 
@@ -584,11 +586,11 @@ indices ranging from 0.035 (\(\alpha=1.5, \beta=0.1, \varepsilon=1\)) to
 
 An interesting property is that the analytic form of the survival
 function in (\ref{eq-polysurv}), offers a natural connection to the
-discrete version of the generalised Pareto (GP) distribution , providing
+discrete version of the generalised Pareto (GP) distribution, providing
 a link to a well established component of discrete extremes in the
 literature. Specifically, it is connected to the Integer GP (IGP)
 distribution seen in \citet{Rohrbeck_2018} with conditional survival: \[
-\Pr(X> x|X> v) = \left(\frac{\xi(x-v)}{\sigma} + 1\right)^{-1/\xi},\qquad x=v+1,v+2,\ldots
+\Pr(X> x|X> v) = \left(\frac{\xi(x-v)}{\sigma} + 1\right)^{-1/\xi},\qquad  x=v+1,v+2,\ldots
 \] for \(v\in\mathbb Z^+, \sigma>0,\xi\in \mathbb R\), denoted as
 \(X|X>u \sim  \mathrm {IGP}(\xi, \sigma, u)\) where \(\xi\) is the shape
 parameter and reciprocal of the tail index.
@@ -624,7 +626,7 @@ well even for large degrees and more so when \(\alpha\) is larger.
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-approx_surv-1.pdf}
+\includegraphics[width=119mm,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-approx_surv-1.pdf}
 
 }
 
@@ -655,7 +657,7 @@ underlying the growth of the network.
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-polyheat-1.pdf}
+\includegraphics[width=119mm,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-polyheat-1.pdf}
 
 }
 
@@ -726,7 +728,7 @@ algorithm. For these simulated networks \(l=0\).
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-rec1-1.pdf}
+\includegraphics[width=119mm,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-rec1-1.pdf}
 
 }
 
@@ -757,7 +759,7 @@ Figures \ref{fig-rec1} and \ref{fig-rec2} demonstrate the usefulness of
 the model, as we can recover the model parameters well from only the
 final degree distribution of the simulated network. This indicates that
 the method may also be applied to real networks, with the assumption
-that they evolved according to the GPA scheme.
+that they evolved according to the proposed GPA scheme.
 
 \subsection{Real Data}\label{sec-real}
 
@@ -811,7 +813,7 @@ from \href{konect.cc}{KONECT} and the
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-real1-1.pdf}
+\includegraphics[width=119mm,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-real1-1.pdf}
 
 }
 
@@ -820,34 +822,35 @@ of the fitted survival function of the proposed GPA model (solid red)
 for several real data sets and their 95\% credible intervals (dotted
 red). Also shown are the posterior medians (solid blue) and 95\%
 credible intervals (dotted blue) for a model from \citet{Lee24}. The
-corresponding thresholds are shown with short vertical lines towards the
-top of each plot.}
+corresponding \(k_0\) values are shown with short vertical lines towards
+the top of each plot.}
 
 \end{figure}%
 
 Figure~\ref{fig-real1} displays the posterior estimates of the survival
-function for various data sets, obtained from fitting the GPA model and
-the Zipf-IGP mixture model from \citet{Lee24}. In most cases, the GPA
-model gives a similar fit to the Zipf-IGP model but where the GPA model
-fits well we gain additional information about the preference function,
-assuming that the network evolved according the the GPA scheme.
+function for various data sets, obtained from fitting the proposed GPA
+model and the Zipf-IGP mixture model from \citet{Lee24}. In most cases,
+the proposed GPA model gives a similar fit to the Zipf-IGP model but
+where the proposed GPA model fits well we gain additional information
+about the preference function, assuming that the network evolved
+according the the proposed GPA scheme.
 
 Figure~\ref{fig-shapes} shows the posterior of the shape parameter
 \(\xi\) obtained from the Zipf-IGP model alongside the posterior of the
 equivalent shape parameter \(\beta/\lambda^*\) obtained from fitting the
-GPA model. Generally, the GPA model performs similarly to the Zipf-IGP
-when estimating the tail behaviour of the degree distribution. In the
-cases of substantial discrepancies, it is either because the GPA model
-fits the tail better than the Zipf-IGP model does, or because of the
-threshold being too low, forcing almost all of the data to be modelled
-by the linear part of the GPA. This again shows the effects that small
-degrees have on this model.
+proposed GPA model. Generally, the proposed GPA model performs similarly
+to the Zipf-IGP when estimating the tail behaviour of the degree
+distribution. In the cases of substantial discrepancies, it is either
+because the proposed GPA model fits the tail better than the Zipf-IGP
+model does, or because of the threshold being too low, forcing almost
+all of the data to be modelled by the linear part of the GPA. This again
+shows the effects that small degrees have on this model.
 
 \begin{figure}
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{images/pars_plot.jpg}
+\includegraphics[width=119mm,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-parplot-1.pdf}
 
 }
 
@@ -856,11 +859,11 @@ proposed model fitted to real data.}
 
 \end{figure}%
 
-\begin{figure}
+\begin{figure}[H]
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-shapes-1.pdf}
+\includegraphics[width=119mm,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-shapes-1.pdf}
 
 }
 
@@ -888,11 +891,11 @@ diminishing returns on the degree of a vertex i.e.~as a vertex gets
 larger gaining more connections has less of an effect than it did before
 some threshold \(k_0\).
 
-\begin{figure}
+\begin{figure}[H]
 
 \centering{
 
-\includegraphics[width=0.8\linewidth,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-pa-1.pdf}
+\includegraphics[width=119mm,height=\textheight,keepaspectratio]{paper_files/figure-pdf/fig-pa-1.pdf}
 
 }
 
@@ -977,28 +980,47 @@ Equation~\ref{eq-surv-origin} : \[
 \] and substituting into the formula for \(\Omega(F,n)\):
 
 \begin{align*}
-\Omega(F,k)&=\left(\log\frac{\prod_{i=0}^{k+1}\frac{b(i)}{\lambda+b(i)}}{\prod_{i=0}^{k+2}\frac{b(i)}{\lambda+b(i)}}\right)^{-1}-\left(\log\frac{\prod_{i=0}^{k}\frac{b(i)}{\lambda+b(i)}}{\prod_{i=0}^{k+1}\frac{b(i)}{\lambda+b(i)}}\right)^{-1}\\
-&=\left(\log\frac{\lambda+b(k+2)}{b(k+2)}\right)^{-1}-\left(\log\frac{\lambda+b(k+1)}{b(k+1)}\right)^{-1}\\
-&=\left(\log\left[1+\frac{\lambda}{b(k+2)}\right]\right)^{-1}-\left(\log\left[1+\frac{\lambda}{b(k+1)}\right]\right)^{-1}.
+\Omega(F,k)&=\left(\log\frac{\prod_{i=0}^{k+1}\frac{b(i)}{\lambda^{*}+b(i)}}{\prod_{i=0}^{k+2}\frac{b(i)}{\lambda^{*}+b(i)}}\right)^{-1}-\left(\log\frac{\prod_{i=0}^{k}\frac{b(i)}{\lambda^{*}+b(i)}}{\prod_{i=0}^{k+1}\frac{b(i)}{\lambda^{*}+b(i)}}\right)^{-1}\\
+&=\left(\log\frac{\lambda^{*}+b(k+2)}{b(k+2)}\right)^{-1}-\left(\log\frac{\lambda^{*}+b(k+1)}{b(k+1)}\right)^{-1}\\
+&=\left(\log\left[1+\frac{\lambda^{*}}{b(k+2)}\right]\right)^{-1}-\left(\log\left[1+\frac{\lambda^{*}}{b(k+1)}\right]\right)^{-1}.
 \end{align*}
 
-Clearly if \(\lim_{k\rightarrow\infty}b(k)=c\) for some \(c>0\) then
-\(\Omega(F,k)= 0 (= \lim_{k\rightarrow\infty}\frac{1}{\lambda^{*}} [b(k+2)-b(k+1)])\).
-Now consider a non-constant \(b(k)\) and re-write \(\Omega(F,k)\) as:
+As it is assumed throughout that \(b(k)\) is non-decreasing, we consider
+the two cases where \(b(k)\) is bounded and unbounded. When \(b(k)\) is
+bounded, by the monotone convergence theorem,
+\(\lim_{k\rightarrow\infty}b(k) = c\) for some \(c>0\), which implies
+that
+\(\lim_{k\rightarrow\infty}\Omega(F,k)=\lim_{k\rightarrow\infty}\frac{1}{\lambda^{*}}\left[b(k+2)-b(k+1)\right] = 0\).
+This proves the first part of Remark~\ref{rem-omega}. Now, using
+Equation~\ref{eq-surv-origin},
+\(\frac{\bar{F}(k+1)}{\bar{F}(k)}=\frac{b(k+1)}{\lambda^{*}+b(k+1)}\rightarrow\frac{c}{\lambda^{*}+c}<1\)
+as \(k\rightarrow\infty\). This means that \(F\) is not long-tailed, and
+therefore is only recovered to the Gumbel MDA.
+
+Now we consider the case where \(b(k)\) is unbounded, re-write
+\(\Omega(F,k)\) as:
 
 \begin{align*}
-\Omega(F,k) &= \left(\log\left[1+\frac{\lambda}{b(k+2)}\right]\right)^{-1}-\frac{b(k+2)}{\lambda}+\frac{b(k+2)}{\lambda}-\left(\log\left[1+\frac{\lambda}{b(k+1)}\right]\right)^{-1}\\&+\frac{b(k+1)}{\lambda}  -\frac{b(k+1)}{\lambda}\\
-&=\left\{ \left(\log\left[1+\frac{\lambda}{b(k+2)}\right]\right)^{-1}-\frac{b(k+2)}{\lambda}\right\} - \left\{ \left(\log\left[1+\frac{\lambda}{b(k+1)}\right]\right)^{-1}-\frac{b(k+1)}{\lambda}\right\}\\&+\frac{b(k+2)}{\lambda}-\frac{b(k+1)}{\lambda}.
+\Omega(F,k) &= \left(\log\left[1+\frac{\lambda^{*}}{b(k+2)}\right]\right)^{-1}-\frac{b(k+2)}{\lambda^{*}}+\frac{b(k+2)}{\lambda^{*}}\\&\qquad  -\left(\log\left[1+\frac{\lambda^{*}}{b(k+1)}\right]\right)^{-1}+\frac{b(k+1)}{\lambda^{*}}-\frac{b(k+1)}{\lambda^{*}}\\
+&=\left\{ \left(\log\left[1+\frac{\lambda^{*}}{b(k+2)}\right]\right)^{-1}-\frac{b(k+2)}{\lambda^{*}}\right\}\\ &\qquad  - \left\{ \left(\log\left[1+\frac{\lambda^{*}}{b(k+1)}\right]\right)^{-1}-\frac{b(k+1)}{\lambda^{*}}\right\}\\&\qquad  +\frac{b(k+2)}{\lambda^{*}}-\frac{b(k+1)}{\lambda^{*}}.
 \end{align*}
 
-Then if \(\lim_{k\rightarrow\infty}b(k)=\infty\) it follows that:
+Then as \(\lim_{k\rightarrow\infty}b(k)=\infty\) it follows that:
 
 \begin{align*}
-\lim_{k\rightarrow\infty}\Omega(F,k) &= \lim_{k\rightarrow\infty}\left\{ \left(\log\left[1+\frac{\lambda}{b(k+2)}\right]\right)^{-1}-\frac{b(k+2)}{\lambda}\right\} \\&- \lim_{k\rightarrow\infty}\left\{ \left(\log\left[1+\frac{\lambda}{b(k+1)}\right]\right)^{-1}-\frac{b(k+1)}{\lambda}\right\}\\
-&\qquad+\lim_{k\rightarrow\infty}\left(\frac{b(k+2)}{\lambda}-\frac{b(k+1)}{\lambda}\right)\\
-&=\frac{1}{2}-\frac{1}{2} + \lim_{k\rightarrow\infty}\left(\frac{b(k+2)}{\lambda}-\frac{b(k+1)}{\lambda}\right)\\
-&=\frac{1}{\lambda}\lim_{k\rightarrow\infty}\left[b(k+2)-b(k+1)\right].\qquad \square
+\lim_{k\rightarrow\infty}\Omega(F,k) &= \lim_{k\rightarrow\infty}\left\{ \left(\log\left[1+\frac{\lambda^{*}}{b(k+2)}\right]\right)^{-1}-\frac{b(k+2)}{\lambda^{*}}\right\} \\&\qquad - \lim_{k\rightarrow\infty}\left\{ \left(\log\left[1+\frac{\lambda^{*}}{b(k+1)}\right]\right)^{-1}-\frac{b(k+1)}{\lambda^{*}}\right\}\\
+&\qquad +\lim_{k\rightarrow\infty}\left(\frac{b(k+2)}{\lambda^{*}}-\frac{b(k+1)}{\lambda^{*}}\right)\\
+&=\frac{1}{2}-\frac{1}{2} + \lim_{k\rightarrow\infty}\left(\frac{b(k+2)}{\lambda^{*}}-\frac{b(k+1)}{\lambda^{*}}\right)\\
+&=\frac{1}{\lambda^{*}}\lim_{k\rightarrow\infty}\left[b(k+2)-b(k+1)\right].\qquad  \square
 \end{align*}
+
+The first two lines both have the limit \(1/2\) as
+\(\lim_{z\rightarrow{}0}\left[\log(1+z)\right]^{-1}-z^{-1} = 1/2\).
+
+Now, using Equation~\ref{eq-surv-origin},
+\(\frac{\bar{F}(k+1)}{\bar{F}(k)}=\frac{b(k+1)}{\lambda^{*}+b(k+1)}=\frac{1}{\lambda^{*}/b(k+1) + 1}\rightarrow{}1\)
+as \(k\rightarrow\infty\). This means that \(F\) is long-tailed, and
+therefore is in an MDA.
 
 \subsection{\texorpdfstring{Derivation of
 Equation~\ref{eq-rho}}{Derivation of Equation~}}\label{derivation-of-eq-rho}
@@ -1024,17 +1046,20 @@ Now using the fact that:
 \] and reindexing the product in the second sum,
 
 \begin{align*}
-\hat\rho(\lambda) &= \sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{g(i)}{\lambda+g(i)} + \left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\right)\sum_{n=k_0+1}^\infty\frac{\Gamma\left(\frac{g(k_0)}{\beta}+n-k_0\right)\Gamma\left(\frac{\lambda+g(k_0)}{\beta}\right)}{\Gamma\left(\frac{\lambda+g(k_0)}{\beta}+n-k_0\right)\Gamma\left(\frac{g(k_0)}{\beta}\right)}\\
-&= \sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{g(i)}{\lambda+g(i)} + \frac{\Gamma\left(\frac{\lambda+g(k_0)}{\beta}\right)}{\Gamma\left(\frac{g(k_0)}{\beta}\right)}\left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\right)\sum_{n=k_0+1}^\infty\frac{\Gamma\left(\frac{g(k_0)}{\beta}+n-k_0\right)}{\Gamma\left(\frac{\lambda+g(k_0)}{\beta}+n-k_0\right)}\\
-&=\sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{g(i)}{\lambda+g(i)} + \frac{\Gamma\left(\frac{\lambda+g(k_0)}{\beta}\right)}{\Gamma\left(\frac{g(k_0)}{\beta}\right)}\left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\right)\sum_{n=1}^\infty\frac{\Gamma\left(\frac{g(k_0)}{\beta}+n\right)}{\Gamma\left(\frac{\lambda+g(k_0)}{\beta}+n\right)}.
+\hat\rho(\lambda) &= C_{g,k_0} + \left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\right)\sum_{n=k_0+1}^\infty\frac{\Gamma\left(\frac{g(k_0)}{\beta}+n-k_0\right)\Gamma\left(\frac{\lambda+g(k_0)}{\beta}\right)}{\Gamma\left(\frac{\lambda+g(k_0)}{\beta}+n-k_0\right)\Gamma\left(\frac{g(k_0)}{\beta}\right)}\\
+&= C_{g,k_0} + \frac{\Gamma\left(\frac{\lambda+g(k_0)}{\beta}\right)}{\Gamma\left(\frac{g(k_0)}{\beta}\right)}\left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\right)\sum_{n=k_0+1}^\infty\frac{\Gamma\left(\frac{g(k_0)}{\beta}+n-k_0\right)}{\Gamma\left(\frac{\lambda+g(k_0)}{\beta}+n-k_0\right)}\\
+&=C_{g,k_0} + \frac{\Gamma\left(\frac{\lambda+g(k_0)}{\beta}\right)}{\Gamma\left(\frac{g(k_0)}{\beta}\right)}\left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\right)\sum_{n=1}^\infty\frac{\Gamma\left(\frac{g(k_0)}{\beta}+n\right)}{\Gamma\left(\frac{\lambda+g(k_0)}{\beta}+n\right)},
 \end{align*}
+
+where
+\(C_{g,k_0} = \sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{g(i)}{\lambda+g(i)}\).
 
 In order to simplify the infinite sum, consider:
 
 \begin{align*}
 \sum_{n=0}^\infty\frac{\Gamma(n+x)}{\Gamma(n+x+y)} &=\frac{1}{\Gamma(y)}\sum_{n=0}^\infty \text{B}(n+x,y)\\
 &=\frac{1}{\Gamma(y)}\sum_{n=0}^\infty\int_0^1t^{n+x-1}(1-t)^{y-1}at\\
-&=\frac{1}{\Gamma(y)}\int_0^1 t^{x-1}(1-t)^{y-1}\sum_{n=0}^\infty t^n\,at\\
+&=\frac{1}{\Gamma(y)}\int_0^1 t^{x-1}(1-t)^{y-1}\sum_{n=0}^\infty t^n\qquad at\\
 &=\frac{1}{\Gamma(y)}\int_0^1 t^{x-1}(1-t)^{y-1}\frac{1}{1-t}at\\
 &=\frac{1}{\Gamma(y)}\int_0^1 t^{x-1}(1-t)^{y-2}at\\
 &=\frac{1}{\Gamma(y)}\text{y}(x,y-1)\\
@@ -1045,10 +1070,10 @@ This infinite sum does not converge when \(x\le1\) as each term is
 \(O(n^{-x})\). We can now use this in \(\hat\rho(\lambda)\):
 
 \begin{align*}
-\hat\rho(\lambda) &= \sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{g(i)}{\lambda+g(i)} + \frac{\Gamma\left(\frac{\lambda+g(k_0)}{\beta}\right)}{\Gamma\left(\frac{g(k_0)}{\beta}\right)}\left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\right)\left(\frac{\Gamma\left(\frac{g(k_0)}{\beta}\right)}{\left(\frac{\lambda}{\beta}-1\right)\Gamma\left(\frac{g(k_0)+\lambda}{\beta}-1\right)}-\frac{\Gamma\left(\frac{g(k_0)}{\beta}\right)}{\Gamma\left(\frac{g(k_0)+\lambda}{\beta}\right)}\right)\\
-&=\sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{g(i)}{\lambda+g(i)} + \left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\right)\left(\frac{\Gamma\left(\frac{g(k_0)+\lambda}{\beta}\right)}{\left(\frac{\lambda}{\beta}-1\right)\Gamma\left(\frac{g(k_0)+\lambda}{\beta}-1\right)}-1\right)\\
-&=\sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{g(i)}{\lambda+g(i)} + \left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\right)\left(\frac{\frac{g(k_0)+\lambda}{\beta}-1}{\frac{\lambda}{\beta}-1}-1\right)\\
-&=\sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{g(i)}{\lambda+g(i)} + \left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\right)\left(\frac{g(k_0)+\lambda-\beta}{\lambda-\beta}-1\right)\\&=\sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{g(i)}{\lambda+g(i)} + \frac{g(k_0)}{\lambda-\beta}\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}.\qquad \square
+\hat\rho(\lambda) &= C_{g,k_0} + \frac{\Gamma\left(\frac{\lambda+g(k_0)}{\beta}\right)}{\Gamma\left(\frac{g(k_0)}{\beta}\right)}\left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\right)\\&\qquad \times\left(\frac{\Gamma\left(\frac{g(k_0)}{\beta}\right)}{\left(\frac{\lambda}{\beta}-1\right)\Gamma\left(\frac{g(k_0)+\lambda}{\beta}-1\right)}-\frac{\Gamma\left(\frac{g(k_0)}{\beta}\right)}{\Gamma\left(\frac{g(k_0)+\lambda}{\beta}\right)}\right)\\
+&=C_{g,k_0} + \left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\right)\left(\frac{\Gamma\left(\frac{g(k_0)+\lambda}{\beta}\right)}{\left(\frac{\lambda}{\beta}-1\right)\Gamma\left(\frac{g(k_0)+\lambda}{\beta}-1\right)}-1\right)\\
+&=C_{g,k_0} + \left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\right)\left(\frac{\frac{g(k_0)+\lambda}{\beta}-1}{\frac{\lambda}{\beta}-1}-1\right)\\
+&=C_{g,k_0} + \left(\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}\right)\left(\frac{g(k_0)+\lambda-\beta}{\lambda-\beta}-1\right)\\&=\sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{g(i)}{\lambda+g(i)} + \frac{g(k_0)}{\lambda-\beta}\prod_{i=0}^{k_0-1}\frac{g(i)}{\lambda+g(i)}.\qquad  \square
 \end{align*}
 
 \newpage
