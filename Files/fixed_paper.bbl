@@ -1,4 +1,4 @@
-\begin{thebibliography}{15}
+\begin{thebibliography}{16}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{{#1}}
 \providecommand{\urlprefix}{URL }
@@ -23,6 +23,10 @@ Betzel RF, Bassett DS (2017) Generative models for network neuroscience:
 \bibitem[{Broido and Clauset(2019)}]{Broido_2019}
 Broido AD, Clauset A (2019) Scale-free networks are rare. Nature Communications
   10(1). \doi{10.1038/s41467-019-08746-5}
+
+\bibitem[{Hitz et~al(2024)Hitz, Davis, and Samorodnitsky}]{hitz24}
+Hitz AS, Davis RA, Samorodnitsky G (2024) Discrete extremes. Journal of Data
+  Science 22(4):524--536. \doi{10.6339/24-JDS1120}
 
 \bibitem[{Kang et~al(2011)Kang, Meeder, and Faloutsos}]{kang11}
 Kang U, Meeder B, Faloutsos C (2011) Spectral analysis for billion-scale

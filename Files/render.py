@@ -12,6 +12,7 @@ def run_command(cmd, work_dir):
         cwd=work_dir,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
+        encoding="utf-8",
         text=True
     )
 

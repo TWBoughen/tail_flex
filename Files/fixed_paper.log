@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.3.18)  30 SEP 2025 06:25
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.3.18)  1 OCT 2025 00:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1404,12 +1404,12 @@ LaTeX Font Warning: Size substitutions with differences
 
  ) 
 Here is how much of TeX's memory you used:
- 24521 strings out of 473832
- 442220 string characters out of 5733158
- 1057430 words of memory out of 5000000
- 47188 multiletter control sequences out of 15000+600000
+ 24526 strings out of 473832
+ 442321 string characters out of 5733158
+ 1057365 words of memory out of 5000000
+ 47193 multiletter control sequences out of 15000+600000
  567612 words of font info for 109 fonts, out of 8000000 for 9000
  1358 hyphenation exceptions out of 8191
- 90i,12n,114p,1008b,580s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,12n,114p,1008b,582s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on fixed_paper.pdf (23 pages).
