@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.3.18)  29 SEP 2025 21:59
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.3.18)  30 SEP 2025 06:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1376,7 +1376,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [21]
 (./fixed_paper.bbl
-Underfull \hbox (badness 2318) in paragraph at lines 20--23
+Underfull \hbox (badness 2318) in paragraph at lines 19--22
 []\TU/lmr/m/n/10.03749 Betzel RF, Bassett DS (2017) Generative models for netwo
 rk neuro-
  []

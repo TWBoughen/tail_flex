@@ -9,8 +9,7 @@
 \bibitem[{Banerjee et~al(2025)Banerjee, Deka, and Olvera-Cravioto}]{banerjee25}
 Banerjee S, Deka P, Olvera-Cravioto M (2025) Local weak limits for collapsed
   branching processes with random out-degrees. Stochastic Processes and their
-  Applications 182:104566. \doi{https://doi.org/10.1016/j.spa.2025.104566},
-  \urlprefix\url{https://www.sciencedirect.com/science/article/pii/S0304414925000055}
+  Applications 182:104566. \doi{https://doi.org/10.1016/j.spa.2025.104566}
 
 \bibitem[{Barabási and Albert(1999)}]{Barabasi99}
 Barabási AL, Albert R (1999) Emergence of scaling in random networks. Science
@@ -27,7 +26,7 @@ Broido AD, Clauset A (2019) Scale-free networks are rare. Nature Communications
 
 \bibitem[{Kang et~al(2011)Kang, Meeder, and Faloutsos}]{kang11}
 Kang U, Meeder B, Faloutsos C (2011) Spectral analysis for billion-scale
-  graphs: Discoveries and implementation. pp 13--25,
+  graphs: Discoveries and implementation. In: LNAI, pp 13--25,
   \doi{10.1007/978-3-642-20847-8_2}
 
 \bibitem[{Krapivsky and Redner(2001)}]{krapivsky01}

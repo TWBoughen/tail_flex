@@ -90,7 +90,7 @@ $$
 \Pr(\zeta(t+\text{d}t)=k+1|\zeta(t)=k) = b(k)\text{d}t + o(\text{d}t).
 $$
 
-Denote the density of the point process associated with the pure birth process corresponding to the growth of an individual node by $\rho(t)$, and its Laplace transform by $\hat \rho(\lambda)\coloneq \int_0^\infty e^{-\lambda t}\rho(t)\text{d}t$. Next, denote the Malthusian parameter of this process by $\lambda^*$, that is $\lambda^*$ satisfies $\hat\rho(\lambda^*) = 1$.
+Denote the density of the point process associated with the pure birth process corresponding to the growth of an individual node by $\rho(t)$, and its Laplace transform by $\hat \rho(\lambda)\coloneq \int_0^\infty e^{-\lambda t}\rho(t)\text{d}t$. We denote the Malthusian parameter of this process by $\lambda^*$, that is $\lambda^*$ satisfies $\hat\rho(\lambda^*) = 1$.
 
 Now, let $\Upsilon(t)$ be the tree determined by $\zeta(t)$ as follows: $\Upsilon(t)=\{\emptyset\}$ and $\Upsilon(t)=G$ where each existing node $x$ in $\Upsilon(t)$ gives birth to a child with rate $b(\mathrm{deg}(x, \Upsilon(t)))$ independently of the other nodes where $\mathrm{deg}(x, \Upsilon(t))$ is the degree of node $x$ in the tree $\Upsilon(t)$ at time $t$, denote by $\Upsilon(t)_{\downarrow x}$ the tree when treating node $x$ as the root.
 
@@ -148,7 +148,7 @@ Let $\bar F (k)$ be the limiting survival function of degrees in a GPA network w
 -   $\bar F(k)$ is light-tailed if and only if $\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=0$. Further, $F$ is in the Gumbel MDA as it is also long-tailed.
 :::
 
-@cor-omega2 is a direct consequence of @prp-omega and the results of @shimura12, and it aligns with previous findings in the literature. In particular it is consistent with @krapivsky01, who showed that a sub-linear preference function leads to a light-tailed distributions, since for $b(k)=k^\alpha$ with $\alpha<1$, we have $\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=0$. Conversely, it also agrees with the limiting behavior of BA model, which produces a regularly degree distribution with tail index 2; for the preference function $b(k)=k+\varepsilon$, $\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=1$, giving a tail index of $\lambda^*=2$
+@cor-omega2 is a direct consequence of @prp-omega and the results of @shimura12, and it aligns with previous findings in the literature. In particular it is consistent with @krapivsky01, who showed that a sub-linear preference function leads to a light-tailed distributions, since for $b(k)=k^\alpha$ with $\alpha<1$, we have $\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=0$. Conversely, it also agrees with the limiting behaviour of BA model, which produces a regularly degree distribution with tail index 2; for the preference function $b(k)=k+\varepsilon$, $\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=1$, giving a tail index of $\lambda^*=2$
 
 Using @cor-omega2 we can directly connect the preference function to the tail behaviour of the degree distribution. By choosing an appropriate preference function, we can ensure that the tail of the degree distribution is regularly varying while allowing the body to deviate from the power-law shape, as observed in real networks. Inspired by @Lee24, we consider a piecewise function:
 
