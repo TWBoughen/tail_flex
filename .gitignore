@@ -3,7 +3,6 @@
 .RData
 .Ruserdata
 mcmc_plot.rds
-*.tex
 *.rmarkdown
 *.bst
 !paper.tex
