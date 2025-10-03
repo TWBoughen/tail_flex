@@ -285,7 +285,7 @@ $$ {#eq-igp-est} meaning that for $k\ge k_0$ the limiting degree distribution (f
 
 To assess how close of an approximation this is, the theoretical conditional survival [@eq-polysurv] are shown in @fig-approx_surv in colour and their IGP approximations [@eq-igp-est] are shown in grey. The approximation holds up well even for large degrees and more so when $\alpha$ is larger.
 
-```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="119mm"}
+```{r, echo=FALSE, warning=FALSE, cache=FALSE, out.width="119mm"}
 #| fig-width: 8
 #| fig-height: 4
 #| fig-cap: Theoretical conditional survivals (grey) of the proposed model alongside their IGP approximations (coloured).
@@ -309,7 +309,7 @@ gp_surv =numeric(nrow(pars))
 for(i in 1:nrow(pars)){
   surv[i] = S(pars$x[i], polylin(pars$a[i], pars$eps[i]),pars$lambda[i], pars$k0[i],pars$b[i])/
     S(pars$k0[i], polylin(pars$a[i], pars$eps[i]),pars$lambda[i], pars$k0[i],pars$b[i])
-  gp_surv[i] = mev::pgp(pars$x[i],pars$k0[i]-1,((pars$k0[i]+1)^pars$a[i] +pars$eps[i]-1 )/pars$lambda[i],pars$b[i]/pars$lambda[i],lower.tail = F)
+  gp_surv[i] = mev::pgp(pars$x[i],pars$k0[i],((pars$k0[i])^pars$a[i] +pars$eps[i]-1 +pars$b[i])/pars$lambda[i],pars$b[i]/pars$lambda[i],lower.tail = F)
 }
 pars = cbind(pars,surv,gp_surv)
 names(pars) = c('a', 'b', 'eps', 'k0','x','lambda','surv','gp_surv')
@@ -327,7 +327,7 @@ l4 = scale_y_log10(limits=c(1e-4,1))
 limlist = list(l1,l2,l3,l4)
 
 ggplot(data = pars) + geom_line(aes(x=(x),y=surv, linetype=as.character(b),colour =as.character(b)), lwd=1) +
-  geom_line(data = pars[pars$x>=pars$k0,],aes(x=(x+1),y=gp_surv, linetype=as.character(b)),colour ='grey')+
+  geom_line(data = pars[pars$x>=pars$k0,],aes(x=(x),y=gp_surv, linetype=as.character(b)),colour ='grey')+
   scale_x_log10()+
   theme(aspect.ratio = 1/2) + theme_bw() + xlab('Total Degree')  +ylab('Survival') + labs(linetype=TeX('\\beta'), colour =TeX('\\beta')) +
   facet_grid(eps~a,labeller = labeller,scales='free') + facetted_pos_scales(y=limlist)
