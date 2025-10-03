@@ -184,8 +184,8 @@
 \hypersetup{
   pdftitle={Learning growth mechanisms of tail realistic preferential attachment models from network degree distributions},
   pdfauthor={Thomas William Boughen; Clement Lee; Vianey Palacios Ramírez},
-  pdfkeywords={Extremes · Discrete extremes · Power law · Preferential
-attachment},
+  pdfkeywords={Network degrees · Discrete extremes · Power law ·
+Preferential attachment},
   colorlinks=true,
   linkcolor={blue},
   filecolor={Maroon},
@@ -228,7 +228,7 @@ supported by simulation studies. Results of applications to real data
 are promising and comparable to alternatives.}
 
 % keywords
-\keywords{Extremes · Discrete extremes · Power law · Preferential
+\keywords{Network degrees · Discrete extremes · Power law · Preferential
 attachment}
 
 
@@ -371,14 +371,10 @@ below.
 
 Consider a continuous time branching process \(\zeta(t)\) driven by a
 Markovian pure birth process, with \(\zeta(0)=0\) and birth rates
-depending on a non-negative function \(b(\cdot)\):
-
-\[
+depending on a non-negative function \(b(\cdot)\): \[
 \Pr(\zeta(t+\text{d}t)=k+1|\zeta(t)=k) = b(k)\text{d}t + o(\text{d}t).
-\]
-
-Denote the density of the point process associated with the pure birth
-process corresponding to the growth of an individual node by
+\] Denote the density of the point process associated with the pure
+birth process corresponding to the growth of an individual node by
 \(\rho(t)\), and its Laplace transform by
 \(\hat \rho(\lambda)\coloneq \int_0^\infty e^{-\lambda t}\rho(t)\text{d}t\).
 We denote the Malthusian parameter of this process by \(\lambda^*\),
@@ -457,8 +453,8 @@ network with preference function \(b\) such that
 \]
 
 Here, \(\lambda^*\) is the Malthusian parameter of the corresponding
-branching process. See Appendix \ref{sec-proofs} for the details of the
-proof.
+branching process. See Appendix \ref{sec-prpproof} for the details of
+the proof.
 
 \end{proposition}
 
@@ -466,7 +462,7 @@ proof.
 If \(\lim_{k\rightarrow\infty}b(k)<\infty\), then \(\Omega(F, k) = 0\).
 Furthermore, \(F\) is recovered to the Gumbel MDA but does not belong to
 the Gumbel MDA itself as it is not long-tailed. See Appendix
-\ref{sec-proofs} for the proof.
+\ref{sec-remproof} for the proof.
 
 \label{rem-omega}
 
@@ -502,7 +498,13 @@ preference function leads to a light-tailed distributions, since for
 with the limiting behaviour of the BA model, which produces a regularly
 degree distribution with tail index 2; for the preference function
 \(b(k)=k+1\), \(\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=1\), giving a
-tail index of \(\lambda^*=2\).
+tail index of \(\lambda^*=2\). We can also obtain the afforementioned
+results for UA, taking \(b(k)=c\) it is clear that
+\(\lim_{k\rightarrow\infty}b(k)<\infty\) and therefore by
+Remark~\ref{rem-omega} we have tha
+\(\lim_{k\rightarrow\infty}\Omega(F,k)=0\) meaning \(F\)'s tail is not
+regularly varying and is in the Gumbel domain as \(b(k)\) is also
+long-tailed.
 
 Using Corollary~\ref{cor-omega2} we can directly connect the preference
 function to the tail behaviour of the degree distribution. By choosing
@@ -567,7 +569,7 @@ survival of the proposed GPA model is:
 \hat\rho(\lambda) = \sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{i^\alpha + \varepsilon}{\lambda+i^\alpha + \varepsilon} + \left(\frac{k_0^\alpha + \varepsilon}{\lambda-\beta}\right)\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda + i^\alpha + \varepsilon}, 
 }\end{equation} which has to be solved numerically for most parameter
 choices. Also, note that \(\lambda>\beta\). See Appendix
-\ref{sec-proofs} for the derivations of Equation~\ref{eq-rho}.
+\ref{sec-rhoproof} for the derivations of Equation~\ref{eq-rho}.
 
 For some parameter combinations, the limiting survival \(\bar F(k)\) is
 shown on log-log scale in Figure~\ref{fig-polylinsurv}:
@@ -696,11 +698,8 @@ the model does not capture the behaviour well at the lower degrees,
 since \citet{rudas07} only provides results for the case of a
 preferential attachment tree.
 
-In order to carry out the Bayesian inference of the parameters we must
-first assign priors, for the parameters defined on the positive real
-line (\(\alpha, \beta,\varepsilon\)) we use diffuse gamma priors and for
-\(k_0\) we use a discrete uniform prior over a large and reasonable
-range of values.
+The methodology for the Bayesian inference of the parameters is detailed
+in Section~\ref{sec-sim}.
 
 \section{Applications}\label{applications}
 
@@ -715,9 +714,12 @@ Equation~\ref{eq-llh}.
 The procedure for recovering the parameters begins with simulating a
 network from the model with \(N=100,000\) vertices and \(m=1\) given
 some set of parameters
-\(\pmb\theta = (\alpha, \beta, \varepsilon, k_0)\), obtaining the degree
-counts and using the likelihood from the previous section alongside the
-priors:
+\(\pmb\theta = (\alpha, \beta, \varepsilon, k_0)\). In order to carry
+out the Bayesian inference of the parameters we must first assign
+priors, for the parameters defined on the positive real line
+(\(\alpha, \beta,\varepsilon\)) we use diffuse gamma priors and for
+\(k_0\) we use a discrete uniform prior over a large and reasonable
+range of values, specifically we use the priors below:
 
 \begin{align*}
 \alpha&\sim \text{Gamma}(1,0.01),\\
@@ -817,6 +819,9 @@ from \href{konect.cc}{KONECT} and the
   \texttt{topology}: network of connections between autonomous systems
   of the Internet
 \end{itemize}
+
+The parameter inferences that follow were obtained using the same priors
+and MCMC sampling method as detailed in Section~\ref{sec-sim}.
 
 \begin{figure}
 
@@ -994,21 +999,22 @@ Equation~\ref{eq-surv-origin} : \[
 \end{align*}
 
 \subsection{\texorpdfstring{Proof of
-Remark~\ref{rem-omega}}{Proof of Remark~}}\label{proof-of-rem-omega}
+Remark~\ref{rem-omega}}{Proof of Remark~}}\label{sec-remproof}
 
 As it is assumed throughout that \(b(k)\) is non-decreasing, we consider
 the two cases where \(b(k)\) is bounded and unbounded. When \(b(k)\) is
 bounded, by the monotone convergence theorem,
 \(\lim_{k\rightarrow\infty}b(k) = c\) for some \(c>0\), which implies
-that \(\lim_{k\rightarrow\infty}\Omega(F,k)= 0\). This proves the first
-part of Remark~\ref{rem-omega}. Now, using
+that
+\(\lim_{k\rightarrow\infty}\Omega(F,k)=\left(\log\left[1+\frac{\lambda^{*}}{c}\right]\right)^{-1}-\left(\log\left[1+\frac{\lambda^{*}}{c}\right]\right)^{-1}= 0\).
+This proves the first part of Remark~\ref{rem-omega}. Now, using
 Equation~\ref{eq-surv-origin},
 \(\frac{\bar{F}(k+1)}{\bar{F}(k)}=\frac{b(k+1)}{\lambda^{*}+b(k+1)}\rightarrow\frac{c}{\lambda^{*}+c}<1\)
 as \(k\rightarrow\infty\). This means that \(F\) is not long-tailed, and
 therefore is only recovered to the Gumbel MDA.
 
 \subsection{\texorpdfstring{Proof of
-Proposition~\ref{prp-omega}}{Proof of Proposition~}}\label{proof-of-prp-omega}
+Proposition~\ref{prp-omega}}{Proof of Proposition~}}\label{sec-prpproof}
 
 Now we consider the case where \(b(k)\) is unbounded, re-write
 \(\Omega(F,k)\) as:
@@ -1036,7 +1042,7 @@ as \(k\rightarrow\infty\). This means that \(F\) is long-tailed, and
 therefore is in an MDA.
 
 \subsection{\texorpdfstring{Derivation of
-Equation~\ref{eq-rho}}{Derivation of Equation~}}\label{derivation-of-eq-rho}
+Equation~\ref{eq-rho}}{Derivation of Equation~}}\label{sec-rhoproof}
 
 For a preference function of the form:
 

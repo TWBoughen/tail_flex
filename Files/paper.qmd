@@ -32,7 +32,7 @@ author:
       - ref: 1
 abstract: |
   Identifying the generating mechanism of a network is challenging as, more often than not, only snapshots are available, but not the full evolution. One candidate for the generating mechanism is preferential attachment which, in its simplest form, results in a degree distribution that follows the power law. Consequently, the growth of real-life networks that display such power-law behaviour is commonly modelled by preferential attachment. The ubiquity of the power law has been challenged by the presence of alternatives with comparable performance, as well as the recent findings that the tail of the degree distribution is often lighter than implied by the body, whilst still being regularly varying. In this paper, we propose a preferential attachment model with a flexible preference function. Using methods for discrete extremes, we characterise the tail behaviour of the limiting degree distribution directly by the form of the preference function. Directly relating the tail index to the model parameters enables them to be inferred when fitting to degree distributions alone, which is supported by simulation studies. Results of applications to real data are promising and comparable to alternatives.
-keywords: Extremes · Discrete extremes · Power law · Preferential attachment
+keywords: Network degrees · Discrete extremes · Power law · Preferential attachment
 msc: 
  - 05C80
  - 60J85
@@ -91,11 +91,9 @@ Special cases of this model include the BA model when $b(k) = k+1$, which in the
 The survival function of the limiting degree distribution, called the limiting survival hereafter, under condition [-@eq-condb2] can be analytically derived in the case where $m=1$, which is presented below.
 
 Consider a continuous time branching process $\zeta(t)$ driven by a Markovian pure birth process, with $\zeta(0)=0$ and birth rates depending on a non-negative function $b(\cdot)$:
-
 $$
 \Pr(\zeta(t+\text{d}t)=k+1|\zeta(t)=k) = b(k)\text{d}t + o(\text{d}t).
 $$
-
 Denote the density of the point process associated with the pure birth process corresponding to the growth of an individual node by $\rho(t)$, and its Laplace transform by $\hat \rho(\lambda)\coloneq \int_0^\infty e^{-\lambda t}\rho(t)\text{d}t$. We denote the Malthusian parameter of this process by $\lambda^*$, that is $\lambda^*$ satisfies $\hat\rho(\lambda^*) = 1$.
 
 Now, we construct the tree $\Upsilon(t)$ determined by $\zeta(t)$ as follows: $\Upsilon(0)=\{\emptyset\}$ and $\Upsilon(t)$ is a graph where each existing node $x$ in $\Upsilon(t)$ gives birth to a child with rate $b(\mathrm{deg}(x, \Upsilon(t)))$ independently of the other nodes where $\mathrm{deg}(x, \Upsilon(t))$ is the degree of node $x$ in the tree $\Upsilon(t)$ at time $t$, denote by $\Upsilon(t)_{\downarrow x}$ the tree when treating node $x$ as the root.
@@ -141,11 +139,11 @@ $$
 \lim_{k\rightarrow\infty}\Omega(F,k) = \lim_{k\rightarrow\infty}\frac{b(k+1)-b(k)}{\lambda^*}.
 $$
 
-Here, $\lambda^*$ is the Malthusian parameter of the corresponding branching process. See Appendix [-@sec-proofs] for the details of the proof.
+Here, $\lambda^*$ is the Malthusian parameter of the corresponding branching process. See Appendix [-@sec-prpproof] for the details of the proof.
 :::
 
 ::: {#rem-omega}
-If $\lim_{k\rightarrow\infty}b(k)<\infty$, then $\Omega(F, k) = 0$. Furthermore, $F$ is recovered to the Gumbel MDA but does not belong to the Gumbel MDA itself as it is not long-tailed. See Appendix [-@sec-proofs] for the proof.
+If $\lim_{k\rightarrow\infty}b(k)<\infty$, then $\Omega(F, k) = 0$. Furthermore, $F$ is recovered to the Gumbel MDA but does not belong to the Gumbel MDA itself as it is not long-tailed. See Appendix [-@sec-remproof] for the proof.
 :::
 
 ::: {#cor-omega2}
@@ -156,7 +154,7 @@ Let $\bar F (k)$ be the limiting survival function of degrees in a GPA network w
 -   $\bar F(k)$ is light-tailed if and only if $\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=0$. Further, $F$ is in the Gumbel MDA as it is also long-tailed.
 :::
 
-@cor-omega2 is a direct consequence of @prp-omega and the results of @shimura12, and it aligns with previous findings in the literature. In particular it is consistent with @krapivsky01, who showed that a sub-linear preference function leads to a light-tailed distributions, since for $b(k)=k^\alpha$ with $\alpha<1$, we have $\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=0$. Conversely, it also agrees with the limiting behaviour of the BA model, which produces a regularly degree distribution with tail index 2; for the preference function $b(k)=k+1$, $\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=1$, giving a tail index of $\lambda^*=2$.
+@cor-omega2 is a direct consequence of @prp-omega and the results of @shimura12, and it aligns with previous findings in the literature. In particular it is consistent with @krapivsky01, who showed that a sub-linear preference function leads to a light-tailed distributions, since for $b(k)=k^\alpha$ with $\alpha<1$, we have $\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=0$. Conversely, it also agrees with the limiting behaviour of the BA model, which produces a regularly degree distribution with tail index 2; for the preference function $b(k)=k+1$, $\lim_{k\rightarrow\infty}[b(k+1)-b(k)]=1$, giving a tail index of $\lambda^*=2$. We can also obtain the afforementioned results for UA, taking $b(k)=c$ it is clear that $\lim_{k\rightarrow\infty}b(k)<\infty$ and therefore by @rem-omega we have tha $\lim_{k\rightarrow\infty}\Omega(F,k)=0$ meaning $F$'s tail is not regularly varying and is in the Gumbel domain as $b(k)$ is also long-tailed.
 
 Using @cor-omega2 we can directly connect the preference function to the tail behaviour of the degree distribution. By choosing an appropriate preference function, we can ensure that the tail of the degree distribution is regularly varying while allowing the body to deviate from the power-law shape, as observed in real networks. Inspired by @Lee24, we consider a piecewise function:
 
@@ -173,7 +171,7 @@ Shown in @fig-ex is an example of one such preference function of this form, the
 
 ```{r, echo=FALSE, out.width="119mm", warning=FALSE, message=FALSE, cache=TRUE}
 #| fig-width: 6
-#| fig-asp: 0.7
+#| fig-asp: 0.55
 #| fig-cap: Example construction of the preference function in @eq-pref
 #| label: fig-ex
 library(ggbrace)
@@ -217,7 +215,7 @@ with Malthusian parameter $\lambda^*$ satisfying $\hat \rho(\lambda^*)=1$ where
 $$
 \hat\rho(\lambda) = \sum_{n=0}^{k_0}\prod_{i=0}^{n-1}\frac{i^\alpha + \varepsilon}{\lambda+i^\alpha + \varepsilon} + \left(\frac{k_0^\alpha + \varepsilon}{\lambda-\beta}\right)\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda + i^\alpha + \varepsilon}, 
 $$ {#eq-rho}
-which has to be solved numerically for most parameter choices. Also, note that $\lambda>\beta$. See Appendix [-@sec-proofs] for the derivations of @eq-rho.
+which has to be solved numerically for most parameter choices. Also, note that $\lambda>\beta$. See Appendix [-@sec-rhoproof] for the derivations of @eq-rho.
 
 For some parameter combinations, the limiting survival $\bar F(k)$ is shown on log-log scale in @fig-polylinsurv:
 
@@ -395,7 +393,7 @@ L(\pmb n | \pmb \theta,l) = &\left(\frac{\lambda^*}{\lambda^*+\varepsilon}\right
 $${#eq-llh}
 where $\text{B}(\cdot,\cdot)$ is the the beta function, $\pmb \theta = (\alpha, \varepsilon, k_0,\beta)$, and $l\ge0$ is a quantity that allows truncating the data such that the minimum degree is $l$. This will allow the model to be fitted whilst ignoring the influence of the lower degrees (those less than $l$) as the model does not capture the behaviour well at the lower degrees, since @rudas07 only provides results for the case of a preferential attachment tree. 
 
-In order to carry out the Bayesian inference of the parameters we must first assign priors, for the parameters defined on the positive real line ($\alpha, \beta,\varepsilon$) we use diffuse gamma priors and for $k_0$ we use a discrete uniform prior over a large and reasonable range of values.
+The methodology for the Bayesian inference of the parameters is detailed in @sec-sim.
 
 # Applications
 
@@ -403,7 +401,7 @@ In order to carry out the Bayesian inference of the parameters we must first ass
 
 This subsection aims to show that the parameters of the proposed model (and therefore the preference function) in @sec-model can be recovered from simulating a network from the model, and fitting it to the observed degree distribution, using the likelihood in @eq-llh.
 
-The procedure for recovering the parameters begins with simulating a network from the model with $N=100,000$ vertices and $m=1$ given some set of parameters $\pmb\theta = (\alpha, \beta, \varepsilon, k_0)$, obtaining the degree counts and using the likelihood from the previous section alongside the priors:
+The procedure for recovering the parameters begins with simulating a network from the model with $N=100,000$ vertices and $m=1$ given some set of parameters $\pmb\theta = (\alpha, \beta, \varepsilon, k_0)$. In order to carry out the Bayesian inference of the parameters we must first assign priors, for the parameters defined on the positive real line ($\alpha, \beta,\varepsilon$) we use diffuse gamma priors and for $k_0$ we use a discrete uniform prior over a large and reasonable range of values, specifically we use the priors below:
 
 \begin{align*}
 \alpha&\sim \text{Gamma}(1,0.01),\\
@@ -474,6 +472,8 @@ In this subsection, we fit the proposed model to the degree distributions of var
 -   `reactome`: network of protein–protein interactions in humans
 -   `sx-mathoverflow`: interactions from the StackExchange site [MathOverflow](https://mathoverflow.net/)
 -   `topology`: network of connections between autonomous systems of the Internet
+
+The parameter inferences that follow were obtained using the same priors and MCMC sampling method as detailed in @sec-sim.
 
 ```{r, echo=FALSE, warning=FALSE, cache=TRUE, out.width="119mm"}
 #| fig-width: 10
@@ -569,11 +569,11 @@ $$ and substituting into the formula for $\Omega(F,n)$:
 &=\left(\log\left[1+\frac{\lambda^{*}}{b(k+2)}\right]\right)^{-1}-\left(\log\left[1+\frac{\lambda^{*}}{b(k+1)}\right]\right)^{-1}.
 \end{align*}
 
-## Proof of @rem-omega
+## Proof of @rem-omega {#sec-remproof}
 
-As it is assumed throughout that $b(k)$ is non-decreasing, we consider the two cases where $b(k)$ is bounded and unbounded. When $b(k)$ is bounded, by the monotone convergence theorem, $\lim_{k\rightarrow\infty}b(k) = c$ for some $c>0$, which implies that $\lim_{k\rightarrow\infty}\Omega(F,k)= 0$. This proves the first part of @rem-omega. Now, using @eq-surv-origin,  $\frac{\bar{F}(k+1)}{\bar{F}(k)}=\frac{b(k+1)}{\lambda^{*}+b(k+1)}\rightarrow\frac{c}{\lambda^{*}+c}<1$ as $k\rightarrow\infty$. This means that $F$ is not long-tailed, and therefore is only recovered to the Gumbel MDA.
+As it is assumed throughout that $b(k)$ is non-decreasing, we consider the two cases where $b(k)$ is bounded and unbounded. When $b(k)$ is bounded, by the monotone convergence theorem, $\lim_{k\rightarrow\infty}b(k) = c$ for some $c>0$, which implies that $\lim_{k\rightarrow\infty}\Omega(F,k)=\left(\log\left[1+\frac{\lambda^{*}}{c}\right]\right)^{-1}-\left(\log\left[1+\frac{\lambda^{*}}{c}\right]\right)^{-1}= 0$. This proves the first part of @rem-omega. Now, using @eq-surv-origin,  $\frac{\bar{F}(k+1)}{\bar{F}(k)}=\frac{b(k+1)}{\lambda^{*}+b(k+1)}\rightarrow\frac{c}{\lambda^{*}+c}<1$ as $k\rightarrow\infty$. This means that $F$ is not long-tailed, and therefore is only recovered to the Gumbel MDA.
 
-## Proof of @prp-omega
+## Proof of @prp-omega {#sec-prpproof}
 
 Now we consider the case where $b(k)$ is unbounded, re-write $\Omega(F,k)$ as:
 
@@ -596,7 +596,7 @@ The first two lines both have the limit $1/2$ as $\lim_{z\rightarrow{}0}\left[\l
 Now, using @eq-surv-origin, $\frac{\bar{F}(k+1)}{\bar{F}(k)}=\frac{b(k+1)}{\lambda^{*}+b(k+1)}=\frac{1}{\lambda^{*}/b(k+1) + 1}\rightarrow{}1$ as $k\rightarrow\infty$. This means that $F$ is long-tailed, and therefore is in an MDA.
 
 
-## Derivation of @eq-rho
+## Derivation of @eq-rho {#sec-rhoproof}
 
 For a preference function of the form:
 
