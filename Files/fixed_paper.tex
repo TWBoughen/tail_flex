@@ -232,7 +232,7 @@ are promising and comparable to alternatives.}
 attachment}
 
 
-\pacs[\sffamily MSC 2020]{05C82· 60G70}
+\pacs[\sffamily AMS 2000 Subject Classification]{05C80· 60J85· 62G32}
 
 \begin{document}
 \maketitle
@@ -305,15 +305,14 @@ distribution, because otherwise the effects of the largest degrees,
 which correspond to the most influential nodes, deviating from the power
 law will be discounted.
 
-While \citet{Voitalov_2019} have pioneered using methods in extreme
-value theory to analyse degree distributions, while their approach is
-good they overlooked the inapplicability of standard tools for
-continuous extremes, due to the discrete nature of degrees. A key
-difficulty arises because many standard discrete distributions, such as
-the Poisson, geometric, or negative binomial, do not satisfy the
-conditions required to belong to a maximum domain of attraction (MDA).
-\citet{shimura12} showed that a discrete distribution \(F\) must be
-long-tailed, that is
+\citet{Voitalov_2019} have pioneered using methods in extreme value
+theory to analyse degree distributions and while their approach is good
+they overlooked the inapplicability of standard tools for continuous
+extremes, due to the discrete nature of degrees. A key difficulty arises
+because many standard discrete distributions, such as the Poisson,
+geometric, or negative binomial, do not satisfy the conditions required
+to belong to a maximum domain of attraction (MDA). \citet{shimura12}
+showed that a discrete distribution \(F\) must be long-tailed, that is
 \(\lim_{x\rightarrow\infty}\bar F(x+1)/\bar F(x) = 1\), in order to be
 in an MDA, and introduced the notion of recoverability to the MDA, also
 sometimes referred to as the discrete MDA \citep{hitz24}. Using the
@@ -686,7 +685,7 @@ Using Equation~\ref{eq-pmf-origin}, the likelihood is:
 
 \begin{equation}\phantomsection\label{eq-llh}{
 \begin{aligned}
-L(\pmb n | \pmb \theta,l) = &\left(\frac{\lambda^*}{\lambda^*+\varepsilon}\right)^{n_0}\left(\prod_{j=l}^{k_0-1}\frac{j^\alpha +\varepsilon}{\lambda^* + j^\alpha +\varepsilon}\right)^{\left(\sum_{i\ge k_0}n_{i}\right)} \\ &\times \prod_{l \le i<k_0}\left(\frac{\lambda^*}{\lambda^* +i^\alpha + \varepsilon } \prod_{j=l}^{k_0-1}\frac{j^\alpha + \varepsilon}{\lambda^* + j^\alpha + \varepsilon}\right)^{n_i}\\ &\times \prod_{i\ge k_0}\left(\frac{\text{B}(i-k_0 + (k_0^\alpha + \varepsilon)/\beta,1+\lambda^*/\beta)}{\text{B}((k_0^\alpha + \varepsilon)/\beta,\lambda^*/\beta)}\right)^{n_i}
+L(\pmb n | \pmb \theta,l) = &\left(\frac{\lambda^*}{\lambda^*+\varepsilon}\right)^{n_0}\left(\prod_{j=l}^{k_0-1}\frac{j^\alpha +\varepsilon}{\lambda^* + j^\alpha +\varepsilon}\right)^{\left(\sum_{i\ge k_0}n_{i}\right)} \\ &\times \prod_{l \le i<k_0}\left(\frac{\lambda^*}{\lambda^* +i^\alpha + \varepsilon } \prod_{j=l}^{k_0-1}\frac{j^\alpha + \varepsilon}{\lambda^* + j^\alpha + \varepsilon}\right)^{n_i}\\ &\times \prod_{i\ge k_0}\left(\frac{\text{B}(i-k_0 + (k_0^\alpha + \varepsilon)/\beta,1+\lambda^*/\beta)}{\text{B}((k_0^\alpha + \varepsilon)/\beta,\lambda^*/\beta)}\right)^{n_i},
 \end{aligned}
 }\end{equation} where \(\text{B}(\cdot,\cdot)\) is the the beta
 function, \(\pmb \theta = (\alpha, \varepsilon, k_0,\beta)\), and
