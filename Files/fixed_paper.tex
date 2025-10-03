@@ -125,6 +125,7 @@
 \usepackage{algpseudocode}%
 \usepackage{listings}%
 \usepackage{setspace}%
+\usepackage{mathtools}%
 
 
 
@@ -183,7 +184,7 @@
 \urlstyle{same}
 \hypersetup{
   pdftitle={Learning growth mechanisms of tail realistic preferential attachment models from network degree distributions},
-  pdfauthor={Thomas William Boughen; Clement Lee; Vianey Palacios Ramírez},
+  pdfauthor={Thomas William Boughen; Clement Lee; Vianey Palacios Ramirez},
   pdfkeywords={Network degrees · Discrete extremes · Power law ·
 Preferential attachment},
   colorlinks=true,
@@ -202,7 +203,7 @@ mechanisms of tail realistic preferential attachment models from network
 degree distributions}
 
 % author setup
-\author*[1]{\fnm{Thomas William} \sur{Boughen}}\email{t.w.boughen1@newcastle.ac.uk}\author[1]{\fnm{Clement} \sur{Lee}}\author[1]{\fnm{Vianey Palacios} \sur{Ramírez}}
+\author*[1]{\fnm{Thomas William} \sur{Boughen}}\email{t.w.boughen1@newcastle.ac.uk}\author[1]{\fnm{Clement} \sur{Lee}}\author[1]{\fnm{Vianey Palacios} \sur{Ramirez}}
 % affil setup
 \affil[1]{\orgdiv{School of Mathematics, Statistics and
 Physics}, \orgname{Newcastle University}}
@@ -271,7 +272,7 @@ the body of the degree distribution is often modelled well by a power
 law, while the tail is lighter than what is implied by the body, albeit
 still regularly varying.
 
-The popularity of using the power law for network degrees can be traced back to a preferential attachment (PA) model popularised by \cite{Barabasi99}. In the general model, general preferential attachment (GPA), as new nodes join the network, an existing node with degree $k$ gains edges at a rate proportional to $b(k)$, where $b(\cdot)$ is a non-negative preference function. \cite{Barabasi99} showed that, when $b(k) = k + 1$, in the limit the resulting degree distribution is regularly varying with index 2 — this model is commonly known as the Barab\'asi-Albert (BA) model.  Subsequently, if a real network is shown to be scale-free, one can loosely justify PA as the underlying mechanism of its growth.
+The popularity of using the power law for network degrees can be traced back to a preferential attachment (PA) model popularised by \cite{Barabasi99}. In the general model, general preferential attachment (GPA), as new nodes join the network, an existing node with degree $k$ gains edges at a rate proportional to $b(k)$, where $b(\cdot)$ is a non-negative preference function. \cite{Barabasi99} showed that, when $b(k) = k + 1$, in the limit the resulting degree distribution is regularly varying with index 2 --- this model is commonly known as the Barab\'asi-Albert (BA) model.  Subsequently, if a real network is shown to be scale-free, one can loosely justify PA as the underlying mechanism of its growth.
 
 Nevertheless, most studies into the appropriateness of a power law for
 the degrees of real networks, the aforementioned references included,
@@ -376,7 +377,7 @@ depending on a non-negative function \(b(\cdot)\): \[
 \] Denote the density of the point process associated with the pure
 birth process corresponding to the growth of an individual node by
 \(\rho(t)\), and its Laplace transform by
-\(\hat \rho(\lambda)\coloneq \int_0^\infty e^{-\lambda t}\rho(t)\text{d}t\).
+\(\hat \rho(\lambda)\coloneqq \int_0^\infty e^{-\lambda t}\rho(t)\text{d}t\).
 We denote the Malthusian parameter of this process by \(\lambda^*\),
 that is \(\lambda^*\) satisfies \(\hat\rho(\lambda^*) = 1\).
 
@@ -429,14 +430,7 @@ For a discrete distribution \(F\) with survival function \(\bar F\) and
 \Omega(F,k) = \left(\log\displaystyle\frac{\bar F (k+1)}{\bar F (k+2)}\right)^{-1} - \left(\log\displaystyle\frac{\bar F (k)}{\bar F (k+1)}\right)^{-1}.
 \]
 
-\citet{shimura12} established that if
-\(\lim_{k\rightarrow\infty} \Omega(F,k) = 1/\alpha\) (\(\alpha>0\)),
-then \(F\) is regularly varying with \(\bar F(k) \sim k^{-\alpha}\), and
-hence belongs to the Fréchet MDA with tail index \(\alpha\). If instead,
-\(\lim_{k\rightarrow\infty} \Omega(F,k) = 0\) then the distribution is
-recoverable to the Gumbel MDA; in this cases we say that the
-distribution is light-tailed. Moreover, if the distribution is also
-long-tailed, we can conclude that \(F\) itself lies in the Gumbel MDA.
+@shimura12 established that if $\lim_{k\rightarrow\infty} \Omega(F,k) = 1/\alpha$ ($\alpha>0$), then $F$ is regularly varying with $\bar F(k) \sim k^{-\alpha}$, and hence belongs to the Fr\'echet MDA with tail index $\alpha$. If instead, $\lim_{k\rightarrow\infty} \Omega(F,k) = 0$ then the distribution is recoverable to the Gumbel MDA; in this cases we say that the distribution is light-tailed. Moreover, if the distribution is also long-tailed, we can conclude that $F$ itself lies in the Gumbel MDA.
 
 This framework offers a natural approach for analysing the tail
 behaviour of the limiting degree distribution. The following proposition
@@ -806,10 +800,11 @@ from \href{konect.cc}{KONECT} and the
   \texttt{moreno-blogs-blogs}: network of URLs found on the first pages
   of individual blogs
 \item
-  \texttt{opsahl−openflights}: network containing flights between
+  \texttt{opsahl-openflights}: network containing flights between
   airports of the world.
 \item
-  \texttt{pajek-erdos}: co-authorship network around Paul Erdős
+  \texttt{pajek-erdos}:
+  \(\text{co-authorship network around Paul Erd\H{o}s}\)
 \item
   \texttt{reactome}: network of protein--protein interactions in humans
 \item

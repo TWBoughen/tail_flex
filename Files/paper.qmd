@@ -27,7 +27,7 @@ author:
   - name: Clement Lee
     affiliations:
       - ref: 1
-  - name: Vianey Palacios Ramírez
+  - name: Vianey Palacios Ramirez
     affiliations:
       - ref: 1
 abstract: |
@@ -39,7 +39,7 @@ msc:
  - 62G32
 bibliography: refs.bib  
 keep-tex: true
-pdf-engine: xelatex
+pdf-engine: pdflatex
 ---
 
 \newpage
@@ -61,7 +61,7 @@ Networks have become powerful tools for representing and analysing complex syste
 Amid the recent rise of interest in networks, there has been a debate on whether most real networks are scale-free. Claiming a real network is scale-free is equivalent to saying that the tail of the degree distribution follows a power law, that is the fraction of nodes with degree greater than $k$ is eventually proportional to $k^{-\alpha}$, and therefore has a regularly varying tail with tail index $\alpha$. On the side against the claim, that most real networks are scale-free, is @Broido_2019 who compared the fits of a power law model against that of several non-scale-free models to nearly a thousand networks, only to find strong evidence for scale-freeness in four percent and weak evidence in over half of the networks, thus claiming that scale-free networks do not make up a majority of real networks. @Voitalov_2019 disagree and claim that these networks are not nearly as rare and only appear so as a result of an unrealistic expectation of a power law without deviations or noise. Additional evidence of these deviations from a power law is shown by @Lee24 who demonstrate that a lot of networks are partially scale-free, in that the body of the degree distribution is often modelled well by a power law, while the tail is lighter than what is implied by the body, albeit still regularly varying. 
 
 ```{=tex}
-The popularity of using the power law for network degrees can be traced back to a preferential attachment (PA) model popularised by \cite{Barabasi99}. In the general model, general preferential attachment (GPA), as new nodes join the network, an existing node with degree $k$ gains edges at a rate proportional to $b(k)$, where $b(\cdot)$ is a non-negative preference function. \cite{Barabasi99} showed that, when $b(k) = k + 1$, in the limit the resulting degree distribution is regularly varying with index 2 — this model is commonly known as the Barab\'asi-Albert (BA) model.  Subsequently, if a real network is shown to be scale-free, one can loosely justify PA as the underlying mechanism of its growth.
+The popularity of using the power law for network degrees can be traced back to a preferential attachment (PA) model popularised by \cite{Barabasi99}. In the general model, general preferential attachment (GPA), as new nodes join the network, an existing node with degree $k$ gains edges at a rate proportional to $b(k)$, where $b(\cdot)$ is a non-negative preference function. \cite{Barabasi99} showed that, when $b(k) = k + 1$, in the limit the resulting degree distribution is regularly varying with index 2 --- this model is commonly known as the Barab\'asi-Albert (BA) model.  Subsequently, if a real network is shown to be scale-free, one can loosely justify PA as the underlying mechanism of its growth.
 ```
 
 Nevertheless, most studies into the appropriateness of a power law for the degrees of real networks, the aforementioned references included, have been largely descriptive in the sense that no information about the growth of the networks is revealed. 
@@ -94,7 +94,7 @@ Consider a continuous time branching process $\zeta(t)$ driven by a Markovian pu
 $$
 \Pr(\zeta(t+\text{d}t)=k+1|\zeta(t)=k) = b(k)\text{d}t + o(\text{d}t).
 $$
-Denote the density of the point process associated with the pure birth process corresponding to the growth of an individual node by $\rho(t)$, and its Laplace transform by $\hat \rho(\lambda)\coloneq \int_0^\infty e^{-\lambda t}\rho(t)\text{d}t$. We denote the Malthusian parameter of this process by $\lambda^*$, that is $\lambda^*$ satisfies $\hat\rho(\lambda^*) = 1$.
+Denote the density of the point process associated with the pure birth process corresponding to the growth of an individual node by $\rho(t)$, and its Laplace transform by $\hat \rho(\lambda)\coloneqq \int_0^\infty e^{-\lambda t}\rho(t)\text{d}t$. We denote the Malthusian parameter of this process by $\lambda^*$, that is $\lambda^*$ satisfies $\hat\rho(\lambda^*) = 1$.
 
 Now, we construct the tree $\Upsilon(t)$ determined by $\zeta(t)$ as follows: $\Upsilon(0)=\{\emptyset\}$ and $\Upsilon(t)$ is a graph where each existing node $x$ in $\Upsilon(t)$ gives birth to a child with rate $b(\mathrm{deg}(x, \Upsilon(t)))$ independently of the other nodes where $\mathrm{deg}(x, \Upsilon(t))$ is the degree of node $x$ in the tree $\Upsilon(t)$ at time $t$, denote by $\Upsilon(t)_{\downarrow x}$ the tree when treating node $x$ as the root.
 
@@ -129,8 +129,10 @@ $$
 \Omega(F,k) = \left(\log\displaystyle\frac{\bar F (k+1)}{\bar F (k+2)}\right)^{-1} - \left(\log\displaystyle\frac{\bar F (k)}{\bar F (k+1)}\right)^{-1}.
 $$
 
-@shimura12 established that if $\lim_{k\rightarrow\infty} \Omega(F,k) = 1/\alpha$ ($\alpha>0$), then $F$ is regularly varying with $\bar F(k) \sim k^{-\alpha}$, and hence belongs to the Fréchet MDA with tail index $\alpha$. If instead, $\lim_{k\rightarrow\infty} \Omega(F,k) = 0$ then the distribution is recoverable to the Gumbel MDA; in this cases we say that the distribution is light-tailed. Moreover, if the distribution is also long-tailed, we can conclude that $F$ itself lies in the Gumbel MDA.
 
+```{=tex}
+@shimura12 established that if $\lim_{k\rightarrow\infty} \Omega(F,k) = 1/\alpha$ ($\alpha>0$), then $F$ is regularly varying with $\bar F(k) \sim k^{-\alpha}$, and hence belongs to the Fr\'echet MDA with tail index $\alpha$. If instead, $\lim_{k\rightarrow\infty} \Omega(F,k) = 0$ then the distribution is recoverable to the Gumbel MDA; in this cases we say that the distribution is light-tailed. Moreover, if the distribution is also long-tailed, we can conclude that $F$ itself lies in the Gumbel MDA.
+```
 This framework offers a natural approach for analysing the tail behaviour of the limiting degree distribution. The following proposition gives the limiting behaviour of $\Omega(F,k)$ when $F$ is a limiting degree distribution resulting from the GPA model with preference function $b(\cdot)$.
 
 ::: {#prp-omega}
@@ -467,8 +469,8 @@ In this subsection, we fit the proposed model to the degree distributions of var
 -   `maayan-faa`: USA FAA (Federal Aviation Administration) preferred routes as recommended by the NFDC (National Flight Data Center)
 -   `maayan-Stelzl`: network representing interacting pairs of proteins in humans
 -   `moreno-blogs-blogs`: network of URLs found on the first pages of individual blogs
--   `opsahl−openflights`: network containing flights between airports of the world.
--   `pajek-erdos`: co-authorship network around Paul Erdős
+-   `opsahl-openflights`: network containing flights between airports of the world.
+-   `pajek-erdos`: $\text{co-authorship network around Paul Erd\H{o}s}$
 -   `reactome`: network of protein–protein interactions in humans
 -   `sx-mathoverflow`: interactions from the StackExchange site [MathOverflow](https://mathoverflow.net/)
 -   `topology`: network of connections between autonomous systems of the Internet
