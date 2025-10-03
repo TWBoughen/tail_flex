@@ -31,7 +31,7 @@ def build_paper():
     # List of commands
     commands = [
     ["quarto", "render", "paper.qmd"],  # stop at .tex
-    ["python", "fix_theorems.py", "paper.tex"],
+    ["python3", "fix_theorems.py", "paper.tex"],
     ["xelatex","-interaction=nonstopmode", "fixed_paper.tex"],
     ["bibtex", "fixed_paper"],
     ["xelatex", "-interaction=nonstopmode", "fixed_paper.tex"]

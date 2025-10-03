@@ -38,6 +38,7 @@ msc:
  - 60G70
 bibliography: refs.bib  
 keep-tex: true
+pdf-engine: xelatex
 ---
 
 \newpage
