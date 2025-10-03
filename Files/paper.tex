@@ -157,9 +157,9 @@
 \newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
 \usepackage{amsthm}
 \theoremstyle{plain}
-\newtheorem{corollary}{Corollary}[section]
-\theoremstyle{plain}
 \newtheorem{proposition}{Proposition}[section]
+\theoremstyle{plain}
+\newtheorem{corollary}{Corollary}[section]
 \theoremstyle{remark}
 \AtBeginDocument{\renewcommand*{\proofname}{Proof}}
 \newtheorem*{remark}{Remark}
@@ -247,29 +247,30 @@ models for investigating patterns in neural systems \citep{Betzel17}.
 
 Amid the recent rise of interest in networks, there has been a debate on
 whether most real networks are scale-free. Claiming a real network is
-scale-free is equivalent to saying that its degree distribution follows
-a power law, that is the fraction of nodes with degree \(k\) is
-proportional to \(k^{-\alpha}\), and therefore has a regularly varying
-tail with tail index \(\alpha\). On the side against the claim is
-\citet{Broido_2019} who compared the fits of a power law model against
-that of several non-scale-free models to nearly a thousand networks,
-only to find strong evidence for scale-freeness in four percent and weak
-evidence in over half of the networks, thus claiming that scale-free
-networks do not make up a majority in real networks. On the other side
-of this debate is \citet{Voitalov_2019} who disagrees and claims that
-these networks are not nearly as rare and only appear to be so as a
-result of an unrealistic expectation of a power law without deviations
-or noise. Additional evidence of these deviations from a power law is
-shown by \citet{Lee24} who demonstrate that a lot of networks are
-partially scale-free, in that the body of the degree distribution is
-often modelled well by a power law, while the tail is lighter than what
-is implied by the body, albeit still regularly varying. Nevertheless,
-most studies into the appropriateness of a power law for the degrees of
-real networks, the aforementioned references included, have been largely
-descriptive in the sense that no information about the growth of the
-networks is revealed.
+scale-free is equivalent to saying that the tail of the degree
+distribution follows a power law, that is the fraction of nodes with
+degree greater than \(k\) is proportional to \(k^{-\alpha}\), and
+therefore has a regularly varying tail with tail index \(\alpha\). On
+the side against the claim is \citet{Broido_2019} who compared the fits
+of a power law model against that of several non-scale-free models to
+nearly a thousand networks, only to find strong evidence for
+scale-freeness in four percent and weak evidence in over half of the
+networks, thus claiming that scale-free networks do not make up a
+majority in real networks. \citet{Voitalov_2019} disagree and claim that
+these networks are not nearly as rare and only appear so as a result of
+an unrealistic expectation of a power law without deviations or noise.
+Additional evidence of these deviations from a power law is shown by
+\citet{Lee24} who demonstrate that a lot of networks are partially
+scale-free, in that the body of the degree distribution is often
+modelled well by a power law, while the tail is lighter than what is
+implied by the body, albeit still regularly varying.
 
 The popularity of using the power law for network degrees can be traced back to a preferential attachment (PA) model popularised by \cite{Barabasi99}. In the general model, general preferential attachment (GPA), as new nodes join the network, an existing node with degree $k$ gains edges at a rate proportional to $b(k)$, where $b(\cdot)$ is a non-negative preference function. \cite{Barabasi99} showed that, when $b(k) = k + 1$, in the limit the resulting degree distribution is regularly varying with index 2 — this model is commonly known as the Barab\'asi-Albert (BA) model.  Subsequently, if a real network is shown to be scale-free, one can loosely justify PA as the underlying mechanism of its growth.
+
+Nevertheless, most studies into the appropriateness of a power law for
+the degrees of real networks, the aforementioned references included,
+have been largely descriptive in the sense that no information about the
+growth of the networks is revealed.
 
 The model from \citet{Barabasi99} provided the foundations for various
 generalisations --- \citet{krapivsky01} considered
@@ -299,24 +300,26 @@ which correspond to the most influential nodes, deviating from the power
 law will be discounted.
 
 While \citet{Voitalov_2019} have pioneered using methods in extreme
-value theory to analyse degree distributions, they overlooked the
-inapplicability of standard tools for continuous extremes, due to the
-discrete nature of degrees. A key difficulty arises because many
-standard discrete distributions, such as the Poisson, geometric, or
-negative binomial, do not satisfy the conditions required to belong to a
-maximum domain of attraction (MDA). \citet{shimura12} showed that a
-discrete distribution \(F\) must be long-tailed in order to be in an
-MDA, and introduced the notion of recoverability to the MDA, also
-referred to as the discrete MDA \citep{hitz24}. Using the theoretical
-guarantees of regular variation for a discrete distribution by
-\citet{shimura12}, we demonstrate how the tail of the degree
-distribution is directly influenced by \(b(\cdot)\), and subsequently
-propose a class of preference functions that not only imply regularly
-varying degree distributions but are also tail realistic for real
-networks. These analytical results enable the likelihood of the degree
-distribution to be expressed in terms of the parameters of \(b(\cdot)\),
-which in turn allows the underlying mechanism of the network, assumed to
-grow according to GPA, to be inferred directly.
+value theory to analyse degree distributions, while their approach is
+good they overlooked the inapplicability of standard tools for
+continuous extremes, due to the discrete nature of degrees. A key
+difficulty arises because many standard discrete distributions, such as
+the Poisson, geometric, or negative binomial, do not satisfy the
+conditions required to belong to a maximum domain of attraction (MDA).
+\citet{shimura12} showed that a discrete distribution \(F\) must be
+long-tailed,that is
+\(\lim_{x\rightarrow\infty}\bar F(x+1)/\bar F(x) = 1\), in order to be
+in an MDA, and introduced the notion of recoverability to the MDA, also
+sometimes referred to as the discrete MDA \citep{hitz24}. Using the
+theoretical guarantees of being in a discrete MDA for a discrete
+distribution by \citet{shimura12}, we demonstrate how the tail of the
+degree distribution is directly influenced by \(b(\cdot)\), and
+subsequently propose a class of preference functions that not only imply
+regularly varying degree distributions but are also tail realistic for
+real networks. These analytical results enable the likelihood of the
+degree distribution to be expressed in terms of the parameters of
+\(b(\cdot)\), which in turn allows the underlying mechanism of the
+network, assumed to grow according to GPA, to be inferred directly.
 
 The remainder of the paper is as follows: Section~\ref{sec-tail} gives a
 detailed description of the GPA model alongside the theoretical results
@@ -329,7 +332,8 @@ Section~\ref{sec-model} utilises the proposed preference function and
 illustrates numerically how the tail index of the degree distribution
 varies with the model parameters. The simulation study in
 Section~\ref{sec-sim} demonstrates that the parameters can be recovered
-from fitting the model to only the degree distribution.
+from fitting the model to only the degree distribution and as a
+consequence recover the underlying growth mechanism.
 Section~\ref{sec-real} fits the model to some real data and provides
 posterior estimates for the preference function. Section~\ref{sec-conc}
 provides a discussion of this paper and possible avenues for future
@@ -353,7 +357,7 @@ preference function \(b(\cdot)\) of their degree, where
 \sum_{k=0}^\infty\frac{1}{b(k)} = \infty.
 }\end{equation}
 
-Special cases of this model include the BA model when $b(k) = k+1$, which in the limit of $t\rightarrow \infty$ leads to a power-law degree distribution with tail index 2, and the Uniform Attachment (UA) model where $b(k)=c$ leading to a degree distribution that is not regularly varying.
+Special cases of this model include the BA model when $b(k) = k+1$, which in the limit of $t\rightarrow \infty$ leads to a power-law degree distribution with tail index 2, and the Uniform Attachment (UA) model where $b(k)=c$ leading to a degree distribution with a tail that is not regularly varying.
 
 The survival function of the limiting degree distribution, called the
 limiting survival hereafter, under condition \ref{eq-condb2} can be
@@ -375,7 +379,7 @@ process corresponding to the growth of an individual node by
 We denote the Malthusian parameter of this process by \(\lambda^*\),
 that is \(\lambda^*\) satisfies \(\hat\rho(\lambda^*) = 1\).
 
-Now, let \(\Upsilon(t)\) be the tree determined by \(\zeta(t)\) as
+Now, we construct the tree \(\Upsilon(t)\) determined by \(\zeta(t)\) as
 follows: \(\Upsilon(0)=\{\emptyset\}\) and \(\Upsilon(t)\) is a graph
 where each existing node \(x\) in \(\Upsilon(t)\) gives birth to a child
 with rate \(b(\mathrm{deg}(x, \Upsilon(t)))\) independently of the other
@@ -384,21 +388,25 @@ in the tree \(\Upsilon(t)\) at time \(t\), denote by
 \(\Upsilon(t)_{\downarrow x}\) the tree when treating node \(x\) as the
 root.
 
-Theorem 1 from \citet{rudas07} states that for the tree \(\Upsilon(t)\)
-at time \(t\) and a characteristic function of the tree
-\(\varphi(\cdot)\) :
-
-\begin{equation}\phantomsection\label{eq-survlim}{
-\lim_{t\rightarrow\infty}\frac{1}{|\Upsilon(t)|}\sum_{x\in\Upsilon(t)}\varphi(\Upsilon(t)_{\downarrow x}) = \lambda^* \int_0^\infty e^{-\lambda^* t}\mathbb E\left[\varphi(\Upsilon(t))\right]\text{d}t.
-}\end{equation}
-
-The limiting survival can be viewed as the limit of the empirical
-proportion of vertices with degree over a threshold \(k\in\mathbb N\),
-that is:
+The limiting survival can be viewed as the limit over time of the
+empirical proportion of vertices with degree over a threshold
+\(k\in\mathbb N\), that is:
 
 \[
 \bar F(k) = \lim_{t\rightarrow\infty}\frac{\sum_{x\in\Upsilon(t)}\mathbb I\left\{\text{deg}(x,\Upsilon(t)_{\downarrow x})>k\right\}}{\sum_{x\in\Upsilon(t)} 1},
-\] which can also be written using Equation~\ref{eq-survlim} as:
+\]
+
+For the tree \(\Upsilon(t)\) defined as above, Theorem 1 from
+\citet{rudas07} states that
+
+\begin{equation}\phantomsection\label{eq-survlim}{
+\lim_{t\rightarrow\infty}\frac{1}{|\Upsilon(t)|}\sum_{x\in\Upsilon(t)}\varphi(\Upsilon(t)_{\downarrow x}) = \lambda^* \int_0^\infty e^{-\lambda^* t}\mathbb E\left[\varphi(\Upsilon(t))\right]\text{d}t.
+}\end{equation} for some characteristic function of the tree
+\(\varphi(\cdot)\).
+
+Using this result, and the characteristic function
+\(\varphi(\Upsilon(t)) = \mathbb I\{\text{deg}(x,\Upsilon(t))>k\}\), we
+can write the limiting survival as:
 
 \begin{equation}\phantomsection\label{eq-surv-origin}{
 \bar F(k) = \frac{\int_0^\infty e^{-\lambda^* t}\mathbb E\left[\mathbb I\left\{\text{deg}(x,\Upsilon(t))>k\right\}\right]\text{d}t}{\int_0^\infty e^{-\lambda^* t}\text{d}t} = \prod_{i=0}^k\frac{b(i)}{\lambda^* + b(i)}.
@@ -411,12 +419,12 @@ distribution \(f(k) = \bar F(k-1) - \bar F(k)\) is
 f(k) = \frac{\lambda^*}{\lambda^* + b(k)}\prod_{i=0}^{k-1}\frac{b(i)}{\lambda^*+b(i)}.
 }\end{equation}
 
-We investigate how the tail behaviour of the discrete limiting degree
-distribution is influenced by the preference function \(b(·)\), using
-the characterisation by \citet{shimura12}.
+We now investigate how the tail behaviour of the discrete limiting
+degree distribution is influenced by the preference function \(b(·)\),
+using the characterisation by \citet{shimura12}.
 
-A central tool is the quantity \(\Omega(F,k)\). For a discrete
-distribution \(F\) with survival function \(\bar F\) and
+A central tool of this characterisation is the quantity \(\Omega(F,k)\).
+For a discrete distribution \(F\) with survival function \(\bar F\) and
 \(k\in\mathbb Z^+\) define:
 
 \[
@@ -426,7 +434,7 @@ distribution \(F\) with survival function \(\bar F\) and
 \citet{shimura12} established that if
 \(\lim_{k\rightarrow\infty} \Omega(F,k) = 1/\alpha\) (\(\alpha>0\)),
 then \(F\) is regularly varying with \(\bar F(k) \sim k^{-\alpha}\), and
-hence belongs to the Fréchet MDA. If instead,
+hence belongs to the Fréchet MDA with tail index \(\alpha\). If instead,
 \(\lim_{k\rightarrow\infty} \Omega(F,k) = 0\) then the distribution is
 recoverable to the Gumbel MDA; in this cases we say that the
 distribution is light-tailed. Moreover, if the distribution is also
@@ -440,8 +448,9 @@ function \(b(\cdot)\).
 
 \begin{proposition}[]\protect\hypertarget{prp-omega}{}\label{prp-omega}
 
-If \(\bar F(k) = \prod_{i=0}^k\frac{b(i)}{\lambda^* + b(i)}\) with
-\(b(k) \rightarrow \infty\) as \(k\rightarrow \infty\), then \[
+Let \(\bar F (k)\) be the limiting survival function of degrees in a GPA
+network with preference function \(b\) such that
+\(b(k)\rightarrow\infty\). Then: \[
 \lim_{k\rightarrow\infty}\Omega(F,k) = \lim_{k\rightarrow\infty}\frac{b(k+1)-b(k)}{\lambda^*}.
 \]
 
@@ -502,14 +511,21 @@ by \citet{Lee24}, we consider a piecewise function:
 
 \begin{equation}\phantomsection\label{eq-pref}{
 b(k) = \begin{cases}
-k^\alpha + \varepsilon,&k<k_0,\\
-k_0^\alpha + \varepsilon + \beta(k-k_0), &k\ge k_0
+k^\alpha + \varepsilon,&k\le k_0,\\
+k_0^\alpha + \varepsilon + \beta(k-k_0), &k> k_0
 \end{cases}
 }\end{equation} for \(\alpha,\beta, \varepsilon>0\) and
 \(k_0\in\mathbb N\). By Corollary~\ref{cor-omega2}, the resulting degree
 distribution is regularly varying with tail index \(\lambda^*/\beta\),
 since
 \(\lim_{k\rightarrow\infty}\Omega(F,k) = \frac{\beta}{\lambda^*}\).
+
+Shown in Figure~\ref{fig-ex} is an example of one such preference
+function of this form, the value of \(\varepsilon\) controls the
+baseline appeal of a node with zero degree and \(k_0\) controls the
+point at which the behaviour changes, below this point the curvature of
+the function is controlled by the value of \(alpha\) and above \(k_0\)
+the gradient of the linear section is contolled by \(\beta\).
 
 \begin{figure}
 
@@ -539,8 +555,8 @@ survival of the proposed GPA model is:
 
 \begin{equation}\phantomsection\label{eq-polysurv}{
 \bar F(k) = \begin{cases}
-\prod_{i=0}^{k}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon},&k<k_0,\\
-\left(\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon}\right)\frac{\Gamma(\lambda^*+k_0^\alpha + \varepsilon)/\beta)}{\Gamma\left((k_0^\alpha + \varepsilon)/\beta\right)} \frac{\Gamma\left(k-k_0 + 1 +\frac{k_0^\alpha + \varepsilon}{\beta}\right)}{\Gamma\left(k-k_0 + 1 +\frac{\lambda^* +k_0^\alpha + \varepsilon}{\beta}\right)},&k\ge k_0,
+\prod_{i=0}^{k}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon},&k\le k_0,\\
+\left(\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon}\right)\frac{\Gamma(\lambda^*+k_0^\alpha + \varepsilon)/\beta)}{\Gamma\left((k_0^\alpha + \varepsilon)/\beta\right)} \frac{\Gamma\left(k-k_0 + 1 +\frac{k_0^\alpha + \varepsilon}{\beta}\right)}{\Gamma\left(k-k_0 + 1 +\frac{\lambda^* +k_0^\alpha + \varepsilon}{\beta}\right)},&k > k_0,
 \end{cases}
 }\end{equation}
 
@@ -592,21 +608,22 @@ This connection is made explicitly below, let \(\bar F (k|k\ge k_0)\) be
 the conditional limiting survival of the proposed GPA model, then:
 
 \begin{align*}
-\bar F(k|k\ge k_0) &= \frac{\Gamma\left(\frac{\lambda^* + k_0^\alpha + \varepsilon}{\beta}\right)}{\Gamma\left(\frac{k_0^\alpha + \varepsilon}{\beta}\right)}\times\frac{\Gamma\left(k-k_0  +1 + \frac{k_0^\alpha + \varepsilon}{\beta}\right)}{\Gamma\left(k-k_0  +1 + \frac{\lambda^*+ k_0^\alpha + \varepsilon}{\beta}\right)}\\
-&\approx\left(\frac{k_0^\alpha+\varepsilon}{\beta}\right)^{\lambda^*/\beta}\left(k-k_0+1+\frac{k_0^\alpha + \varepsilon}{\beta}\right)^{-\lambda^*/\beta}\\
-&=\left(\frac{k_0^\alpha+\varepsilon}{k_0^\alpha+\varepsilon + \beta}\right)^{\lambda^*/\beta}\left(\frac{\beta(k-k_0)}{\beta + k_0^\alpha+\varepsilon} + 1\right)^{-\lambda^*/\beta}\\
-&=\left(\frac{\beta(k+1-k_0)}{k_0^{\alpha}+\varepsilon} + 1\right)^{-\lambda^{*}/\beta}.
+\bar F(k|k>k_0) &= \frac{\bar F(k)}{\bar F(k_0)}\\
+&= \frac{\lambda^* + k_0^\alpha + \varepsilon}{k_0^\alpha + \varepsilon}\times \frac{\Gamma((\lambda^*+k_0^\alpha + \varepsilon)/\beta)}{\Gamma\left((k_0^\alpha + \varepsilon)/\beta\right)} \frac{\Gamma\left(k-k_0 + 1 +\frac{k_0^\alpha + \varepsilon}{\beta}\right)}{\Gamma\left(k-k_0 + 1 +\frac{\lambda^* +k_0^\alpha + \varepsilon}{\beta}\right)}\\
+&=\frac{\Gamma(1 + (\lambda^*+k_0^\alpha + \varepsilon)/\beta)}{\Gamma\left(1+(k_0^\alpha + \varepsilon)/\beta\right)} \frac{\Gamma\left(k-k_0 + 1 +\frac{k_0^\alpha + \varepsilon}{\beta}\right)}{\Gamma\left(k-k_0 + 1 +\frac{\lambda^* +k_0^\alpha + \varepsilon}{\beta}\right)}\\
+&\approx \left(1+\frac{k_0^\alpha + \varepsilon}{\beta}\right)^{\lambda^*/\beta} \left(k-k_0+1+\frac{k_0^\alpha + \varepsilon}{\beta}\right)^{-\lambda^*/\beta}\\
+&=\left(\frac{\beta(k-k_0)}{k_0^{\alpha}+\varepsilon+\beta} + 1\right)^{-\lambda^{*}/\beta}
 \end{align*}
 
 Therefore, \begin{equation}\phantomsection\label{eq-igp-est}{
 \bar F(k) 
 \begin{cases}
-=\prod_{i=0}^{k}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon},&k<k_0,\\
-\approx \left(\prod_{i=0}^{k_0-1}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon}\right) \left(\frac{\beta(k+1-k_0)}{k_0^{\alpha}+\varepsilon} + 1\right)^{-\lambda^*/\beta},&k\ge k_0,
+=\prod_{i=0}^{k}\frac{i^\alpha + \varepsilon}{\lambda^*+i^\alpha + \varepsilon},&k\le k_0,\\
+\approx \left(\prod_{i=0}^{k_0}\frac{i^\alpha + \varepsilon}{\lambda^* + i^\alpha + \varepsilon}\right)\left(\frac{\beta(k-k_0)}{k_0^{\alpha}+\varepsilon+\beta} + 1\right)^{-\lambda^{*}/\beta},&k > k_0,
 \end{cases}
 }\end{equation} meaning that for \(k\ge k_0\) the limiting degree
 distribution (for large \(k_0^\alpha\)) is approximated by the
-\(\text{IGP}\left(\frac{\beta}{\lambda^*}, \frac{k_0^\alpha + \varepsilon}{\lambda^*},k_0-1\right)\)
+\(\text{IGP}\left(\frac{\beta}{\lambda^*}, \frac{k_0^\alpha + \varepsilon+\beta}{\lambda^*},k_0-1\right)\)
 distribution.
 
 To assess how close of an approximation this is, the theoretical
@@ -643,8 +660,8 @@ equivalent to fitting the IGP distribution to the degrees and estimating
 its parameters, something that has already been done by \citet{Lee24}
 with promising results. However, instead of only describing the shape of
 the degree distribution, we would learn about the shape of the
-preference function, thus gaining a direct understanding the mechanisms
-underlying the growth of the network.
+preference function, thus gaining a direct understanding of the
+mechanisms underlying the growth of the network.
 
 \begin{figure}
 
@@ -965,8 +982,7 @@ problems for future analysis.
 
 \section{Proofs and Derivations}\label{sec-proofs}
 
-\subsection{\texorpdfstring{Proof of
-Proposition~\ref{prp-omega}}{Proof of Proposition~}}\label{proof-of-prp-omega}
+\subsection{Preliminary}\label{preliminary}
 
 Taking the form of the GPA degree survival from
 Equation~\ref{eq-surv-origin} : \[
@@ -979,17 +995,22 @@ Equation~\ref{eq-surv-origin} : \[
 &=\left(\log\left[1+\frac{\lambda^{*}}{b(k+2)}\right]\right)^{-1}-\left(\log\left[1+\frac{\lambda^{*}}{b(k+1)}\right]\right)^{-1}.
 \end{align*}
 
+\subsection{\texorpdfstring{Proof of
+Remark~\ref{rem-omega}}{Proof of Remark~}}\label{proof-of-rem-omega}
+
 As it is assumed throughout that \(b(k)\) is non-decreasing, we consider
 the two cases where \(b(k)\) is bounded and unbounded. When \(b(k)\) is
 bounded, by the monotone convergence theorem,
 \(\lim_{k\rightarrow\infty}b(k) = c\) for some \(c>0\), which implies
-that
-\(\lim_{k\rightarrow\infty}\Omega(F,k)=\lim_{k\rightarrow\infty}\frac{1}{\lambda^{*}}\left[b(k+2)-b(k+1)\right] = 0\).
-This proves the first part of Remark~\ref{rem-omega}. Now, using
+that \(\lim_{k\rightarrow\infty}\Omega(F,k)= 0\). This proves the first
+part of Remark~\ref{rem-omega}. Now, using
 Equation~\ref{eq-surv-origin},
 \(\frac{\bar{F}(k+1)}{\bar{F}(k)}=\frac{b(k+1)}{\lambda^{*}+b(k+1)}\rightarrow\frac{c}{\lambda^{*}+c}<1\)
 as \(k\rightarrow\infty\). This means that \(F\) is not long-tailed, and
 therefore is only recovered to the Gumbel MDA.
+
+\subsection{\texorpdfstring{Proof of
+Proposition~\ref{prp-omega}}{Proof of Proposition~}}\label{proof-of-prp-omega}
 
 Now we consider the case where \(b(k)\) is unbounded, re-write
 \(\Omega(F,k)\) as:
