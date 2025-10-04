@@ -32,7 +32,7 @@ author:
       - ref: 1
 abstract: |
   Identifying the generating mechanism of a network is challenging as, more often than not, only snapshots are available, but not the full evolution. One candidate for the generating mechanism is preferential attachment which, in its simplest form, results in a degree distribution that follows the power law. Consequently, the growth of real-life networks that display such power-law behaviour is commonly modelled by preferential attachment. The ubiquity of the power law has been challenged by the presence of alternatives with comparable performance, as well as the recent findings that the tail of the degree distribution is often lighter than implied by the body, whilst still being regularly varying. In this paper, we propose a preferential attachment model with a flexible preference function. Using methods for discrete extremes, we characterise the tail behaviour of the limiting degree distribution directly by the form of the preference function. Directly relating the tail index to the model parameters enables them to be inferred when fitting to degree distributions alone, which is supported by simulation studies. Results of applications to real data are promising and comparable to alternatives.
-keywords: Network degrees · Discrete extremes · Power law · Preferential attachment
+keywords: Network degrees - Discrete extremes - Power law - Preferential attachment
 msc: 
  - 05C80
  - 60J85
